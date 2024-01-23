@@ -103,5 +103,21 @@ export let corso = [
         id_utenti:[
             38199209
         ],
+    },
+    {
+        _id:29388899,
+        nome:"B1 INGLESE",
+        ente:"FORMAZIONE ENTE",
+        payments:{
+            prezzo_acquisto:100,
+            prezzo_vendita:180,
+            entrate:0,
+            uscite:0,
+            profitto:0,
+        },
+        numero_utenti:0,
+        id_utenti:[
+            38199209
+        ],
     }
     ]
