@@ -1,7 +1,9 @@
-import React,{useState} from "react";
+'use client'
 
+import { useState } from "react";
 
-const VisualizeResult = () => {
+const VisualizeResult = (students:any) => {
+  console.log(students)
   return (
     <div>
 
@@ -137,16 +139,27 @@ export default function Search() {
           <h1 className="fs-1">Search Tool</h1>
         </div>
         <div id="searchinput" className="row">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          value={searchQuery}
-          onChange={handleSearch}
-        />
+        {/* Barra di ricerca */}
+              <input
+                type="text"
+                placeholder="Search by name..."
+                value={searchQuery}
+                onChange={handleSearch}
+              />
+
+              {/* Filtri (aggiungi altri filtri secondo necessità) */}
+        <select
+          value={filters.someFilter}
+          onChange={(e) => handleFilterChange('someFilter', e.target.value)}
+        >
+          <option value="">All</option>
+          <option value="someValue">Some Value</option>
+          {/* Aggiungi altre opzioni di filtro */}
+        </select>
 
         </div>
         <div className="row">
-            <VisualizeResult />
+          <VisualizeResult students={filteredStudents} />
         </div>
        </div>
       )}

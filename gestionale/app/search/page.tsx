@@ -1,7 +1,9 @@
 import Navbar from "../components/Navbar"
 import Search from "../components/Search"
- 
+
 export default function Search_Page() {
+    
+
     return (
       <main className="container-fluid d-flex flex-row">
         <Navbar />
