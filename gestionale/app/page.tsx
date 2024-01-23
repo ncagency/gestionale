@@ -1,13 +1,16 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import Link from 'next/link';
 
+import Navbar from './components/Navbar';
+import Dashboard from './components/Dashboard';
 
 
 export default function Home() {
   return (
-    <div className="container">
-    </div>
+    <main className='container-fluid d-flex flex-row'>
+      <Navbar />
+      <div className='col-md-10 p-4'>
+        <Dashboard />
+      </div>
+    </main>
   )
 }
