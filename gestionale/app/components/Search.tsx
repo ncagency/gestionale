@@ -109,7 +109,6 @@ export default function Search() {
     // Stato per gestire i filtri
   const [filters, setFilters] = useState<{ someFilter: string }>({
     someFilter: '',
-    // Aggiungi altri filtri con i relativi tipi
   });
 
   // Funzione per gestire la barra di ricerca
