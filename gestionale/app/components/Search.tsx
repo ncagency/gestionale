@@ -72,6 +72,14 @@ const VisualizeResult = ({ results }: { results: Student[] }) => {
 };
 
 
+const province = [
+  "AG", "AL", "AN", "AO", "AR", "AP", "AT", "AV", "BA", "BT", "BL", "BN", "BG", "BI", "BO", "BZ", "BS", "BR", "CA", "CL",
+  "CB", "CI", "CE", "CT", "CZ", "CH", "CO", "CS", "CR", "KR", "CN", "EN", "FM", "FE", "FI", "FG", "FC", "FR", "GE", "GO",
+  "GR", "IM", "IS", "AQ", "SP", "LT", "LE", "LC", "LI", "LO", "LU", "MC", "MN", "MS", "MT", "VS", "ME", "MI", "MO", "MB",
+  "NA", "NO", "NU", "OG", "OT", "OR", "PD", "PA", "PR", "PV", "PG", "PU", "PE", "PC", "PI", "PT", "PN", "PZ", "PO", "RG",
+  "RA", "RE", "RI", "RN", "RM", "RO", "SA", "VS", "SS", "SV", "SI", "SR", "SO", "TA", "TE", "TR", "TO", "OG", "TP", "TN",
+  "TV", "TS", "UD", "VA", "VE", "VB", "VC", "VR", "VV", "VI", "VT"
+];
 
 const students = [
   {
@@ -534,7 +542,7 @@ export default function Search() {
   const [searchQuery, setSearchQuery] = useState("");
   const [birthYearRange, setBirthYearRange] = useState({ start: "", end: "" });
   const [selectedCourse, setSelectedCourse] = useState("");
-  
+  const [selectedProvince, setSelectedProvince] = useState("");
 
 
 const handleSearch = () => {
@@ -546,8 +554,9 @@ const handleSearch = () => {
         (!birthYearRange.start || parseInt(student.info.dob.split("-")[2]) >= parseInt(birthYearRange.start)) &&
         (!birthYearRange.end || parseInt(student.info.dob.split("-")[2]) <= parseInt(birthYearRange.end));
       const isCourseMatch = !selectedCourse || student.courses_id.includes(parseInt(selectedCourse));
-
-      return isNameMatch && isBirthYearMatch && isCourseMatch;
+      const isProvinceMatch = !selectedProvince || student.info.prob.toLowerCase() === selectedProvince.toLowerCase();
+      
+      return isNameMatch && isBirthYearMatch && isCourseMatch && isProvinceMatch;
     });
 
     // Passa gli studenti filtrati al componente VisualizeResult per il rendering
@@ -555,9 +564,9 @@ const handleSearch = () => {
   };
 
   return (
-    <div className="container">
+        <div className="container">
       <div className="row text-center">
-        <h1 className="fs-1">Strumento di Ricerca</h1>
+        <h1 className="fs-1">Ricerca</h1>
       </div>
       <div id="searchinput" className="row">
         <input
@@ -580,6 +589,17 @@ const handleSearch = () => {
             value={birthYearRange.end}
             onChange={(e) => setBirthYearRange({ ...birthYearRange, end: e.target.value })}
           />
+        </label>
+        <label>
+          Provincia:
+          <select
+            value={selectedProvince}
+            onChange={(e) => setSelectedProvince(e.target.value)}
+          >
+            {province.map((prov, index) => (
+              <option key={index} value={prov}>{prov}</option>
+            ))}
+          </select>
         </label>
         <label>
           Corso:
