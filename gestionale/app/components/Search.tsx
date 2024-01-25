@@ -132,17 +132,16 @@ let corsi = [
 }
   ]
 
-export default function Search_Users(datas: User[],type:string) { //impostare dentro una any USERS
+export default function Search_Users(datas: User[]) { //impostare dentro una any USERS
   const [searchQuery, setSearchQuery] = useState("");
   const [birthYearRange, setBirthYearRange] = useState({ start: "", end: "" });
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedProvince, setSelectedProvince] = useState("");
-
   const handleSearch = (array: User[]) => {
     let filteredData: User[] = [];
     if (Array.isArray(array)) {
       filteredData = array.filter((data: User) => {
-        const fullName = `${data.info.nome} ${data.info.cognome}`.toLowerCase();
+        const fullName = `${data.info.nome} ${data.info.secondo_nome} ${data.info.cognome}`.toLowerCase();
         const isNameMatch = fullName.includes(searchQuery.toLowerCase());
         const isBirthYearMatch =
           (!birthYearRange.start || parseInt(data.info.dob.split("-")[2]) >= parseInt(birthYearRange.start)) &&
@@ -162,10 +161,8 @@ export default function Search_Users(datas: User[],type:string) { //impostare de
 
   return (
         <div className="container">
-      <div className="row text-center">
-        <h1 className="fs-1">Ricerca</h1>
-      </div>
-      <div id="searchinput" className="row">
+      
+   <div id="searchinput" className="row">
         <input
           type="text"
           placeholder="Cerca per Nome o Cognome"
@@ -199,7 +196,7 @@ export default function Search_Users(datas: User[],type:string) { //impostare de
           </select>
         </label>
         
-        { type === "students" && (<label>
+        <label>
           Corso:
           <select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
             <option value="">Tutti i corsi</option>
@@ -209,11 +206,13 @@ export default function Search_Users(datas: User[],type:string) { //impostare de
             
             {/* Aggiungi altre opzioni secondo le esigenze */}
           </select>
-        </label>)}
+        </label>
 
 
         <button onClick={handleSearch}>Cerca</button>
       </div>
+
+
       <div className="row flex-grow-1 p-4">
         {handleSearch(datas.category)} 
       </div>

@@ -441,8 +441,7 @@ const workers = [
 
 
 export default function Search_Page() {
-    const type = "students"
-
+    
     return (
       <main className="container-fluid d-flex flex-row">
         <Navbar />
