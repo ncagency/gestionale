@@ -414,7 +414,7 @@ let corsi = [
   {
       _id:77764555,
       nome:"EIPASS",
-      ente:"FORMAZIONE ENTE",
+      ente:"ANSIDONNA",
       payments:{
           prezzo_acquisto:20,
           prezzo_vendita:140,
@@ -430,7 +430,7 @@ let corsi = [
   {
       _id:29388899,
       nome:"B1 INGLESE",
-      ente:"FORMAZIONE ENTE",
+      ente:"ANSIDONNA",
       payments:{
           prezzo_acquisto:100,
           prezzo_vendita:180,
@@ -446,7 +446,7 @@ let corsi = [
   {
     _id:29348899,
     nome:"PEKIT EXPERT",
-    ente:"FORMAZIONE ENTE",
+    ente:"ANSIDONNA",
     payments:{
         prezzo_acquisto:130,
         prezzo_vendita:180,
@@ -459,9 +459,6 @@ let corsi = [
     ],
 }
   ]
-
-
-
 
 export default function Search_Page() {
     const type = "courses"

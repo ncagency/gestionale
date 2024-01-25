@@ -2,6 +2,23 @@
 import { useRouter } from 'next/router';
 import { useState } from "react";
  
+const EntiRow = ({ ente }: { ente: Enti }) => {
+  return (
+    <div className="bg-success text-warning p-4 rounded-3 row my-2">
+      <div className="col-6">
+      <h1 className="fs-4">{ente.nome}</h1>
+      </div>
+      <div className="col-4">
+      <p className=" fs-5 ml-5 bold"></p>
+      </div>
+      <div className="col-2 d-flex gap-2">
+        <p>Visualizza</p>
+        <p>Edit</p>
+        <p></p>
+      </div>
+    </div>
+  );
+};
 
 const CourseRow = ({ course }: { course: Courses }) => {
   return (
@@ -38,11 +55,11 @@ const UserRow = ({ user }: { user: User }) => {
   );
 };
 
-const VisualizeResult = ({ results, dataType }: { results: User[] | Courses[], dataType: string }) => {
+const VisualizeResult = ({ results, dataType }: { results: User[] | Courses[] | Enti[], dataType: string }) => {
   
     return (
       <div className="p-2 w-100 vh-100 mt-4 rounded-2 border border-5 border-warning overflow-auto">
-              {results.map((item: User | Courses, index: number) => (
+              {results.map((item: User | Courses | Enti, index: number) => (
                  <div key={index}>
                     {(dataType == "students" || dataType == "workers") && (
                       <>
@@ -52,6 +69,11 @@ const VisualizeResult = ({ results, dataType }: { results: User[] | Courses[], d
                     {(dataType == "courses") && (
                       <>
                       <CourseRow course={item as Courses} />
+                      </>
+                    )} 
+                    {(dataType == "enti") && (
+                      <>
+                      <EntiRow ente={item as Enti} />
                       </>
                     )}
                  </div>
@@ -76,7 +98,7 @@ let corsi = [
   {
       _id:77764555,
       nome:"EIPASS",
-      ente:"FORMAZIONE ENTE",
+      ente:"ANSIDONNA",
       payments:{
           prezzo_acquisto:20,
           prezzo_vendita:140,
@@ -92,7 +114,7 @@ let corsi = [
   {
       _id:29388899,
       nome:"B1 INGLESE",
-      ente:"FORMAZIONE ENTE",
+      ente:"ansi",
       payments:{
           prezzo_acquisto:100,
           prezzo_vendita:180,
@@ -108,7 +130,7 @@ let corsi = [
   {
     _id:29348899,
     nome:"PEKIT EXPERT",
-    ente:"FORMAZIONE ENTE",
+    ente:"ANSIDONNA",
     payments:{
         prezzo_acquisto:130,
         prezzo_vendita:180,
@@ -177,7 +199,16 @@ interface Courses {
     numero_utenti: number;
     id_utenti: number[];
   }
-  
+interface Enti {
+  _id:number,
+  nome:string,
+  prob:string,
+  payments:{
+      da_dare:number,
+      da_ricevere:number
+  },
+
+}
 interface SearchParams {
     searchQuery: string;
     birthYearRange: { start?: string; end?: string };
@@ -201,12 +232,12 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
   const [userRange, setUserRange] = useState({ start: "", end: "" });
   const [priceRange, setPriceRange] = useState({ start: "", end: "" });
   
-
-  const handleSearch = (array: User[] | Courses[], dataType: string) => {
+  console.log(datas)
+  const handleSearch = (array: User[] | Courses[] | Enti[], dataType: string) => {
     let filteredData: (User | Courses)[] = [];
     
     if (Array.isArray(array)) {
-      filteredData = array.filter((data: User | Courses): data is User => {
+      filteredData = array.filter((data: User | Courses | Enti): data is User => {
         if ('info' in data) {
           // È un utente
           const user = data as User;
@@ -220,7 +251,7 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
           const isProvinceMatch = !selectedProvince || user.info.prob.toLowerCase() === selectedProvince.toLowerCase();
       
           return isNameMatch && isBirthYearMatch && isCourseMatch && isProvinceMatch;
-        } else {
+        } else if (dataType == "courses") {
           // È un corso
           const course = data as Courses;
           // Implementa la logica di filtraggio per i corsi
@@ -233,6 +264,13 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
             (!priceRange.end || course.payments.prezzo_acquisto <= parseInt(priceRange.end, 10));
       
           return isNameMatch && isUserRangeMatch && isPriceRangeMatch;
+        } else if (dataType == "enti") {
+          const ente = data as Enti
+          const isNameMatch = ente.nome.toLowerCase().includes(searchQuery.toLowerCase());
+          const isCourseMatch = !selectedCourse || selectedCourse === ente.nome;
+          const isProvinceMatch = !selectedProvince || ente.prob.toLowerCase() === selectedProvince.toLowerCase();
+          
+          return isNameMatch && isCourseMatch && isProvinceMatch
         }
       });
       
@@ -340,6 +378,48 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
             onChange={(e) => setUserRange({ ...userRange, end: e.target.value })}
           />
         </label>
+        <button onClick={handleSearch}>Cerca</button>
+          </div>
+         
+        </>
+      )}
+
+      {(type == "enti") && (
+        <>
+          <div id="searchinputenti" className='row'>
+        <input
+          type="text"
+          placeholder="Cerca per Nome"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        
+        <label>
+          Provincia:
+          <select
+            value={selectedProvince}
+            onChange={(e) => setSelectedProvince(e.target.value)}
+          >
+            {province.map((prov, index) => (
+              <option key={index} value={prov}>{prov}</option>
+            ))}
+          </select>
+        </label>
+
+
+        <label>
+          Corso:
+            <select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
+              <option value="">Tutti i corsi</option>
+              {corsi.map((corso, index) => (
+                <option key={index} value={corso.ente} >{corso.nome}</option>
+              ))}
+              
+              {/* Aggiungi altre opzioni secondo le esigenze */}
+            </select>
+        </label>
+
+
         <button onClick={handleSearch}>Cerca</button>
           </div>
          
