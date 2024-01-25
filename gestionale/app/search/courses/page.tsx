@@ -476,7 +476,7 @@ export default function Search_Page() {
 
             <CategoryTabs />
 
-            <Search datas={students} type={type}/>
+            <Search datas={corsi} type={type}/>
 
         </div>
       </main>

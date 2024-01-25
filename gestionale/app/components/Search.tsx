@@ -3,7 +3,23 @@ import { useRouter } from 'next/router';
 import { useState } from "react";
  
 
-
+const CourseRow = ({ course }: { course: Courses }) => {
+  return (
+    <div className="bg-success text-warning p-4 rounded-3 row my-2">
+      <div className="col-6">
+      <h1 className="fs-4">{course.nome}</h1>
+      </div>
+      <div className="col-4">
+      <p className=" fs-5 ml-5 bold"></p>
+      </div>
+      <div className="col-2 d-flex gap-2">
+        <p>Visualizza</p>
+        <p>Edit</p>
+        <p></p>
+      </div>
+    </div>
+  );
+};
 const UserRow = ({ user }: { user: User }) => {
   return (
     <div className="bg-success text-warning p-4 rounded-3 row my-2">
@@ -24,19 +40,24 @@ const UserRow = ({ user }: { user: User }) => {
 
 const VisualizeResult = ({ results, dataType }: { results: User[] | Courses[], dataType: string }) => {
   
-  if (dataType == "students" || dataType == "workers") {
     return (
       <div className="p-2 w-100 vh-100 mt-4 rounded-2 border border-5 border-warning overflow-auto">
-        Students e Workers
+              {results.map((item: User | Courses, index: number) => (
+                 <div key={index}>
+                    {(dataType == "students" || dataType == "workers") && (
+                      <>
+                      <UserRow user={item as User} />
+                      </>
+                    )} 
+                    {(dataType == "courses") && (
+                      <>
+                      <CourseRow course={item as Courses} />
+                      </>
+                    )}
+                 </div>
+              ))}
       </div>
     ) 
-  } else if ( dataType == "courses") {
-    return (
-      <div className="p-2 w-100 vh-100 mt-4 rounded-2 border border-5 border-warning overflow-auto">
-      Courses
-       </div>
-    )
-  }
  
 };
 
