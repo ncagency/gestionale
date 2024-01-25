@@ -1,9 +1,9 @@
 'use client'
 
-import Navbar from "../components/Navbar"
-import Search_Users from "../components/Search"
-import { useState } from "react";
-import {useRouter} from "next/router";
+import Navbar from "../../components/Navbar"
+import { Search } from "../../components/Search";
+import CategoryTabs from "../../components/CategoryTabs";
+
 
 const students = [
   {
@@ -410,38 +410,13 @@ const students = [
   
   
 ];
-const workers = [
-  {
-  _id: 198328983,
-  info: {
-      nome: "Mario",
-      secondo_nome: "",
-      cognome: "Merola",
-      dob: "10-10-1998", //data di nascita
-      lob: "Roma", //luogo di nascita
-      prob: "RM", //provincia di nascita
-      capb: "00139", // cap luogo nascita
-      state: "Italy", //stato di nascita
-      cf: "ACACASBUACACASBU",  //codice fiscale
-      res: "Via delle Vie", //indirizzo residenza
-      cap_res: "00139", //CAP RESIDENZA
-      dom: "Via delle Vie", //indirizzo domicilio
-      cap_dom: "00139", // CAP DOMICILIO
-      prefix_cell: "+39",
-      cellulare: "3333333333",
-      email: "mail@gmai.com",
-    },
-    permessi:{
-      p1:"string"
-    }
-  }
-];
 
 
 
 
 export default function Search_Page() {
-    
+    const type = "courses"
+
     return (
       <main className="container-fluid d-flex flex-row">
         <Navbar />
@@ -449,15 +424,11 @@ export default function Search_Page() {
               <div className="row text-center">
               <h1 className="fs-1">Ricerca {type}</h1>
             </div>
-            <div className="d-flex gap-1">
-              <div id="students" className="bg-primary col-2 py-2 rounded-top text-center text-white">Students</div>
-              <div id="workers" className="bg-primary col-2 py-2 rounded-top text-center text-white">Workers</div>
 
-            </div>
-            
-            { (type == "students" || type == "workers") && (<Search_Users category={students} type={type}/>)}
-            
-        
+            <CategoryTabs />
+
+            <Search datas={students} type={type}/>
+
         </div>
       </main>
     )

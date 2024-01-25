@@ -1,7 +1,7 @@
 'use client'
-
-import { use, useState } from "react";
-
+import { useRouter } from 'next/router';
+import { useState } from "react";
+ 
 interface User {
   _id: number;
   info: {
@@ -43,6 +43,7 @@ interface User {
   };
 }
 
+
 const UserRow = ({ user }: { user: User }) => {
   return (
     <div className="bg-success text-warning p-4 rounded-3 row my-2">
@@ -81,7 +82,7 @@ const province = [
   "TV", "TS", "UD", "VA", "VE", "VB", "VC", "VR", "VV", "VI", "VT"
 ];
 
-
+//importa corsi
 let corsi = [
   {
       _id:77764555,
@@ -132,11 +133,80 @@ let corsi = [
 }
   ]
 
-export default function Search_Users(datas: User[]) { //impostare dentro una any USERS
+
+interface User {
+    _id: number;
+    info: {
+      nome: string;
+      secondo_nome: string;
+      cognome: string;
+      dob: string; //data di nascita
+      lob: string; //luogo di nascita
+      prob: string; //provincia di nascita
+      capb: number; // cap luogo nascita
+      state: string; //stato di nascita
+      cf: string; //codice fiscale
+      res: string; //indirizzo residenza
+      cap_res: number; //CAP RESIDENZA
+      dom: string; //indirizzo domicilio
+      cap_dom: number; // CAP DOMICILIO
+      prefix_cell: string;
+      cellulare: string;
+      email: string;
+    };
+    payments: {
+      totale: number;
+      inviati: number;
+      da_dare: number;
+    };
+    courses_id: number[];
+    docs: {
+      n_doc: string; //numero documento fornito (CID, PATENTE, PASSAPORTO)
+      l_doc: string; //luogo rilascio documento fornito (COMUNE, MOTORIZZAZIONE)
+      city_doc: string; //CITTA DI RILASCIO documento fornito
+      rilascio_doc: string; //data rilascio
+      scadenza_doc: string; //data scadenza
+      immagini: {
+        path: string; //cartella studente
+        fronte: string;
+        retro: string;
+        vari_doc: { path: string }[];
+      };
+    };
+  }
+interface Courses {
+  
+    _id:number,
+    nome:string,
+    ente:string,
+    payments:{
+        prezzo_acquisto:number,
+        prezzo_vendita:number,
+        entrate:number,
+        uscite:number,
+        profitto:number,
+    },
+    numero_utenti:number,
+    id_utenti:[
+      number
+    ]
+}
+
+interface SearchProps {
+    datas: User[];
+    type: string;
+  }
+  
+
+  
+export const Search: React.FC<SearchProps> = ({ datas, type }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [birthYearRange, setBirthYearRange] = useState({ start: "", end: "" });
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedProvince, setSelectedProvince] = useState("");
+  console.log(type);
+  
+
   const handleSearch = (array: User[]) => {
     let filteredData: User[] = [];
     if (Array.isArray(array)) {
@@ -159,10 +229,12 @@ export default function Search_Users(datas: User[]) { //impostare dentro una any
     return <VisualizeResult results={filteredData} />;
   };
 
+  
   return (
         <div className="container">
       
-   <div id="searchinput" className="row">
+      {(type == "students" || type== "workers") && (<>
+      <div id="searchinputuser" className="row">
         <input
           type="text"
           placeholder="Cerca per Nome o Cognome"
@@ -196,25 +268,26 @@ export default function Search_Users(datas: User[]) { //impostare dentro una any
           </select>
         </label>
         
-        <label>
+        { (type === "students" ) && (
+          <>
+          <label>
           Corso:
-          <select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
-            <option value="">Tutti i corsi</option>
-            {corsi.map((corso, index) => (
-              <option key={index} value={corso._id} >{corso.nome}</option>
-            ))}
-            
-            {/* Aggiungi altre opzioni secondo le esigenze */}
-          </select>
+            <select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
+              <option value="">Tutti i corsi</option>
+              {corsi.map((corso, index) => (
+                <option key={index} value={corso._id} >{corso.nome}</option>
+              ))}
+              
+              {/* Aggiungi altre opzioni secondo le esigenze */}
+            </select>
         </label>
-
-
+          </>)} 
         <button onClick={handleSearch}>Cerca</button>
-      </div>
-
+      </div> 
+      </>)}
 
       <div className="row flex-grow-1 p-4">
-        {handleSearch(datas.category)} 
+        {handleSearch(datas)} 
       </div>
     </div>
   );

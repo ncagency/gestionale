@@ -1,8 +1,8 @@
 'use client'
 
-import Navbar from "../components/Navbar"
-import { Search } from "../components/Search";
-import CategoryTabs from "../components/CategoryTabs";
+import Navbar from "../../components/Navbar"
+import { Search } from "../../components/Search";
+import CategoryTabs from "../../components/CategoryTabs";
 
 
 const students = [
@@ -410,32 +410,7 @@ const students = [
   
   
 ];
-const workers = [
-  {
-  _id: 198328983,
-  info: {
-      nome: "Mario",
-      secondo_nome: "",
-      cognome: "Merola",
-      dob: "10-10-1998", //data di nascita
-      lob: "Roma", //luogo di nascita
-      prob: "RM", //provincia di nascita
-      capb: "00139", // cap luogo nascita
-      state: "Italy", //stato di nascita
-      cf: "ACACASBUACACASBU",  //codice fiscale
-      res: "Via delle Vie", //indirizzo residenza
-      cap_res: "00139", //CAP RESIDENZA
-      dom: "Via delle Vie", //indirizzo domicilio
-      cap_dom: "00139", // CAP DOMICILIO
-      prefix_cell: "+39",
-      cellulare: "3333333333",
-      email: "mail@gmai.com",
-    },
-    permessi:{
-      p1:"string"
-    }
-  }
-];
+
 
 
 
