@@ -314,13 +314,13 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
           <input
             type="text"
             placeholder="Minimo"
-            value={birthYearRange.start}
+            value={priceRange.start}
             onChange={(e) => setPriceRange({ ...priceRange, start: e.target.value })}
           />
           <input
             type="text"
             placeholder="Massimo"
-            value={birthYearRange.end}
+            value={priceRange.end}
             onChange={(e) => setPriceRange({ ...priceRange, end: e.target.value })}
           />
         </label>
@@ -330,13 +330,13 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
           <input
             type="text"
             placeholder="Da"
-            value={birthYearRange.start}
+            value={userRange.start}
             onChange={(e) => setUserRange({ ...userRange, start: e.target.value })}
           />
           <input
             type="text"
             placeholder="A"
-            value={birthYearRange.end}
+            value={userRange.end}
             onChange={(e) => setUserRange({ ...userRange, end: e.target.value })}
           />
         </label>
