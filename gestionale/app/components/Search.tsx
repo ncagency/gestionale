@@ -2,46 +2,6 @@
 import { useRouter } from 'next/router';
 import { useState } from "react";
  
-interface User {
-  _id: number;
-  info: {
-    nome: string;
-    secondo_nome: string;
-    cognome: string;
-    dob: string; //data di nascita
-    lob: string; //luogo di nascita
-    prob: string; //provincia di nascita
-    capb: number; // cap luogo nascita
-    state: string; //stato di nascita
-    cf: string; //codice fiscale
-    res: string; //indirizzo residenza
-    cap_res: number; //CAP RESIDENZA
-    dom: string; //indirizzo domicilio
-    cap_dom: number; // CAP DOMICILIO
-    prefix_cell: string;
-    cellulare: string;
-    email: string;
-  };
-  payments: {
-    totale: number;
-    inviati: number;
-    da_dare: number;
-  };
-  courses_id: number[];
-  docs: {
-    n_doc: string; //numero documento fornito (CID, PATENTE, PASSAPORTO)
-    l_doc: string; //luogo rilascio documento fornito (COMUNE, MOTORIZZAZIONE)
-    city_doc: string; //CITTA DI RILASCIO documento fornito
-    rilascio_doc: string; //data rilascio
-    scadenza_doc: string; //data scadenza
-    immagini: {
-      path: string; //cartella studente
-      fronte: string;
-      retro: string;
-      vari_doc: { path: string }[];
-    };
-  };
-}
 
 
 const UserRow = ({ user }: { user: User }) => {
@@ -62,14 +22,22 @@ const UserRow = ({ user }: { user: User }) => {
   );
 };
 
-const VisualizeResult = ({ results }: { results: User[] }) => {
-  return (
-    <div className="p-2 w-100 vh-100 mt-4 rounded-2 border border-5 border-warning overflow-auto">
-      {results.map((item: User, index: number) => (
-        <UserRow key={index} user={item} />
-      ))}
-    </div>
-  );
+const VisualizeResult = ({ results, dataType }: { results: User[] | Courses[], dataType: string }) => {
+  
+  if (dataType == "students" || dataType == "workers") {
+    return (
+      <div className="p-2 w-100 vh-100 mt-4 rounded-2 border border-5 border-warning overflow-auto">
+        Students e Workers
+      </div>
+    ) 
+  } else if ( dataType == "courses") {
+    return (
+      <div className="p-2 w-100 vh-100 mt-4 rounded-2 border border-5 border-warning overflow-auto">
+      Courses
+       </div>
+    )
+  }
+ 
 };
 
 
@@ -175,23 +143,28 @@ interface User {
     };
   }
 interface Courses {
+    _id: number;
+    nome: string;
+    ente: string;
+    payments: {
+      prezzo_acquisto: number;
+      prezzo_vendita: number;
+      entrate: number;
+      uscite: number;
+      profitto: number;
+    };
+    numero_utenti: number;
+    id_utenti: number[];
+  }
   
-    _id:number,
-    nome:string,
-    ente:string,
-    payments:{
-        prezzo_acquisto:number,
-        prezzo_vendita:number,
-        entrate:number,
-        uscite:number,
-        profitto:number,
-    },
-    numero_utenti:number,
-    id_utenti:[
-      number
-    ]
-}
-
+interface SearchParams {
+    searchQuery: string;
+    birthYearRange: { start?: string; end?: string };
+    selectedCourse: string;
+    selectedProvince: string;
+    userRange: { start?: string; end?: string };
+    priceRange: { start?: string; end?: string };
+  }
 interface SearchProps {
     datas: User[];
     type: string;
@@ -204,29 +177,50 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
   const [birthYearRange, setBirthYearRange] = useState({ start: "", end: "" });
   const [selectedCourse, setSelectedCourse] = useState("");
   const [selectedProvince, setSelectedProvince] = useState("");
-  console.log(type);
+  const [userRange, setUserRange] = useState({ start: "", end: "" });
+  const [priceRange, setPriceRange] = useState({ start: "", end: "" });
   
 
-  const handleSearch = (array: User[]) => {
-    let filteredData: User[] = [];
+  const handleSearch = (array: User[] | Courses[], dataType: string) => {
+    let filteredData: (User | Courses)[] = [];
+    
     if (Array.isArray(array)) {
-      filteredData = array.filter((data: User) => {
-        const fullName = `${data.info.nome} ${data.info.secondo_nome} ${data.info.cognome}`.toLowerCase();
-        const isNameMatch = fullName.includes(searchQuery.toLowerCase());
-        const isBirthYearMatch =
-          (!birthYearRange.start || parseInt(data.info.dob.split("-")[2]) >= parseInt(birthYearRange.start)) &&
-          (!birthYearRange.end || parseInt(data.info.dob.split("-")[2]) <= parseInt(birthYearRange.end));
-        const isCourseMatch = !selectedCourse || data.courses_id.includes(parseInt(selectedCourse));
-        const isProvinceMatch = !selectedProvince || data.info.prob.toLowerCase() === selectedProvince.toLowerCase();
-  
-        return isNameMatch && isBirthYearMatch && isCourseMatch && isProvinceMatch;
+      filteredData = array.filter((data: User | Courses): data is User => {
+        if ('info' in data) {
+          // È un utente
+          const user = data as User;
+          // Implementa la logica di filtraggio per gli utenti
+          const fullName = `${user.info.nome} ${user.info.secondo_nome} ${user.info.cognome}`.toLowerCase();
+          const isNameMatch = fullName.includes(searchQuery.toLowerCase());
+          const isBirthYearMatch =
+            (!birthYearRange.start || parseInt(user.info.dob.split("-")[2]) >= parseInt(birthYearRange.start)) &&
+            (!birthYearRange.end || parseInt(user.info.dob.split("-")[2]) <= parseInt(birthYearRange.end));
+          const isCourseMatch = !selectedCourse || user.courses_id.includes(parseInt(selectedCourse, 10));
+          const isProvinceMatch = !selectedProvince || user.info.prob.toLowerCase() === selectedProvince.toLowerCase();
+      
+          return isNameMatch && isBirthYearMatch && isCourseMatch && isProvinceMatch;
+        } else {
+          // È un corso
+          const course = data as Courses;
+          // Implementa la logica di filtraggio per i corsi
+          const isNameMatch = course.nome.toLowerCase().includes(searchQuery.toLowerCase());
+          const isUserRangeMatch =
+            (!userRange.start || course.numero_utenti >= parseInt(userRange.start, 10)) &&
+            (!userRange.end || course.numero_utenti <= parseInt(userRange.end, 10));
+          const isPriceRangeMatch =
+            (!priceRange.start || course.payments.prezzo_acquisto >= parseInt(priceRange.start, 10)) &&
+            (!priceRange.end || course.payments.prezzo_acquisto <= parseInt(priceRange.end, 10));
+      
+          return isNameMatch && isUserRangeMatch && isPriceRangeMatch;
+        }
       });
+      
     } else {
       console.error('La variabile "datas" non è un array.');
     }
-  
+    
     // Passa gli studenti filtrati al componente VisualizeResult per il rendering
-    return <VisualizeResult results={filteredData} />;
+    return <VisualizeResult results={filteredData} dataType={dataType}/>;
   };
 
   
@@ -285,9 +279,55 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
         <button onClick={handleSearch}>Cerca</button>
       </div> 
       </>)}
+      {(type == "courses") && (
+        <>
+          <div id="searchinputcourses" className='row'>
+        <input
+          type="text"
+          placeholder="Cerca per Nome"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <label>
+          Prezzo:
+          <input
+            type="text"
+            placeholder="Minimo"
+            value={birthYearRange.start}
+            onChange={(e) => setPriceRange({ ...priceRange, start: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Massimo"
+            value={birthYearRange.end}
+            onChange={(e) => setPriceRange({ ...priceRange, end: e.target.value })}
+          />
+        </label>
+
+        <label>
+          Numero utenti:
+          <input
+            type="text"
+            placeholder="Da"
+            value={birthYearRange.start}
+            onChange={(e) => setUserRange({ ...userRange, start: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="A"
+            value={birthYearRange.end}
+            onChange={(e) => setUserRange({ ...userRange, end: e.target.value })}
+          />
+        </label>
+        <button onClick={handleSearch}>Cerca</button>
+          </div>
+         
+        </>
+      )}
+       
 
       <div className="row flex-grow-1 p-4">
-        {handleSearch(datas)} 
+        {handleSearch(datas, type)} 
       </div>
     </div>
   );
