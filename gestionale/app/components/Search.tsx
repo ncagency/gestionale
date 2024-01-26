@@ -145,7 +145,7 @@ let corsi = [
   ]
 
 
-interface User {
+export default interface User {
     _id: number;
     info: {
       nome: string;
