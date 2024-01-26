@@ -36,7 +36,6 @@ const workers = [
 
 export default function Search_Page() {
     const type = "workers"
-
     return (
       <main className="container-fluid d-flex flex-row">
         <Navbar />
