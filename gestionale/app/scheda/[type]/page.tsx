@@ -2,6 +2,8 @@
 import Navbar from "../../components/Navbar"
 import { useState } from "react";
 import User from "@/app/components/Search";
+import { Courses } from "@/app/components/Search";
+
 
 const UserDetails = ({ user, type }: { user: User, type:string }) => {
     
@@ -68,6 +70,70 @@ const UserDetails = ({ user, type }: { user: User, type:string }) => {
     )
 }
 
+const CourseDetails = ({ course, type }: { course: Courses, type:string}) => {
+    
+    return (
+        <>
+            <div className="container">
+                Indietro
+                <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
+                <div className="row mt-5">
+                    <div className="col-7"> 
+                        <p className="mb-0">{course._id}</p>
+                        <h2>{course.nome}</h2>
+                        <h3>{course.ente}</h3>
+                    </div>
+                    <div className="col-5 text-right ml-auto">
+                        <p className="mb-1"></p>
+                        <p></p>
+                    </div>
+                </div>
+                <div className="row mt-4">
+                    <div className="col-7">
+                            <label>
+                            Data di Nascita:
+                        </label>
+                        <h2></h2>
+                        <label>
+                            Luogo di Nascita:
+                        </label>
+                        <h2></h2>
+                        <label>
+                          
+                        </label>
+                    </div>
+                    <div className="col-5 bg-primary text-white p-3 border rounded-3 fs-3 ">
+                        <label className="fs-5">
+                            Pagamenti:
+                        </label>
+                        <p className="mb-0 mt-4">Tot: </p>
+                        <p className="mb-0">Ricevuti: </p>
+                        <p className="mb-0">In Sospeso: </p>
+                    </div>
+                </div>
+                <div className="row mt-4">
+                    
+                    <div className="col-4">
+                        <label>
+                            Indirizzo Residenza:
+                        </label>
+                        <h3></h3>
+                        <p></p>
+                    </div>
+                    <div className="col-4">
+                        <label>
+                            Indirizzo di Domicilio
+                        </label>
+                        <h3></h3>
+                        <p></p>
+                    </div>
+                  
+                </div>
+            </div>
+
+        </>
+    )
+}
 
 
 
@@ -119,12 +185,32 @@ const tabDetails = ({ params })=> {
       },
     },
   }
-    const [data, setData] = useState(student);
+    let corso = 
+    {
+        _id:77764555,
+        nome:"EIPASS",
+        ente:"ANSIDONNA",
+        payments:{
+            prezzo_acquisto:20,
+            prezzo_vendita:140,
+            entrate:0,
+            uscite:0,
+            profitto:0,
+        },
+        numero_utenti:0,
+        id_utenti:[
+            38199209
+        ],
+    }
+    const [courseData, setCourseData] = useState(corso);
+    const [studentData, setStudentData] = useState(student);
+   
     return (
         <main className="container-fluid d-flex flex-row">
                 <Navbar />
                 <div className="col-md-10 p-4">
-                    <UserDetails type={params.type} user={data} />
+                    { (params.type == "student" || params.type == "worker") && <UserDetails type={params.type} user={studentData} />}
+                    { (params.type == "corso") && <CourseDetails type={params.type} course={courseData} />}
                 </div>
         </main>
     );

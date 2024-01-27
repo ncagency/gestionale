@@ -185,7 +185,7 @@ export default interface User {
       };
     };
   }
-interface Courses {
+export interface Courses {
     _id: number;
     nome: string;
     ente: string;
