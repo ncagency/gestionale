@@ -1,5 +1,5 @@
 'use client'
-import Navbar from "../../components/Navbar"
+import Navbar from "../../../components/Navbar"
 import { useState } from "react";
 import User from "@/app/components/Search";
 import { Courses } from "@/app/components/Search";
@@ -140,10 +140,6 @@ const CourseDetails = ({ course, type }: { course: Courses, type:string}) => {
 
 
 
-
-
-
-
 const tabDetails = ({ params })=> {
     let student =   {
     _id: 38199209,
@@ -204,12 +200,12 @@ const tabDetails = ({ params })=> {
     }
     const [courseData, setCourseData] = useState(corso);
     const [studentData, setStudentData] = useState(student);
-   
+    console.log(params.id) //lo userai per selezionare lo specifico utente o corso o ente prendendolo da quando cliccano visualizza/
     return (
         <main className="container-fluid d-flex flex-row">
                 <Navbar />
                 <div className="col-md-10 p-4">
-                    { (params.type == "student" || params.type == "worker") && <UserDetails type={params.type} user={studentData} />}
+                    { (params.type == "student" || params.type == "worker") && <UserDetails type={params.type}  user={studentData} />}
                     { (params.type == "corso") && <CourseDetails type={params.type} course={courseData} />}
                 </div>
         </main>
