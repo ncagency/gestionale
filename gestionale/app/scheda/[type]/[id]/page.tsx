@@ -1,11 +1,12 @@
 'use client'
 import Navbar from "../../../components/Navbar"
 import { useState } from "react";
-import User from "@/app/components/Search";
 import { Courses } from "@/app/components/Search";
 
 
-const UserDetails = ({ user, type }: { user: User, type:string }) => {
+const UserDetails = ({ user, type }: { user: any, type:string }) => {
+    
+    //fai chiamata DB per i corsi_id che sono nell'array utente tutto relativo all'id dell'utente
     
     return (
         <>
@@ -23,7 +24,7 @@ const UserDetails = ({ user, type }: { user: User, type:string }) => {
                         <p>{user.info.email}</p>
                     </div>
                 </div>
-                <div className="row mt-4">
+                <div className="row mt-0 mb-0">
                     <div className="col-7">
                             <label>
                             Data di Nascita:
@@ -32,22 +33,21 @@ const UserDetails = ({ user, type }: { user: User, type:string }) => {
                         <label>
                             Luogo di Nascita:
                         </label>
-                        <h2>{user.info.lob} ({user.info.prob}), {user.info.state}</h2>
+                        <h2 className="mt-0">{user.info.lob} ({user.info.prob}), {user.info.state}</h2>
                         <label>
                             {user.info.capb}
                         </label>
                     </div>
-                    <div className="col-5 bg-primary text-white p-3 border rounded-3 fs-3 ">
+                    {(type == "student" ) && <div className="col-5 bg-primary text-white p-3 border rounded-3 fs-3 ">
                         <label className="fs-5">
                             Pagamenti:
                         </label>
-                        <p className="mb-0 mt-4">Tot: {user.payments.totale}</p>
+                        <p className="mb-0 ">Tot: {user.payments.totale}</p>
                         <p className="mb-0">Ricevuti: {user.payments.totale}</p>
                         <p className="mb-0">In Sospeso: {user.payments.totale}</p>
-                    </div>
+                    </div>}
                 </div>
-                <div className="row mt-4">
-                    
+                <div className="row mt-0">
                     <div className="col-4">
                         <label>
                             Indirizzo Residenza:
@@ -64,6 +64,50 @@ const UserDetails = ({ user, type }: { user: User, type:string }) => {
                     </div>
                   
                 </div>
+                
+                
+                {(type == "student" ) && 
+                    <div className="row bg-primary mt-0">
+                            <div className="col-4 bg-secondary">
+                                <ul>
+                                    <li>
+                                        Corso1 | In corso
+                                    </li>
+                                    <li>
+                                        Corso2 | Completo
+                                    </li>
+                                    <li>
+                                        Corso1 | Annullato
+                                    </li>
+                                    <li>
+                                        Corso2 | In corso
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="col-4 bg-warning">
+                                <p>{user.docs.n_doc} {user.docs.l_doc} {user.docs.city_doc}</p>
+                                <p> Emissione: {user.docs.rilascio} Scadenza{user.docs.scadenza}</p>
+                                <div>
+                                    <ul> //IMPLEMENTA CON DEGLI SCARICABILI
+                                        <li>FRONTE</li>
+                                        <li>RETRO</li>
+                                        <li>SELFIE?</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="col-4 bg-secondary">
+                                <p>Vari documenti</p>
+                            </div>
+                    </div>}
+                
+                {(type == "worker" ) && 
+                    <div className="row bg-primary mt-0">
+                        <ul>
+                            <li>
+                                Permesso 1 | o Si o No // implementa permessi
+                            </li>
+                        </ul>
+                    </div>}
             </div>
 
         </>
@@ -198,14 +242,43 @@ const tabDetails = ({ params })=> {
             38199209
         ],
     }
+    let worker = {
+        _id: 198328983,
+        info: {
+            nome: "Mario",
+            secondo_nome: "",
+            cognome: "Merola",
+            dob: "10-10-1998", //data di nascita
+            lob: "Roma", //luogo di nascita
+            prob: "RM", //provincia di nascita
+            capb: "00139", // cap luogo nascita
+            state: "Italy", //stato di nascita
+            cf: "ACACASBUACACASBU",  //codice fiscale
+            res: "Via delle Vie", //indirizzo residenza
+            cap_res: "00139", //CAP RESIDENZA
+            dom: "Via delle Vie", //indirizzo domicilio
+            cap_dom: "00139", // CAP DOMICILIO
+            prefix_cell: "+39",
+            cellulare: "3333333333",
+            email: "mail@gmai.com",
+          },
+          permessi:{
+            p1:"string"
+          }
+        }
+
+
+
     const [courseData, setCourseData] = useState(corso);
     const [studentData, setStudentData] = useState(student);
+    const [workerData, setWorkerData] = useState(worker);
     console.log(params.id) //lo userai per selezionare lo specifico utente o corso o ente prendendolo da quando cliccano visualizza/
     return (
         <main className="container-fluid d-flex flex-row">
                 <Navbar />
                 <div className="col-md-10 p-4">
-                    { (params.type == "student" || params.type == "worker") && <UserDetails type={params.type}  user={studentData} />}
+                    { (params.type == "student" ) && <UserDetails type={params.type}  user={studentData} />}
+                    { (params.type == "worker") && <UserDetails type={params.type}  user={workerData} />}
                     { (params.type == "corso") && <CourseDetails type={params.type} course={courseData} />}
                 </div>
         </main>

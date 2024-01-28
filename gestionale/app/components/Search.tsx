@@ -94,7 +94,7 @@ const province = [
 ];
 
 //importa corsi
-let corsi = [
+export let corsi = [
   {
       _id:77764555,
       nome:"EIPASS",
@@ -143,6 +143,31 @@ let corsi = [
     ],
 }
   ]
+
+export  interface UserWorker {
+    _id: number;
+    info: {
+      nome: string;
+      secondo_nome: string;
+      cognome: string;
+      dob: string; //data di nascita
+      lob: string; //luogo di nascita
+      prob: string; //provincia di nascita
+      capb: number; // cap luogo nascita
+      state: string; //stato di nascita
+      cf: string; //codice fiscale
+      res: string; //indirizzo residenza
+      cap_res: number; //CAP RESIDENZA
+      dom: string; //indirizzo domicilio
+      cap_dom: number; // CAP DOMICILIO
+      prefix_cell: string;
+      cellulare: string;
+      email: string;
+    };
+    permessi:{
+      p1:string
+    }
+  }
 
 
 export default interface User {

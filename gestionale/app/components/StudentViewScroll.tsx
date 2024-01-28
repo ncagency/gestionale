@@ -1,6 +1,5 @@
 import User from "./Search";
 
-
 const UserRow = ({ user }: { user: User }) => {
     return (
       <div className="bg-success text-warning p-4 rounded-3 row my-2">
@@ -18,13 +17,14 @@ const UserRow = ({ user }: { user: User }) => {
     );
   };
   
+
 export const StudentView: React.FC<{ results: User[] }> = ({ results }) => {
     const containerHeight = 300;
   
     return (
       <div className="p-2 w-100 h-100 mt-4 rounded-2 border border-5 border-warning overflow-hidden">
         <div className="h-100 overflow-auto" style={{ maxHeight: `${containerHeight}px`, overflowX: "hidden" }}>
-          {results.map((item: User, index: number) => (
+          {results.map((item: User , index: number) => (
             <div key={index}>
               <>
                 <UserRow user={item as User} />
