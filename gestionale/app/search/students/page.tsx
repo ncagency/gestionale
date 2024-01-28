@@ -5,7 +5,7 @@ import { Search } from "../../components/Search";
 import CategoryTabs from "../../components/CategoryTabs";
 
 
-const students = [
+export const students = [
   {
     _id: 38199209,
     info: {

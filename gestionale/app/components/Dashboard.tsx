@@ -1,7 +1,8 @@
 import Link from "next/link";
 import GoButton from "./GoButton";
 import React from "react";
- 
+import { students } from "../search/students/page";
+import { StudentView } from "./StudentViewScroll";
 
 const redirect = (query:string) => {
     const destinationValue = `/search/${query}`;
@@ -82,15 +83,16 @@ const ContabileCard: React.FC = () => {
       </div>
     );
   };
-  
+
+
 const StudentiCard: React.FC = () => {
     let query = "students"
 
     return (
         <div className='d-flex flex-column position-relative bg-warning p-2 h-100 rounded-4 justify-content-between'>
         <h1 className=' text-success'>Studenti</h1>
-        <div className='bg-secondary mb-2 h-100'>
-            ss
+        <div className=' mb-2 ' >
+           <StudentView results={students}/>
         </div>
         <GoButton destination={query} />{/* INSERISCI DESTINAZIONE CORRETTA IN MODO DA GESTIRE L'EVENTO ONCLICK DEL BOTTONE */}
       </div>
