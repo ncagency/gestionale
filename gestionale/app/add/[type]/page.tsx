@@ -75,8 +75,6 @@ const UserForm = () => {
                         <input type="text" className="form-control w-75" placeholder="Numero" />
                         <input type="text" className="form-control w-75" placeholder="email@example.com" />
                      </div>
-                   
-                
                 </form> 
         </div>
     
