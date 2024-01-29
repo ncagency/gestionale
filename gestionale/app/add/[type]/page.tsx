@@ -7,94 +7,95 @@ import Link from "next/link";
 
 
 
+
+const UserForm = () => {
+
+    return (
+        <div className="container">
+                <div className="fs-1">Aggiungi Studente</div>
+                <form>
+                    <div className="row ">
+                        <div className="gap-2 form-group col-7 ">
+                            <div className="d-flex mt-4 h-25 align-items-center gap-3">
+                                    <input type="text" className="form-control w-25" placeholder="Nome" />
+                                    <input type="text" className="form-control w-25" placeholder="Secondo Nome" />
+                                    <input type="text" className="form-control w-25" placeholder="Cognome" />
+                            </div>
+                    
+                        
+                        </div>
+                          
+                       
+
+                    </div>
+                    <div className="form-group mt-3  col flex-column">
+                                <input type="text" className="form-control w-50 mb-3" placeholder="Codice Fiscale" />
+                                <label>Data di Nascita</label>
+                                <input type="text" className="form-control w-25 mb-2" placeholder="GG-MM-YYYY" />
+                                <small className="form-text text-muted">Rispettare il formato della data di nascita <br /> o potrebbero esserci errori nel salvataggio</small>
+                                <div className="flex-column"> 
+                                    <label className="mt-4">Luogo di Nascita</label>
+                                    <div className="d-flex gap-2 mt-2">
+                                        <input type="text" className="form-control w-25 " placeholder="Città" />
+                                        <input type="text" className="form-control w-25" placeholder="Provincia(XX)" />
+                                    </div>
+                                    <div className="d-flex gap-2 mt-2">
+                                        <input type="text" className="form-control w-25" placeholder="CAP" />
+                                        <input type="text" className="form-control w-25 " placeholder="Stato" />
+                                    </div>  
+                                </div>  
+                        
+                        </div>
+ 
+                    <div className="flex-column h-25 align-items-center">
+
+                                <div className="row mt-5">
+                                        <div className="col-6 ">
+                                            <label className="fs-4 mb-1">Residenza</label>
+                                            <input type="text" className="form-control w-75" placeholder="Indirizzo" />
+                                            <div className="d-flex gap-2 mt-2">
+                                                <input type="text" className="form-control w-25" placeholder="Città" />
+                                                <input type="text" className="form-control w-25" placeholder="CAP" />
+                                                <input type="text" className="form-control w-25" placeholder="Stato" /> 
+                                            </div>
+                                        </div>
+                                        <div className="col-6">
+                                            <label className="fs-4 mb-1">Domicilio</label>
+                                                <input type="text" className="form-control w-75" placeholder="Indirizzo" />
+                                                <div className="d-flex gap-2 mt-2">
+                                                    <input type="text" className="form-control w-25" placeholder="Città" />
+                                                    <input type="text" className="form-control w-25" placeholder="CAP" />
+                                                    <input type="text" className="form-control w-25" placeholder="Stato" /> 
+                                                </div>
+                                        </div>
+                                </div>
+                            </div>
+
+                   
+                
+                </form> 
+        </div>
+    
+    )
+}
+
+
+
+
+
+const AddForm = ({dataType} : {dataType:string}) => {
+    return ( 
+        <>
+            <UserForm />
+        </>
+    )
+}
+
+
+
+
 const tabDetails = ({ params })=> {
-    let student =   {
-    _id: 38199209,
-    info: {
-      nome: "Luca",
-      secondo_nome: "Jr",
-      cognome: "Valori",
-      dob: "25-05-2001",
-      lob: "Benevento",
-      prob: "BN",
-      capb: 82100,
-      state: "Italy",
-      cf: "LVHS01MSHWU12",
-      res: "Via Avellino 28",
-      cap_res: 82100,
-      dom: "Via Avellino 28",
-      cap_dom: 82100,
-      prefix_cell: "+39",
-      cellulare: "3662731403",
-      email: "gerardo.dagostino12@gmail.com",
-    },
-    payments: {
-      totale: 3500,
-      inviati: 2000,
-      da_dare: 0,
-    },
-    courses_id: [77764555, 29388899],
-    docs: {
-      n_doc: "CA1177899",
-      l_doc: "COMUNE",
-      city_doc: "Benevento",
-      rilascio_doc: "22-01-2023",
-      scadenza_doc: "25-05-2033",
-      immagini: {
-        path: "",
-        fronte: "",
-        retro: "",
-        vari_doc: [{ path: "" }],
-      },
-    },
-  }
-    let corso = 
-    {
-        _id:77764555,
-        nome:"EIPASS",
-        ente:"ANSIDONNA",
-        payments:{
-            prezzo_acquisto:20,
-            prezzo_vendita:140,
-            entrate:0,
-            uscite:0,
-            profitto:0,
-        },
-        numero_utenti:0,
-        id_utenti:[
-            38199209
-        ],
-    }
-    let worker = {
-        _id: 198328983,
-        info: {
-            nome: "Mario",
-            secondo_nome: "",
-            cognome: "Merola",
-            dob: "10-10-1998", //data di nascita
-            lob: "Roma", //luogo di nascita
-            prob: "RM", //provincia di nascita
-            capb: "00139", // cap luogo nascita
-            state: "Italy", //stato di nascita
-            cf: "ACACASBUACACASBU",  //codice fiscale
-            res: "Via delle Vie", //indirizzo residenza
-            cap_res: "00139", //CAP RESIDENZA
-            dom: "Via delle Vie", //indirizzo domicilio
-            cap_dom: "00139", // CAP DOMICILIO
-            prefix_cell: "+39",
-            cellulare: "3333333333",
-            email: "mail@gmai.com",
-          },
-          permessi:{
-            p1:"string"
-          }
-        }
 
-
-
-    const [courseData, setCourseData] = useState(corso);
-    const [studentData, setStudentData] = useState(student);
-    const [workerData, setWorkerData] = useState(worker);
     return (
         <main className="container-fluid d-flex flex-row">
                 <Navbar />
@@ -102,7 +103,7 @@ const tabDetails = ({ params })=> {
                     <Link href="/add"><p>Indietro</p></Link>
                 </div>
                 <div className="col-md-10 p-4">
-                    { (params.type == "student" ) && <p>Aggiungi Studente</p>}
+                    { (params.type == "student" ) && <AddForm dataType={params.type}/>}
                     { (params.type == "worker") && <p>Aggiungi Worker</p>}
                     { (params.type == "ente") && <p>Aggiungi Ente</p>}
                     { (params.type == "corso") && <p>Aggiungi Corso</p>}
