@@ -19,9 +19,9 @@ const UserForm = () => {
                             <div className="d-flex mt-4 h-25 align-items-center gap-3">
                                     <input type="text" className="form-control w-25" placeholder="Nome" />
                                     <input type="text" className="form-control w-25" placeholder="Secondo Nome" />
-                                    <input type="text" className="form-control w-25" placeholder="Cognome" />
+                                    <input type="text" className="form-control w-75" placeholder="Codice Fiscale" />
                             </div>
-                    
+                          
                         
                         </div>
                           
@@ -48,7 +48,6 @@ const UserForm = () => {
                         </div>
  
                     <div className="flex-column h-25 align-items-center">
-
                                 <div className="row mt-5">
                                         <div className="col-6 ">
                                             <label className="fs-4 mb-1">Residenza</label>
@@ -69,8 +68,13 @@ const UserForm = () => {
                                                 </div>
                                         </div>
                                 </div>
-                            </div>
-
+                     </div>
+                        <br/>
+                     <div className="d-flex col-6 mt-5 gap-2">
+                        <input type="text" className="form-control w-75" placeholder="+39" />
+                        <input type="text" className="form-control w-75" placeholder="Numero" />
+                        <input type="text" className="form-control w-75" placeholder="email@example.com" />
+                     </div>
                    
                 
                 </form> 
