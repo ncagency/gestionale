@@ -170,7 +170,7 @@ export  interface UserWorker {
   }
 
 
-export default interface User {
+export default interface User { //AGGIUNGERE CITTA E STATO RESIDENZA E DOMICILIO
     _id: number;
     info: {
       nome: string;
