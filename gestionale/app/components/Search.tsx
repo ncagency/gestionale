@@ -224,9 +224,10 @@ export interface Courses {
     numero_utenti: number;
     id_utenti: number[];
   }
-interface Enti {
+export interface Enti {
   _id:number,
   nome:string,
+  city:string,
   prob:string,
   payments:{
       da_dare:number,

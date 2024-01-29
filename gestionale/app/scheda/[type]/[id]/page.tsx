@@ -2,7 +2,7 @@
 import Navbar from "../../../components/Navbar"
 import { useState } from "react";
 import { Courses } from "@/app/components/Search";
-
+import { Enti } from "@/app/components/Search";
 
 const UserDetails = ({ user, type }: { user: any, type:string }) => {
     
@@ -179,6 +179,29 @@ const CourseDetails = ({ course, type }: { course: Courses, type:string}) => {
     )
 }
 
+const EntiDetails = ({ente, type} : {ente: Enti, type:string}) =>{
+    return (
+        <>
+            <div className="container">
+                Indietro
+                <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
+                <div className="row mt-5">
+                    <div className="col-7"> 
+                        <p className="mb-0">{ente._id}</p>
+                        <h2>{ente.nome}</h2>
+                        <h3>{ente.city} {ente.prob}</h3>
+                    </div>
+                    <div className="col-5 text-right ml-auto">
+                        <p className="mb-1"></p>
+                        <p>{ente.payments.da_dare} {ente.payments.da_ricevere} || </p>
+                    </div>
+                </div>
+              
+            </div>
+
+        </>
+    )
+}
 
 
 
@@ -266,12 +289,23 @@ const tabDetails = ({ params })=> {
             p1:"string"
           }
         }
-
+    
+    let ente = {
+            _id:12356666,
+            nome:"ANSIDONNA",
+            city:"Caserta",
+            prob:"CE",
+            payments:{
+                da_dare:1000,
+                da_ricevere:200
+            }
+        }
 
 
     const [courseData, setCourseData] = useState(corso);
     const [studentData, setStudentData] = useState(student);
     const [workerData, setWorkerData] = useState(worker);
+    const [enteData, setEnteData] = useState(ente);
     console.log(params.id) //lo userai per selezionare lo specifico utente o corso o ente prendendolo da quando cliccano visualizza/
     return (
         <main className="container-fluid d-flex flex-row">
@@ -280,6 +314,7 @@ const tabDetails = ({ params })=> {
                     { (params.type == "student" ) && <UserDetails type={params.type}  user={studentData} />}
                     { (params.type == "worker") && <UserDetails type={params.type}  user={workerData} />}
                     { (params.type == "corso") && <CourseDetails type={params.type} course={courseData} />}
+                    { (params.type == "ente") && <EntiDetails type={params.type} ente={enteData} />}
                 </div>
         </main>
     );
