@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 
 let dbConnection
 
-const uri = "mongodb+srv://gerrydag:<Mulignan6>@cluster0.ggmbjak.mongodb.net/";
+const uri = "mongodb+srv://gerrydag:Mulignan_1324@cluster0.g7jbh.mongodb.net/ansidonna";
 
 module.exports = {
     connectToDb: (cb) => {

@@ -17,8 +17,14 @@ connectToDb((err) => {
 
 
     
-app.get('/', (req, res) => {
-    res.json({mssg:"welcome to the api"})
-})
+app.get('/', async (req, res) => {
+    try {
+        const result = await db.collection('users').find().toArray();
+        res.json(result);
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 
