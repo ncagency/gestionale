@@ -1,12 +1,13 @@
 'use client'
 import Navbar from "../../../components/Navbar"
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Courses } from "@/app/components/Search";
 import { Enti } from "@/app/components/Search";
+import axios from "axios";
+
 
 const UserDetails = ({ user, type }: { user: any, type:string }) => {
     
-    //fai chiamata DB per i corsi_id che sono nell'array utente tutto relativo all'id dell'utente
     
     return (
         <>
@@ -300,21 +301,44 @@ const tabDetails = ({ params })=> {
                 da_ricevere:200
             }
         }
-
+    
 
     const [courseData, setCourseData] = useState(corso);
     const [studentData, setStudentData] = useState(student);
     const [workerData, setWorkerData] = useState(worker);
     const [enteData, setEnteData] = useState(ente);
-    console.log(params.id) //lo userai per selezionare lo specifico utente o corso o ente prendendolo da quando cliccano visualizza/
+
+    const apiUrl = `http://localhost:2000/${params.type}/${params.id}`;
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(apiUrl);
+        if (params.type == "students" ) { setStudentData(response.data); }     
+        else if  (params.type == "workers" ) { setWorkerData(response.data);}
+        else if (params.type == "courses" ) { setCourseData(response.data);}
+        else if  (params.type == "enti" ) { setEnteData(response.data);}
+        else {
+
+        }
+    
+      } catch (error) {
+        console.error('Errore durante la richiesta GET:', error);
+      }
+    };
+  
+    // Esegui la richiesta GET quando il componente si monta
+    useEffect(() => {
+      fetchData();
+    }, []); // Assicurati di passare un array vuoto come secondo argomento per eseguire l'effetto solo al mount del componente
+
     return (
         <main className="container-fluid d-flex flex-row">
                 <Navbar />
                 <div className="col-md-10 p-4">
-                    { (params.type == "student" ) && <UserDetails type={params.type}  user={studentData} />}
-                    { (params.type == "worker") && <UserDetails type={params.type}  user={workerData} />}
-                    { (params.type == "corso") && <CourseDetails type={params.type} course={courseData} />}
-                    { (params.type == "ente") && <EntiDetails type={params.type} ente={enteData} />}
+                    { (params.type == "students" ) && <UserDetails type={params.type}  user={studentData} />}
+                    { (params.type == "workers") && <UserDetails type={params.type}  user={workerData} />}
+                    { (params.type == "courses") && <CourseDetails type={params.type} course={courseData} />}
+                    { (params.type == "enti") && <EntiDetails type={params.type} ente={enteData} />}
                 </div>
         </main>
     );

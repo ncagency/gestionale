@@ -1,7 +1,10 @@
 'use client'
 import { useRouter } from 'next/router';
 import { useState } from "react";
- 
+import ViewButton from './ViewButton';
+import { ObjectId } from 'mongodb';
+
+
 const EntiRow = ({ ente }: { ente: Enti }) => {
   return (
     <div className="bg-success text-warning p-4 rounded-3 row my-2">
@@ -38,7 +41,11 @@ const CourseRow = ({ course }: { course: Courses }) => {
     </div>
   );
 };
-const UserRow = ({ user }: { user: User }) => {
+
+
+
+const UserRow = ({ user, type }: { user: User, type:string }) => {
+
   return (
     <div className="bg-success text-warning p-4 rounded-3 row my-2">
       <div className="col-6">
@@ -48,7 +55,7 @@ const UserRow = ({ user }: { user: User }) => {
       <p className=" fs-5 ml-5 bold">{user.info.dob}</p>
       </div>
       <div className="col-2 d-flex gap-2">
-        <p>Visualizza</p>
+          <ViewButton id={user._id} type={type} />
         <p>Edit</p>
         <p></p>
       </div>
@@ -64,7 +71,7 @@ export const VisualizeResult = ({ results, dataType }: { results: User[] | Cours
                  <div key={index}>
                     {(dataType == "students" || dataType == "workers") && (
                       <>
-                      <UserRow user={item as User} />
+                      <UserRow type={dataType} user={item as User} />
                       </>
                     )} 
                     {(dataType == "courses") && (
@@ -172,7 +179,7 @@ export  interface UserWorker {
 
 
 export default interface User { //AGGIUNGERE CITTA E STATO RESIDENZA E DOMICILIO
-    _id: number;
+    _id: ObjectId;
     info: {
       nome: string;
       secondo_nome: string;
