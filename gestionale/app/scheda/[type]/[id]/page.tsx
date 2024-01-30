@@ -4,7 +4,7 @@ import { useState,useEffect } from "react";
 import { Courses } from "@/app/components/Search";
 import { Enti } from "@/app/components/Search";
 import axios from "axios";
-
+import { ObjectId } from "mongodb";
 
 const UserDetails = ({ user, type }: { user: any, type:string }) => {
     
@@ -251,9 +251,9 @@ const tabDetails = ({ params })=> {
   }
     let corso = 
     {
-        _id:77764555,
-        nome:"EIPASS",
-        ente:"ANSIDONNA",
+        _id:1234567,
+        nome:"",
+        ente:"",
         payments:{
             prezzo_acquisto:20,
             prezzo_vendita:140,
@@ -292,7 +292,7 @@ const tabDetails = ({ params })=> {
         }
     
     let ente = {
-            _id:12356666,
+            _id:1234,
             nome:"ANSIDONNA",
             city:"Caserta",
             prob:"CE",

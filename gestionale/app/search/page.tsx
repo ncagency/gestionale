@@ -21,7 +21,7 @@ export default function Search_Page() {
 
             <CategoryTabs />
 
-            
+            <p>Seleziona una tab per continuare</p>
 
         </div>
       </main>

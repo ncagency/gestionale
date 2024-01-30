@@ -6,6 +6,7 @@ import { ObjectId } from 'mongodb';
 
 
 const EntiRow = ({ ente }: { ente: Enti }) => {
+  let type = "enti"
   return (
     <div className="bg-success text-warning p-4 rounded-3 row my-2">
       <div className="col-6">
@@ -15,16 +16,15 @@ const EntiRow = ({ ente }: { ente: Enti }) => {
       <p className=" fs-5 ml-5 bold"></p>
       </div>
       <div className="col-2 d-flex gap-2">
-        <p>Visualizza</p>
+        <ViewButton id={ente._id} type={type} />
         <p>Edit</p>
-        <p></p>
       </div>
     </div>
   );
 };
 
 const CourseRow = ({ course }: { course: Courses }) => {
-  console.log(course);
+  let type = "courses"
   return (
     <div className="bg-success text-warning p-4 rounded-3 row my-2">
       <div className="col-6">
@@ -34,9 +34,8 @@ const CourseRow = ({ course }: { course: Courses }) => {
       <p className=" fs-5 ml-5 bold"></p>
       </div>
       <div className="col-2 d-flex gap-2">
-        <p>Visualizza</p>
+        <ViewButton id={course._id} type={type} />
         <p>Edit</p>
-        <p></p>
       </div>
     </div>
   );
@@ -219,7 +218,7 @@ export default interface User { //AGGIUNGERE CITTA E STATO RESIDENZA E DOMICILIO
     };
   }
 export interface Courses {
-    _id: number;
+    _id: ObjectId;
     nome: string;
     ente: string;
     payments: {
@@ -233,7 +232,7 @@ export interface Courses {
     id_utenti: number[];
   }
 export interface Enti {
-  _id:number,
+  _id:ObjectId,
   nome:string,
   city:string,
   prob:string,
