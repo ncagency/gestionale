@@ -1,6 +1,7 @@
 const express = require('express')
 const { connectToDb, getDb} = require('./db')
 const cors = require('cors');
+const { ObjectId } = require('mongodb');
 
 const app = express()
 app.use(cors());
@@ -42,6 +43,27 @@ app.get('/workers', async (req, res) => {
 app.get('/courses', async (req, res) => {
     try {
         const result = await db.collection('courses').find().toArray();
+        res.json(result);
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/student/:id', async (req, res) => {
+    try {
+        const studentId = req.params.id;
+        
+        // Assicurati che il parametro _id sia un ObjectId
+        const objectIdStudentId = new ObjectId(studentId);
+
+        const result = await db.collection('students').findOne({ _id: objectIdStudentId });
+
+        if (!result) {
+            res.status(404).json({ error: 'Student not found' });
+            return;
+        }
+
         res.json(result);
     } catch (error) {
         console.error('Errore durante la query al database', error);
