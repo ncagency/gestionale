@@ -57,6 +57,7 @@ const UserRow = ({ user }: { user: User }) => {
 };
 
 export const VisualizeResult = ({ results, dataType }: { results: User[] | Courses[] | Enti[], dataType: string }) => {
+    
     return (
       <div className="p-2 w-100 vh-100 mt-4 rounded-2 border border-5 border-warning overflow-auto">
               {results.map((item: User | Courses | Enti, index: number) => (
