@@ -1,7 +1,9 @@
 const express = require('express')
 const { connectToDb, getDb} = require('./db')
+const cors = require('cors');
 
 const app = express()
+app.use(cors());
 
 
 let db
@@ -17,9 +19,9 @@ connectToDb((err) => {
 
 
     
-app.get('/', async (req, res) => {
+app.get('/students', async (req, res) => {
     try {
-        const result = await db.collection('users').find().toArray();
+        const result = await db.collection('students').find().toArray();
         res.json(result);
     } catch (error) {
         console.error('Errore durante la query al database', error);

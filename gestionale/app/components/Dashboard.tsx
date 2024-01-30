@@ -1,7 +1,7 @@
 import Link from "next/link";
 import GoButton from "./GoButton";
 import React from "react";
-import { students } from "../search/students/page";
+import { students } from "../search/studentsx/page";
 import { StudentView } from "./StudentViewScroll";
 
 const redirect = (query:string) => {
