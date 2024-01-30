@@ -231,6 +231,9 @@ export interface Courses {
     numero_utenti: number;
     id_utenti: number[];
   }
+  
+
+
 export interface Enti {
   _id:ObjectId,
   nome:string,

@@ -105,7 +105,7 @@ app.get('/courses/:id', async (req, res) => {
         // Assicurati che il parametro _id sia un ObjectId
         const objectIdCourseId = new ObjectId(courseId);
 
-        const result = await db.collection('workers').findOne({ _id: objectIdCourseId });
+        const result = await db.collection('courses').findOne({ _id: objectIdCourseId });
 
         if (!result) {
             res.status(404).json({ error: 'Worker not found' });
