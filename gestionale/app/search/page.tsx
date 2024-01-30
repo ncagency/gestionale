@@ -1,8 +1,8 @@
 'use client'
 
-import Navbar from "../../components/Navbar"
-import { Search } from "../../components/Search";
-import CategoryTabs from "../../components/CategoryTabs";
+import Navbar from "../components/Navbar";
+import { Search } from '../components/Search'
+import CategoryTabs from "../components/CategoryTabs";
 
 
 const workers = [
@@ -35,7 +35,8 @@ const workers = [
 
 
 export default function Search_Page() {
-    const type = "workers"
+    const type = "students"
+
     return (
       <main className="container-fluid d-flex flex-row">
         <Navbar />
@@ -52,4 +53,3 @@ export default function Search_Page() {
       </main>
     )
   }
-  

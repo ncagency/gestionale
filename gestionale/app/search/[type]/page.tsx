@@ -155,7 +155,7 @@ const workers = [
 
 
  const Search_Page = ({ params })=> {
-    console.log(params.type)
+
     
     const [data, setData] = useState(null);
     const apiUrl = `http://localhost:2000/${params.type}`;

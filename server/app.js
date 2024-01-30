@@ -29,4 +29,22 @@ app.get('/students', async (req, res) => {
     }
 });
 
+app.get('/workers', async (req, res) => {
+    try {
+        const result = await db.collection('workers').find().toArray();
+        res.json(result);
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
+app.get('/courses', async (req, res) => {
+    try {
+        const result = await db.collection('courses').find().toArray();
+        res.json(result);
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});

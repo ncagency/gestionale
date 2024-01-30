@@ -1,8 +1,10 @@
 import Link from "next/link";
 import GoButton from "./GoButton";
 import React from "react";
-import { students } from "../search/studentsx/page";
+import { useState, useEffect } from "react";
 import { StudentView } from "./StudentViewScroll";
+import axios from "axios";
+
 
 const redirect = (query:string) => {
     const destinationValue = `/search/${query}`;
@@ -87,6 +89,24 @@ const ContabileCard: React.FC = () => {
 
 const StudentiCard: React.FC = () => {
     let query = "students"
+    const [students, setStudents] = useState([]);
+
+    const apiUrl = `http://localhost:2000/students`;
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(apiUrl);
+        setStudents(response.data);
+    
+      } catch (error) {
+        console.error('Errore durante la richiesta GET:', error);
+      }
+    };
+  
+    // Esegui la richiesta GET quando il componente si monta
+    useEffect(() => {
+      fetchData();
+    }, []); // Assicurati di passare un array vuoto come secondo argomento per eseguire l'effetto solo al mount del componente
 
     return (
         <div className='d-flex flex-column position-relative bg-warning p-2 h-100 rounded-4 justify-content-between'>
@@ -101,6 +121,10 @@ const StudentiCard: React.FC = () => {
 
 
 export default function Dashboard() {
+
+   
+
+
     return (
         <div className='container '>
             <div className='row h-100 mt-4'>
