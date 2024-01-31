@@ -93,7 +93,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                 </div>
                 
                 
-                {(type == "student" ) && 
+                {(type == "students" ) && 
                     <div className="row bg-primary mt-0">
                             <div className="col-4 bg-secondary">
                                 <ul>
@@ -127,7 +127,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                             </div>
                     </div>}
                 
-                {(type == "worker" ) && 
+                {(type == "workers" ) && 
                     <div className="row bg-primary mt-0">
                         <ul>
                             <li>
@@ -235,10 +235,10 @@ const Details = ({ data, type }) => {
     if (!data) {
       return <p>Loading...</p>; // o qualsiasi altra logica per gestire il caricamento
     }
-  
+    console.log(data)
     return (
       <>
-        { type == "students" || type == "workers" && (<UserDetails user={data} type={type} />)}
+        { (type == "students" || type == "workers") && (<UserDetails user={data} type={type} />)}
         { type == "courses" && (<CourseDetails course={data} type={type} />)}
         { type == "enti" && (<EntiDetails ente={data} type={type} />)}
       </>
