@@ -118,3 +118,34 @@ app.get('/courses/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+app.get('/enti', async (req, res) => {
+    try {
+        const result = await db.collection('enti').find().toArray();
+        res.json(result);
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/enti/:id', async (req, res) => {
+    try {
+        const workerId = req.params.id;
+        
+        // Assicurati che il parametro _id sia un ObjectId
+        const objectIdWorkerId = new ObjectId(workerId);
+
+        const result = await db.collection('enti').findOne({ _id: objectIdWorkerId });
+
+        if (!result) {
+            res.status(404).json({ error: 'Worker not found' });
+            return;
+        }
+
+        res.json(result);
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});

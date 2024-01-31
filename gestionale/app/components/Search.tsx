@@ -189,7 +189,8 @@ export interface Enti {
   _id:ObjectId,
   nome:string,
   city:string,
-  prob:string,
+  via:string,
+  prov:string,
   payments:{
       da_dare:number,
       da_ricevere:number
@@ -219,7 +220,6 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
   const [userRange, setUserRange] = useState({ start: "", end: "" });
   const [priceRange, setPriceRange] = useState({ start: "", end: "" });
   
-  console.log(datas)
   const handleSearch = (array: User[] | Courses[] | Enti[], dataType: string) => {
     let filteredData: (User | Courses)[] = [];
     

@@ -18,7 +18,6 @@ import axios from "axios";
       try {
         const response = await axios.get(apiUrl);
         setData(response.data);
-        console.log(data);
       } catch (error) {
         console.error('Errore durante la richiesta GET:', error);
       }

@@ -2,6 +2,7 @@
 import { FC, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 // Import Navbar (update with the correct path)
 import Navbar from '@/app/components/Navbar';
@@ -20,6 +21,12 @@ interface EntiDetailsProps {
     ente: any;
     type: string;
   }
+interface TabDetailsProps {
+  params:{
+    type: string;
+    id: string;
+}
+  }
 
 
 
@@ -35,7 +42,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                 <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
                 <div className="row mt-5">
                     <div className="col-7"> 
-                        <p className="mb-0">{user._id.toHexString()}</p>
+                        <p className="mb-0">{user._id}</p>
                         <h2>{user.info.nome} {user.info.secondo_nome} {user.info.cognome}</h2>
                         <h3>{user.info.cf}</h3>
                     </div>
@@ -135,6 +142,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
 }
  
 const CourseDetails: FC<CourseDetailsProps> = ({ course, type }) => {
+ 
         return (
         <>
             <div className="container">
@@ -142,7 +150,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type }) => {
                 <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
                 <div className="row mt-5">
                     <div className="col-7"> 
-                        <p className="mb-0">{course._id.toHexString()}</p>
+                        <p className="mb-0">{course._id}</p>
                         <h2>{course.nome}</h2>
                         <h3>{course.ente}</h3>
                     </div>
@@ -222,50 +230,53 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type }) => {
     )
 }
 
-interface TabDetailsProps {
-    params: {
-      type: string;
-      // Add other necessary properties from params
-    };
-  }
-  
 
+const Details = ({ data, type }) => {
+    if (!data) {
+      return <p>Loading...</p>; // o qualsiasi altra logica per gestire il caricamento
+    }
+  
+    return (
+      <>
+        { type == "students" || type == "workers" && (<UserDetails user={data} type={type} />)}
+        { type == "courses" && (<CourseDetails course={data} type={type} />)}
+        { type == "enti" && (<EntiDetails ente={data} type={type} />)}
+      </>
+    );
+  };
 
-const tabDetails: FC<TabDetailsProps> = ({ params }) => {  
-    const { type, id } = useParams();
-    const [data, setData] = useState<any | null>(null);
+const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
-    const apiUrl = `http://localhost:2000/${type}/${id}`;
-  
+   
+    
+    const apiUrl = `http://localhost:2000/${params.type}/${params.id}`;
+
+    const [data,setData] = useState(null);
     const fetchData = async () => {
       try {
         const response = await axios.get(apiUrl);
-        setData(response.data);
+        setData(response.data)
       } catch (error) {
         console.error('Errore durante la richiesta GET:', error);
-        // Handle the error more detailedly if necessary
       }
     };
   
+    // Esegui la richiesta GET quando il componente si monta
     useEffect(() => {
-      if (type && id) {
-        fetchData();
-      }
-    }, [type, id]);
-  
-    const components: Record<string, JSX.Element> = {
-      students: <UserDetails user={data} type={type} />,
-      workers: <UserDetails user={data} type={type} />,
-      courses: <CourseDetails course={data} type={type} />,
-      enti: <EntiDetails ente={data} type={type} />,
-    };
-    console.log(data)
-    console.log(type)
+      fetchData();
+    }, []); // Assicurati di passare un array vuoto come secondo argomento per eseguire l'effetto solo al mount del componente
+
+
+
+
+
     return (
-      <main className="container-fluid d-flex flex-row">
+      <div className="container-fluid d-flex flex-row">
         <Navbar />
-        <div className="col-md-10 p-4">{type && components[type]}</div>
-      </main>
+        <div className="col-md-10 p-4">
+            <Details data={data} type={params.type}/>
+        </div>
+      </div>
     );
   };
   
