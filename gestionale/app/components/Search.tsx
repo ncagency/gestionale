@@ -1,9 +1,9 @@
 'use client'
 import { useRouter } from 'next/router';
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import ViewButton from './ViewButton';
 import { ObjectId } from 'mongodb';
-
+import axios from 'axios';
 
 const EntiRow = ({ ente }: { ente: Enti }) => {
   let type = "enti"
@@ -100,56 +100,7 @@ const province = [
   "TV", "TS", "UD", "VA", "VE", "VB", "VC", "VR", "VV", "VI", "VT"
 ];
 
-//importa corsi
-export let corsi = [
-  {
-      _id:77764555,
-      nome:"EIPASS",
-      ente:"ANSIDONNA",
-      payments:{
-          prezzo_acquisto:20,
-          prezzo_vendita:140,
-          entrate:0,
-          uscite:0,
-          profitto:0,
-      },
-      numero_utenti:0,
-      id_utenti:[
-          38199209
-      ],
-  },
-  {
-      _id:29388899,
-      nome:"B1 INGLESE",
-      ente:"ansi",
-      payments:{
-          prezzo_acquisto:100,
-          prezzo_vendita:180,
-          entrate:0,
-          uscite:0,
-          profitto:0,
-      },
-      numero_utenti:0,
-      id_utenti:[
-          38199209
-      ],
-  },
-  {
-    _id:29348899,
-    nome:"PEKIT EXPERT",
-    ente:"ANSIDONNA",
-    payments:{
-        prezzo_acquisto:130,
-        prezzo_vendita:180,
-        entrate:0,
-        uscite:0,
-        profitto:0,
-    },
-    numero_utenti:0,
-    id_utenti:[
-    ],
-}
-  ]
+
 
 export  interface UserWorker {
     _id: number;
@@ -318,7 +269,26 @@ export const Search: React.FC<SearchProps> = ({ datas, type }) => {
     return <VisualizeResult results={filteredData} dataType={dataType}/>;
   };
 
+  const [corsi, setCorsi] = useState([]);
+
+  const apiUrl = `http://localhost:2000/courses`;
+
+  const fetchData = async () => {
+      try {
+        const response = await axios.get(apiUrl);
+        setCorsi(response.data);
+    
+      } catch (error) {
+        console.error('Errore durante la richiesta GET:', error);
+      }
+    };
   
+    // Esegui la richiesta GET quando il componente si monta
+    useEffect(() => {
+      fetchData();
+    }, []); // Assicurati di passare un array vuoto come secondo argomento per eseguire l'effetto solo al mount del componente
+
+
   return (
         <div className="container">
       

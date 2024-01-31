@@ -231,7 +231,7 @@ interface TabDetailsProps {
   
 
 
-const tabDetails: FC<TabDetailsProps> = ({ params }) => {
+const tabDetails: FC<TabDetailsProps> = ({ params }) => {  
     const { type, id } = useParams();
     const [data, setData] = useState<any | null>(null);
   
