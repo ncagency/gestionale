@@ -19,7 +19,7 @@ connectToDb((err) => {
 })
 
 
-    
+//GET CALL 
 app.get('/students', async (req, res) => {
     try {
         const result = await db.collection('students').find().toArray();
@@ -149,3 +149,6 @@ app.get('/enti/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
+//CHIAMATE POST
