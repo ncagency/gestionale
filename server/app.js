@@ -20,9 +20,13 @@ connectToDb((err) => {
 
 
 //GET CALL 
-app.get('/students', async (req, res) => {
+
+app.get('/:type', async (req, res) => {
+
+    let type = req.params.type;
+    console.log(type)
     try {
-        const result = await db.collection('students').find().toArray();
+        const result = await db.collection(type).find().toArray();
         res.json(result);
     } catch (error) {
         console.error('Errore durante la query al database', error);
@@ -30,85 +34,16 @@ app.get('/students', async (req, res) => {
     }
 });
 
-app.get('/students/:id', async (req, res) => {
+app.get('/:type/:id', async (req, res) => {
     try {
-        const studentId = req.params.id;
-        
-        // Assicurati che il parametro _id sia un ObjectId
-        const objectIdStudentId = new ObjectId(studentId);
-
-        const result = await db.collection('students').findOne({ _id: objectIdStudentId });
-
-        if (!result) {
-            res.status(404).json({ error: 'Student not found' });
-            return;
-        }
-
-        res.json(result);
-    } catch (error) {
-        console.error('Errore durante la query al database', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-
-
-
-app.get('/workers', async (req, res) => {
-    try {
-        const result = await db.collection('workers').find().toArray();
-        res.json(result);
-    } catch (error) {
-        console.error('Errore durante la query al database', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-app.get('/workers/:id', async (req, res) => {
-    try {
-        const workerId = req.params.id;
-        
-        // Assicurati che il parametro _id sia un ObjectId
-        const objectIdWorkerId = new ObjectId(workerId);
-
-        const result = await db.collection('workers').findOne({ _id: objectIdWorkerId });
-
-        if (!result) {
-            res.status(404).json({ error: 'Worker not found' });
-            return;
-        }
-
-        res.json(result);
-    } catch (error) {
-        console.error('Errore durante la query al database', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-
-
-
-app.get('/courses', async (req, res) => {
-    try {
-        const result = await db.collection('courses').find().toArray();
-        res.json(result);
-    } catch (error) {
-        console.error('Errore durante la query al database', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-app.get('/courses/:id', async (req, res) => {
-    try {
+        let type = req.params.type;
         const courseId = req.params.id;
-        
-        // Assicurati che il parametro _id sia un ObjectId
         const objectIdCourseId = new ObjectId(courseId);
 
-        const result = await db.collection('courses').findOne({ _id: objectIdCourseId });
+        const result = await db.collection(type).findOne({ _id: objectIdCourseId });
 
         if (!result) {
-            res.status(404).json({ error: 'Worker not found' });
+            res.status(404).json({ error: `${type} not Found` });
             return;
         }
 
@@ -119,36 +54,6 @@ app.get('/courses/:id', async (req, res) => {
     }
 });
 
-app.get('/enti', async (req, res) => {
-    try {
-        const result = await db.collection('enti').find().toArray();
-        res.json(result);
-    } catch (error) {
-        console.error('Errore durante la query al database', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-app.get('/enti/:id', async (req, res) => {
-    try {
-        const workerId = req.params.id;
-        
-        // Assicurati che il parametro _id sia un ObjectId
-        const objectIdWorkerId = new ObjectId(workerId);
-
-        const result = await db.collection('enti').findOne({ _id: objectIdWorkerId });
-
-        if (!result) {
-            res.status(404).json({ error: 'Worker not found' });
-            return;
-        }
-
-        res.json(result);
-    } catch (error) {
-        console.error('Errore durante la query al database', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
 
 
 //CHIAMATE POST
