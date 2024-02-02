@@ -5,7 +5,7 @@ import { Search } from "../../components/Search";
 import CategoryTabs from "../../components/CategoryTabs";
 import { useState,useEffect } from "react";
 import axios from "axios";
-
+import Link from "next/link";
 
 
  const Search_Page = ({ params })=> {
@@ -33,6 +33,7 @@ import axios from "axios";
       <main className="container-fluid d-flex flex-row">
         <Navbar />
         <div className="col-md-10 p-4">
+        <Link  href="/"><p>Indietro</p></Link>
               <div className="row text-center">
               <h1 className="fs-1">Ricerca {params.type}</h1>
             </div>

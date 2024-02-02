@@ -2,7 +2,7 @@
 import Navbar from "../../components/Navbar";
 import  { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
-
+import Link from "next/link";
 
 const ManagerMenu = ({params})  => {
   
@@ -118,6 +118,7 @@ return (
     <div className="container-fluid d-flex flex-row">
       <Navbar />
       <div className="col-md-10 p-4">
+        <Link  href="/manager"><p>Indietro</p></Link>
             <form  onSubmit={handleSubmit} className="d-flex flex-column gap-5 p-3">
                 <label>Add Student</label>
                 <button type="submit">Invia Dati</button>

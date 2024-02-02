@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 // Import Navbar (update with the correct path)
 import Navbar from '@/app/components/Navbar';
-
+import Link from 'next/link';
 
 
 interface UserDetailsProps {
@@ -268,12 +268,13 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
 
 
 
-
+    let link = `/search/${params.type}`
 
     return (
       <div className="container-fluid d-flex flex-row">
         <Navbar />
         <div className="col-md-10 p-4">
+            <Link  href={link}><p>Indietro</p></Link>
             <Details data={data} type={params.type}/>
         </div>
       </div>

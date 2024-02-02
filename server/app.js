@@ -29,7 +29,6 @@ connectToDb((err) => {
 app.get('/:type', async (req, res) => {
 
     let type = req.params.type;
-    console.log(type)
     try {
         const result = await db.collection(type).find().toArray();
         res.json(result);
