@@ -4,10 +4,15 @@ import  { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import Link from "next/link";
 
+
+
+
+
+
 const ManagerMenu = ({params})  => {
   
   let type = params.type
-  
+
   const [formData, setFormData] = useState({
     info: {
       nome: '',
@@ -50,7 +55,7 @@ const ManagerMenu = ({params})  => {
         vari: [],
       },
     },
-  });
+  });// crea piu formdata(uno per categoria e poi metti le variabili di input all'interno del <form></form dai componenti e imposta qua sotto setformdata con le sue varianti??? o no perchè in sumbit è richiesto un solo FORMDATA)
  
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -119,6 +124,9 @@ return (
       <Navbar />
       <div className="col-md-10 p-4">
         <Link  href="/manager"><p>Indietro</p></Link>
+            
+            
+            
             <form  onSubmit={handleSubmit} className="d-flex flex-column gap-5 p-3">
                 <label>Add Student</label>
                 <button type="submit">Invia Dati</button>
