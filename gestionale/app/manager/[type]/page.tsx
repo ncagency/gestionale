@@ -1,51 +1,95 @@
 'use client'
 import Navbar from "../../components/Navbar";
-import { useState } from "react";
+import  { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 
 
 const ManagerMenu = ({params})  => {
   
   let type = params.type
-  console.log(type)
-
-
+  
   const [formData, setFormData] = useState({
-    
+    info: {
+      nome: '',
+      secondo_nome: '',
+      cognome: '',
+      dob: '',
+      lob: '',
+      prob: '',
+      state: '',
+      cf: '',
+      res: '',
+      res_city:'', // AGGIUNGI SU SCHEDA
+      res_prov:'',
+      cap_res: 0,
+      state_res:'',
+      dom: '',
+      dom_city: '', // AGGIUNGI SU SCHEDA
+      dom_prov:'',
+      cap_dom: 0,
+      state_dom:'',
+      prefix_cell: '', // selector
+      cellulare: '',
+      email: '',
+    },
+    payments: {
+      totale: 0,
+      saldati: 0,
+      in_sospeso: 0,
+    },
+    courses_id: [],
+    docs: {
+      n_doc: '',
+      l_doc: '', // selector
+      city_doc: '',
+      rilascio_doc: '',
+      scadenza_doc: '',
+      immagini: {
+        fronte: '',
+        retro: '',
+        vari: [],
+      },
+    },
   });
+ 
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const keys = name.split('.');
+    const inputCategory = keys[0];
+    const inputField = keys[keys.length - 1];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+    setFormData((prevFormData) => {
+      if (keys.length === 1) {
+        // If no nesting, directly update the value
+        return { ...prevFormData, [inputCategory]: value };
+      } else if (keys.length === 2) {
+        // If one level of nesting, update the nested object value
+        return {
+          ...prevFormData,
+          [inputCategory]: { ...prevFormData[inputCategory], [inputField]: value },
+        };
+      } else {
+        // If more than one level of nesting, update the deeply nested object value
+        const updatedCategory = keys.reduce(
+          (acc, key, index) =>
+            index === keys.length - 1
+              ? { ...acc, [key]: value }
+              : { ...acc[key] },
+          { ...prevFormData }
+        );
+        return { ...prevFormData, [inputCategory]: updatedCategory };
+      }
     });
   };
-  
-  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-  
-    try {
-      // Esegui la richiesta POST con Axios
-      const response = await axios.post(`http://127.0.0.1:2000/add/${type}`, formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (response.status === 200) {
-        console.log('Dati inviati con successo!');
-        // Aggiorna lo stato o esegui altre azioni necessarie
-      } else {
-        console.error('Errore durante l\'invio dei dati.');
-      }
-    } catch (error) {
-      console.error('Errore generale:', error);
-    }
+    // Handle form submission logic here
+    console.log(formData);
   };
-  
-  
-  
+
   
   const province = [
     "","AG", "AL", "AN", "AO", "AR", "AP", "AT", "AV", "BA", "BT", "BL", "BN", "BG", "BI", "BO", "BZ", "BS", "BR", "CA", "CL",
@@ -70,23 +114,52 @@ return (
                 <label>Info</label>
 
               <div className="d-flex gap-3 form">
-                  <h3 className="">Nome</h3>
-                  <input className=""/>
+                  <h3>Nome</h3>
+                  <input
+                  type="text"
+                  name="info.nome"
+                  value={formData.info.nome}
+                  onChange={handleInputChange}
+                  />
                   <h3 className="">Secondo Nome</h3>
-                  <input className=""/>
+                  <input 
+                    type="text"
+                    name="info.secondo_nome"
+                    value={formData.info.secondo_nome}
+                    onChange={handleInputChange}
+                  />
                   <h3 className="">Cognome</h3>
-                  <input className=""/>
+                  <input 
+                 type="text"
+                 name="info.cognome"
+                 value={formData.info.cognome}
+                 onChange={handleInputChange}
+                  />
               </div>
               
               <div className="d-flex gap-3 form">
                   <h3 className="">Data Nascita</h3>
-                  <input className=""/>
+                  <input 
+                   type="text"
+                   name="info.dob"
+                   value={formData.info.dob}
+                   onChange={handleInputChange}
+                  />
                   <div>
                   <p className="text-sm">*imposta formato DD-MM-YYYY <br/>(Esempio: 11-05-2001) per non avere problemi nel salvataggio </p>
                   </div>
                   <h3>Luogo Nascita</h3>
-                  <input />
-                  <select className="selector-width">
+                  <input 
+                     type="text"
+                     name="info.lob"
+                     value={formData.info.lob}
+                     onChange={handleInputChange}
+                  />
+                  <select 
+                  name="info.prob"
+                  value={formData.info.prob}
+                  onChange={handleInputChange} 
+                  className="selector-width">
                       <option value="" disabled>Seleziona una provincia</option>
                       {province.map((province, index) => (
                         <option key={index} value={province}>
@@ -96,7 +169,11 @@ return (
                     </select>
                     
                     <h3>Stato</h3>
-                    <select className="selector-width-state ">
+                    <select 
+                    name="info.state"
+                    value={formData.info.state}
+                    onChange={handleInputChange} 
+                    className="selector-width-state ">
                       <option value="" disabled>Seleziona uno Stato</option>
                       {paesiOrdinati.map((paese, index) => (
                         <option key={index} value={paese}>
@@ -108,13 +185,31 @@ return (
 
               <div className="d-flex gap-3 form">
                   <h3 className="">Codice Fiscale</h3>
-                  <input className=""/>
+                  <input 
+                     type="text"
+                     name="info.cf"
+                     value={formData.info.cf}
+                     onChange={handleInputChange}
+                     />
                   <h3 className="">Email</h3>
-                    <input className=""/>
+                    <input 
+                       type="email"
+                       name="info.email"
+                       value={formData.info.email}
+                       onChange={handleInputChange}/>
                     <h3 className="">Cellulare</h3>
                   <div className="d-flex gap-2">
-                    <input className="selector-width"/>
-                    <input className=""/>
+                    <input  type="text"
+                       name="info.prefix_cell"
+                       value={formData.info.prefix_cell}
+                       onChange={handleInputChange}
+                       className="selector-width"/>
+                    <input 
+                     type="text"
+                     name="info.cellulare"
+                     value={formData.info.cellulare}
+                     onChange={handleInputChange}
+                     />
                   </div>
                   
               </div>
@@ -124,17 +219,36 @@ return (
                         
                         <div className="d-flex flex-column gap-2">
                           <h3 className="">Indirizzo Residenza</h3>
-                          <input className=""/>
+                          <input 
+                           type="text"
+                           name="info.res"
+                           value={formData.info.res}
+                           onChange={handleInputChange}
+                          />
                           <h3 className="">Città Residenza</h3>
-                          <input className=""/>
+                          <input    
+                          type="text"
+                           name="info.res_city"
+                           value={formData.info.res_city}
+                           onChange={handleInputChange}
+                           />
                           <div className="d-flex gap-3">
                             <div>
                               <h3 className="">CAP</h3>
-                              <input className="selector-width"/>
+                              <input 
+                              type="text"
+                              name="info.cap_res"
+                              value={formData.info.cap_res}
+                              onChange={handleInputChange}
+                              className="selector-width"/>
                             </div>
                             <div>
                               <h3 className="">Provincia</h3>
-                                <select className="selector-width">
+                                <select 
+                                name="info.res_prov"
+                                value={formData.info.res_prov}
+                                onChange={handleInputChange} 
+                                className="selector-width">
                                 <option value="" disabled>Seleziona una provincia</option>
                                 {province.map((province, index) => (
                                   <option key={index} value={province}>
@@ -145,7 +259,11 @@ return (
                             </div>
                             <div>
                               <h3 className="">Stato</h3>
-                                <select className="selector-width-state ">
+                                <select 
+                                  name="info.state_res"
+                                  value={formData.info.state_res}
+                                  onChange={handleInputChange} 
+                                className="selector-width-state ">
                                   <option value="" disabled>Seleziona uno Stato</option>
                                   {paesiOrdinati.map((paese, index) => (
                                     <option key={index} value={paese}>
@@ -164,17 +282,36 @@ return (
 
                         <div className="d-flex flex-column gap-2">
                           <h3 className="">Indirizzo Domciilio</h3>
-                          <input className=""/>
+                          <input 
+                          type="text"
+                          name="info.dom"
+                          value={formData.info.dom}
+                          onChange={handleInputChange}
+                          />
                           <h3 className="">Città Domicilio</h3>
-                          <input className=""/>
+                          <input 
+                          type="text"
+                          name="info.dom_city"
+                          value={formData.info.dom_city}
+                          onChange={handleInputChange}
+                          />
                           <div className="d-flex gap-3">
                             <div>
                               <h3 className="">CAP</h3>
-                              <input className="selector-width"/>
+                              <input 
+                              type="text"
+                              name="info.cap_dom"
+                              value={formData.info.cap_dom}
+                              onChange={handleInputChange}
+                              className="selector-width"/>
                             </div>
                             <div>
                               <h3 className="">Provincia</h3>
-                                <select className="selector-width">
+                                <select 
+                                name="info.dom_prov"
+                                value={formData.info.dom_prov}
+                                onChange={handleInputChange} 
+                                className="selector-width">
                                 <option value="" disabled>Seleziona una provincia</option>
                                 {province.map((province, index) => (
                                   <option key={index} value={province}>
@@ -185,7 +322,11 @@ return (
                             </div>
                             <div>
                               <h3 className="">Stato</h3>
-                                <select className="selector-width-state ">
+                                <select 
+                                name="info.state_dom"
+                                value={formData.info.state_dom}
+                                onChange={handleInputChange} 
+                                className="selector-width-state ">
                                   <option value="" disabled>Seleziona uno Stato</option>
                                   {paesiOrdinati.map((paese, index) => (
                                     <option key={index} value={paese}>
@@ -206,16 +347,29 @@ return (
                             <h3>Pagamenti</h3>
                             <div className="d-flex gap-2">
                                   <h3>Totali:</h3>
-                                  <input className=""/>
+                                  <input type="text"
+                  name="payments.totale"
+                  value={formData.payments.totale}
+                  onChange={handleInputChange}/>
                             </div>
                             <div className="d-flex gap-3">
                               <div className="d-flex gap-2">
                                     <h3>Saldati:</h3>
-                                    <input className="selector-width"/>
+                                    <input 
+                                    type="text"
+                           name="payments.saldati"
+                           value={formData.payments.saldati}
+                           onChange={handleInputChange}
+                           className="selector-width"/>
                               </div>
                               <div className="d-flex gap-2">
                                     <h3>In Sospeso:</h3>
-                                    <input className="selector-width"/>
+                                    <input 
+                                              type="text"
+                                              name="payments.in_sospeso"
+                                              value={formData.payments.in_sospeso}
+                                              onChange={handleInputChange}
+                                    className="selector-width"/>
                               </div>
                             
                             </div>
