@@ -2,10 +2,15 @@ const express = require('express')
 const { connectToDb, getDb} = require('./db')
 const cors = require('cors');
 const { ObjectId } = require('mongodb');
+const bodyParser = require('body-parser');
+
+
 
 const app = express()
 app.use(cors());
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 let db
 
@@ -57,3 +62,20 @@ app.get('/:type/:id', async (req, res) => {
 
 
 //CHIAMATE POST
+
+app.post('/add/:type/', async (req,res) => {
+    try {
+   
+        datiUtente = req.body
+        let type = req.params.type
+        const collezione = db.collection(type);
+
+        // Inserisci lo studente nella collezione
+        await collezione.insertOne(datiUtente);
+
+        res.status(200).json({ message: 'Dati ricevuti con successo', data: datiUtente });
+    } catch (error) {
+        console.error('Errore durante il salvataggio', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
