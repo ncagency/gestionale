@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 
 
-const ManagerMenu = () => {
+const Menu = () => {
 return (
     <div className="container-fluid d-flex flex-row">
       <Navbar />
@@ -16,4 +16,4 @@ return (
   );
 };
 
-export default ManagerMenu
+export default Menu

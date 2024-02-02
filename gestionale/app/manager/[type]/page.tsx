@@ -1,8 +1,52 @@
 'use client'
 import Navbar from "../../components/Navbar";
+import { useState } from "react";
+import axios from "axios";
 
 
-const ManagerMenu = () => {
+const ManagerMenu = ({params})  => {
+  
+  let type = params.type
+  console.log(type)
+
+
+  const [formData, setFormData] = useState({
+    
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  
+    try {
+      // Esegui la richiesta POST con Axios
+      const response = await axios.post(`http://127.0.0.1:2000/add/${type}`, formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.status === 200) {
+        console.log('Dati inviati con successo!');
+        // Aggiorna lo stato o esegui altre azioni necessarie
+      } else {
+        console.error('Errore durante l\'invio dei dati.');
+      }
+    } catch (error) {
+      console.error('Errore generale:', error);
+    }
+  };
+  
+  
+  
+  
   const province = [
     "","AG", "AL", "AN", "AO", "AR", "AP", "AT", "AV", "BA", "BT", "BL", "BN", "BG", "BI", "BO", "BZ", "BS", "BR", "CA", "CL",
     "CB", "CI", "CE", "CT", "CZ", "CH", "CO", "CS", "CR", "KR", "CN", "EN", "FM", "FE", "FI", "FG", "FC", "FR", "GE", "GO",
@@ -11,16 +55,16 @@ const ManagerMenu = () => {
     "RA", "RE", "RI", "RN", "RM", "RO", "SA", "VS", "SS", "SV", "SI", "SR", "SO", "TA", "TE", "TR", "TO", "OG", "TP", "TN",
     "TV", "TS", "UD", "VA", "VE", "VB", "VC", "VR", "VV", "VI", "VT"
   ];
-  const paesi = ["Italia"]
-  let paesiOrdinati = paesi.sort()
+  const paesiOrdinati = ["Italia"]
+  
 
-  console.log(paesi.length)
 return (
     <div className="container-fluid d-flex flex-row">
       <Navbar />
       <div className="col-md-10 p-4">
-            <div className="d-flex flex-column gap-5 p-3">
+            <form  onSubmit={handleSubmit} className="d-flex flex-column gap-5 p-3">
                 <label>Add Student</label>
+                <button type="submit">Invia Dati</button>
 
 
                 <label>Info</label>
@@ -77,7 +121,7 @@ return (
               
 
               <div className="d-flex gap-5 form">
-                               
+                        
                         <div className="d-flex flex-column gap-2">
                           <h3 className="">Indirizzo Residenza</h3>
                           <input className=""/>
@@ -182,7 +226,7 @@ return (
               
 
 
-            </div>
+            </form>
             
       </div>
 
