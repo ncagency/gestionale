@@ -84,11 +84,23 @@ const ManagerMenu = ({params})  => {
     });
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    
+    try {
+      // Effettua la chiamata POST utilizzando Axios
+      const response = await axios.post(`http://127.0.0.1:2000/add/${type}`, formData);
+  
+      // Gestisci la risposta qui, ad esempio loggando la risposta
+      console.log('Risposta API:', response.data);
+  
+      // Resetta il form o esegui altre azioni necessarie
+    } catch (error) {
+      // Gestisci gli errori qui, ad esempio loggando l'errore
+      console.error('Errore API:', error);
+    }
   };
+  
 
   
   const province = [
