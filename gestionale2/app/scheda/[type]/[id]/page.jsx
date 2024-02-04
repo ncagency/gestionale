@@ -1,38 +1,15 @@
 'use client'
 import { FC, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { useRouter } from 'next/router';
 
 // Import Navbar (update with the correct path)
-import Navbar from '@/app/components/Navbar';
+import Navbar  from '@/app/components/Navbar';
 import Link from 'next/link';
 
 
-interface UserDetailsProps {
-    user: any;
-    type: string;
-  }
-interface CourseDetailsProps {
-    course: any;
-    type: string;
-  }
-interface EntiDetailsProps {
-    ente: any;
-    type: string;
-  }
-interface TabDetailsProps {
-  params:{
-    type: string;
-    id: string;
-}
-  }
 
-
-
-
-
-const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
+const UserDetails = ({ user, type }) => {
     
     
     return (
@@ -141,7 +118,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
     )
 }
  
-const CourseDetails: FC<CourseDetailsProps> = ({ course, type }) => {
+const CourseDetails = ({ course, type }) => {
  
         return (
         <>
@@ -206,7 +183,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type }) => {
     )
 }
 
-const EntiDetails: FC<EntiDetailsProps> = ({ ente, type }) => {
+const EntiDetails  = ({ ente, type }) => {
     return (
         <>
             <div className="container">
@@ -244,7 +221,8 @@ const Details = ({ data, type }) => {
     );
   };
 
-const tabDetails: FC<TabDetailsProps> = ({ params }) => {
+
+const tabDetails = ({ params }) => {
   
    
     
@@ -270,9 +248,9 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
     let link = `/search/${params.type}`
 
     return (
-      <div className="container-fluid d-flex flex-row">
+      <div className="flex w-screen">
         <Navbar />
-        <div className="col-md-10 p-4">
+        <div className="p-4">
             <Link  href={link}><p>Indietro</p></Link>
             <Details data={data} type={params.type}/>
         </div>
