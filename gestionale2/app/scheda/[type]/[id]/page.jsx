@@ -15,7 +15,7 @@ const UserDetails = ({ user, type }) => {
     return (
         <>
             <div className="container">
-                Indietro
+                
                 <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
                 <div className="row mt-5">
                     <div className="col-7"> 
@@ -123,7 +123,6 @@ const CourseDetails = ({ course, type }) => {
         return (
         <>
             <div className="container">
-                Indietro
                 <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
                 <div className="row mt-5">
                     <div className="col-7"> 
@@ -187,7 +186,6 @@ const EntiDetails  = ({ ente, type }) => {
     return (
         <>
             <div className="container">
-                Indietro
                 <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
                 <div className="row mt-5">
                     <div className="col-7"> 
@@ -250,8 +248,8 @@ const tabDetails = ({ params }) => {
     return (
       <div className="flex w-screen">
         <Navbar />
-        <div className="p-4">
-            <Link  href={link}><p>Indietro</p></Link>
+        <div className="p-4 w-full bg-red-300">
+            <Link  href={link}><p className='text-blue-700'>Indietro</p></Link>
             <Details data={data} type={params.type}/>
         </div>
       </div>
