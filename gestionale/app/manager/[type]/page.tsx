@@ -55,8 +55,7 @@ const ManagerMenu = ({params})  => {
         vari: [],
       },
     },
-  });// crea piu formdata(uno per categoria e poi metti le variabili di input all'interno del <form></form dai componenti e imposta qua sotto setformdata con le sue varianti??? o no perchè in sumbit è richiesto un solo FORMDATA)
- 
+  });// CREA 4 COMPONENTI STUDENT ENTE CORSO E WORKER e ripeti questi comandi poi magari lo aggiusti
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -126,7 +125,7 @@ return (
         <Link  href="/manager"><p>Indietro</p></Link>
             
             
-            
+            creai componenti separati e pace
             <form  onSubmit={handleSubmit} className="d-flex flex-column gap-5 p-3">
                 <label>Add Student</label>
                 <button type="submit">Invia Dati</button>
