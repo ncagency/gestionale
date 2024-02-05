@@ -2,21 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-.form h3{
-    font-size:15px
-  }
-  .form p{
-    font-size:10px;
-  }
-  .form input {
-    height: 30px;
-  }
-  .selector-width {
-    width: 70px; 
-    height: 30px;
-  }
+form label{
+    font-weight: 600;
+    font-size: medium;
+}
 
-  .selector-width-state {
-    width: 140px; 
-    height: 30px;
+
+form input{
+   border: 1px solid;
+   border-color: rgb(53, 53, 53);
+   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra */
+   margin:2px
+}
+form input:focus {
+    outline: none; /* Rimuove l'outline al momento del focus */
+    border-color: #007bff; /* Cambia il colore del bordo durante il focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Cambia l'ombra durante il focus */
   }

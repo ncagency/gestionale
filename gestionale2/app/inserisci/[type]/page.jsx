@@ -33,13 +33,11 @@ const ManagerMenu = ({params})  => {
     return (
         <>
         
-        <div className="flex w-screen">
+        <div className="flex w-full">
         <Navbar />
-        <div className="p-4 w-full ">
+        <div className="p-4 w-full flex flex-col items-center  ">
             <p>Indietro</p>
-                <StudentForm />
-
-
+             <StudentForm />
         </div>
       </div>
         </>

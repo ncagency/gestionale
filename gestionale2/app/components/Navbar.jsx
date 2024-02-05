@@ -11,8 +11,8 @@ let navlinks = [
 
 export default function Navbar() {
      return (
-        <div className={` h-screen w-0 bg-gray-800 text-white overflow-x-hidden transition-all duration-500 ease-in-out w-56`}>
-                <nav className="p-4">
+        <div className={`h-screen w-0 bg-gray-800 text-white overflow-x-hidden transition-all duration-500 ease-in-out w-56`}>
+                <nav className="p-4 h-full">
                 <ul className="nav gap-1 fs-5 flex-column mt-5">
                         {navlinks.map((navlink, index) => (
                         <Link href={navlink.url} key={index} className="bg-primary p-2">
