@@ -69,13 +69,60 @@ const student = {
 };
 
 const ente = {
+    nome:"ANSIDONNA",
+    indirizzo:"Via delle Vie 12",
+    citta:"Mondragone",
+    prov:"CE",
+    stato:"Italia",
+    email:"ansidonna@gmail.com",
+    cellulare:"082828282",
+    altri_contatti:[
+        {
+            nome:"Cell",
+            contatto:"+393662731459"
+        },
+        {
+            nome:"Email",
+            contatto:"+350393993"
+        },
+        {
+            nome:"Email Franco",
+            contatto:"+382829292"
+        }
+    ],
+    payments:{
+        da_saldare:1000,
+        saldati:400,
+        totale_dadare:1400,
+        
+    },
+    fatture:[
+        "path/to/photo","path/to/photo","path/to/photo","path/to/photo"
+    ],
+    corsi_id:[
+
+    ]
+}
+
+const corso = {
+    _id:"",
+    nome:"EIPASS",
+    ente:"ANSIDONNA",
+    n_iscritti:0,
+    utenti:[],
+    payments:{
+        entrate:1000,
+        costi:300,
+        stock:40
+    }
 
 }
 
 
+
+const table_style = "border p-2";
 const UserDetails = ({ user, type }) => {
     
-    const table_style = "border p-2";
     const [title, setTitle] = useState("");
 
     useEffect(() => {
@@ -127,11 +174,11 @@ const UserDetails = ({ user, type }) => {
                                     </tr>
                                     <tr>
                                         <td className={table_style}>Residenza</td>
-                                        <td className={table_style}>{user.info.res_addr}, {user.info.res_city} ({user.info.res_prov}), {user.info.res_state}</td>              
+                                        <td className={table_style}>{user.info.residenza.addr}, {user.info.residenza.city} ({user.info.residenza.prov}), {user.info.residenza.state}</td>              
                                     </tr>
                                     <tr>
                                         <td className={table_style}>Domicilio</td>
-                                        <td className={table_style}>{user.info.dom_addr}, {user.info.dom_city} ({user.info.dom_prov}), {user.info.dom_state}</td>              
+                                        <td className={table_style}>{user.info.domicilio.addr}, {user.info.domicilio.city} ({user.info.domicilio.prov}), {user.info.domicilio.state}</td>              
                                     </tr>
                                     <tr>
                                         <td className={table_style}>Cellulare</td>
@@ -192,59 +239,41 @@ const CourseDetails = ({ course, type }) => {
  
         return (
         <>
-            <div className="container">
-                <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
-                <div className="row mt-5">
-                    <div className="col-7"> 
-                        <p className="mb-0">{course._id}</p>
-                        <h2>{course.nome}</h2>
-                        <h3>{course.ente}</h3>
-                    </div>
-                    <div className="col-5 text-right ml-auto">
-                        <p className="mb-1"></p>
-                        <p></p>
-                    </div>
+            <div className='flex flex-col'>
+                <h1>Dettagli Corso</h1>
+                
+                <div className='p-4 flex gap-4 '>
+                    <table className='table-auto w-1/3 border border-collapse'>
+                                    <tbody>
+                                        <tr>
+                                            <td className={table_style}>ID</td>
+                                            <td className={table_style}>{course._id}</td>              
+                                        </tr>
+                                        <tr>
+                                            <td className={table_style}>Nome</td>
+                                            <td className={table_style}>{course.nome}</td>              
+                                        </tr>
+                                        <tr>
+                                            <td className={table_style}>Ente</td>
+                                            <td className={table_style}>{course.ente}</td>              
+                                        </tr>
+                                        <tr>
+                                            <td className={table_style}>Iscritti</td>
+                                            <td className={table_style}>{course.n_iscritti}</td>              
+                                        </tr>
+                                        
+                                    </tbody>
+                        </table>
+                        <div className='w-1/3 border border-4 border-black p-4'>
+                                    <p>Entrate:{course.payments.entrate}</p>
+                                    <p>Costi:{course.payments.costi}</p>
+                                    <p>Profitto:{course.payments.entrate - course.payments.costi}</p>
+                                    <p>Stock:{course.payments.stock}</p>
+                                
+                    </div>  
                 </div>
-                <div className="row mt-4">
-                    <div className="col-7">
-                            <label>
-                            Data di Nascita:
-                        </label>
-                        <h2></h2>
-                        <label>
-                            Luogo di Nascita:
-                        </label>
-                        <h2></h2>
-                        <label>
-                          
-                        </label>
-                    </div>
-                    <div className="col-5 bg-primary text-white p-3 border rounded-3 fs-3 ">
-                        <label className="fs-5">
-                            Pagamenti:
-                        </label>
-                        <p className="mb-0 mt-4">Tot: </p>
-                        <p className="mb-0">Ricevuti: </p>
-                        <p className="mb-0">In Sospeso: </p>
-                    </div>
-                </div>
-                <div className="row mt-4">
-                    
-                    <div className="col-4">
-                        <label>
-                            Indirizzo Residenza:
-                        </label>
-                        <h3></h3>
-                        <p></p>
-                    </div>
-                    <div className="col-4">
-                        <label>
-                            Indirizzo di Domicilio
-                        </label>
-                        <h3></h3>
-                        <p></p>
-                    </div>
-                  
+                <div>
+                    Utenti Lista:
                 </div>
             </div>
 
@@ -255,18 +284,58 @@ const CourseDetails = ({ course, type }) => {
 const EntiDetails  = ({ ente, type }) => {
     return (
         <>
-            <div className="container">
-                <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
-                <div className="row mt-5">
-                    <div className="col-7"> 
-                        <p className="mb-0">{ente._id}</p>
-                        <h2>{ente.nome}</h2>
-                        <h3>{ente.city} {ente.prob}</h3>
-                    </div>
-                    <div className="col-5 text-right ml-auto">
-                        <p className="mb-1"></p>
-                        <p>{ente.payments.da_dare} {ente.payments.da_ricevere} || </p>
-                    </div>
+            <div className='flex flex-col'>
+                <h1>Dettagli Ente</h1>
+                <div className='p-4 flex gap-4 '> 
+
+                        <table className='table-auto w-1/3 border border-collapse'>
+                                <tbody>
+                                    <tr>
+                                        <td className={table_style}>ID</td>
+                                        <td className={table_style}>{ente._id}</td>              
+                                    </tr>
+                                    <tr>
+                                        <td className={table_style}>Nome</td>
+                                        <td className={table_style}>{ente.nome}</td>              
+                                    </tr>
+                                    <tr>
+                                        <td className={table_style}>Indrizzo</td>
+                                        <td className={table_style}>{ente.indirizzo}, {ente.citta} ({ente.prov}), {ente.stato}</td>              
+                                    </tr>
+                                    <tr>
+                                        <td className={table_style}>Email</td>
+                                        <td className={table_style}>{ente.email}</td>              
+                                    </tr>
+                                    <tr>
+                                        <td className={table_style}>Cellulare</td>
+                                        <td className={table_style}>{ente.cellulare}</td>              
+                                    </tr>
+                                    {
+                                    ente.altri_contatti.map((contatto, index) => (
+                                        <tr key={index}>
+                                            <td className={table_style}>{contatto.nome}</td>
+                                            <td className={table_style}>{contatto.contatto}</td>
+                                        </tr>
+                                    ))
+                                    }
+                                </tbody>
+                        </table>
+
+                        <div className='w-1/3 border border-4 border-black p-4'>
+                                <p>Totale:{ente.payments.totale_dadare}</p>
+                                <p>Saldati:{ente.payments.saldati}</p>
+                                <p>Saldati:{ente.payments.da_saldare}</p>
+                            
+                        </div>       
+                        <div className='w-1/3 border border-4 border-black p-4'>
+                                   { ente.fatture.map((fattura, index) => (
+                                    <p key={index}>Fattura n.</p>
+                                   ))}
+                        </div>            
+                </div>
+                <h1> Corsi:</h1>
+                <div className='w-full border-4 border-black'>
+                  //Corsi collegati
                 </div>
               
             </div>
@@ -278,13 +347,13 @@ const EntiDetails  = ({ ente, type }) => {
 
 const Details = ({ data, type }) => {
     if (!data) {
-      return <p>Loading...</p>; // o qualsiasi altra logica per gestire il caricamento
+        return "Loading..."
     }
     return (
       <>
-        { (type == "students" || type == "workers") && (<UserDetails user={student} type={type} />)}
+        { (type == "students" || type == "workers") && (<UserDetails user={data} type={type} />)}
         { type == "courses" && (<CourseDetails course={data} type={type} />)}
-        { type == "enti" && (<EntiDetails ente={ente} type={type} />)}
+        { type == "enti" && (<EntiDetails ente={data} type={type} />)}
       </>
     );
   };
