@@ -406,6 +406,7 @@ return (
       </div>
 
       <style jsx>{`
+        
         .form h3{
           font-size:15px
         }
@@ -414,6 +415,7 @@ return (
         }
         .form input {
           height: 30px;
+          border: 2px;
         }
         .selector-width {
           width: 70px; 
