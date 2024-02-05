@@ -1,5 +1,9 @@
+'use client'
 
-
+import StudentForm from "@/app/components/StudentForm";
+import Navbar from "@/app/components/Navbar";
+import Link from "next/link";
+import { useState } from "react";
 
 
 
@@ -49,16 +53,21 @@ const ManagerMenu = ({params})  => {
     return (
         <>
         
+        <div className="flex w-screen">
+        <Navbar />
+        <div className="p-4 w-full ">
+            <p>Indietro</p>
+            <form onSubmit={handleSubmit}>
+                <button type="submit">Invia Dati</button>
+                <StudentForm />
 
-        
 
-
-
-
-
-       
+            </form>
+        </div>
+      </div>
         </>
     )
 }
 
 
+export default ManagerMenu
