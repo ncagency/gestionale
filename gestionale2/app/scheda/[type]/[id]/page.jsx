@@ -8,7 +8,6 @@ import Navbar  from '@/app/components/Navbar';
 import Link from 'next/link';
 
 const student = {
-    _id:'7237273727372',
     info: {
         nome: 'Mario',
         secondo_nome: 'Rossi',
@@ -69,6 +68,9 @@ const student = {
     }
 };
 
+const ente = {
+
+}
 
 
 const UserDetails = ({ user, type }) => {
@@ -142,6 +144,7 @@ const UserDetails = ({ user, type }) => {
                                 </tbody>
                         </table>
                     </div>
+                    {(type == "students" ) && 
                     <div className='p-4'>
                         <table className='table-auto w-full border border-collapse'>
                                 <tbody>
@@ -167,34 +170,18 @@ const UserDetails = ({ user, type }) => {
                                     </tr>
                                 </tbody>
                         </table>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
+                        
+                    </div>}
+                    {(type == "workers" ) && 
+                    <div className='p-4 '>
+                        <div>
+                            <h1>Permessi</h1>
+                        </div>
+                    </div>}
                 </div>
                 
-                
-                {(type == "students" ) && 
-                    <div>
-                   
-                    </div>}
-                
-                {(type == "workers" ) && 
-                    <div>
-                        <ul>
-                            <li>
-                                Permesso 1 | o Si o No // implementa permessi
-                            </li>
-                        </ul>
-                    </div>}
+
+               
             </div>
 
         </>
@@ -297,7 +284,7 @@ const Details = ({ data, type }) => {
       <>
         { (type == "students" || type == "workers") && (<UserDetails user={student} type={type} />)}
         { type == "courses" && (<CourseDetails course={data} type={type} />)}
-        { type == "enti" && (<EntiDetails ente={data} type={type} />)}
+        { type == "enti" && (<EntiDetails ente={ente} type={type} />)}
       </>
     );
   };
