@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import Navbar from '@/app/components/Navbar';
 import Link from 'next/link';
 import Rate from '@/app/components/Rate';
+import ViewCorsi from '@/app/components/ViewCorsi';
+
 
 interface UserDetailsProps {
     user: any;
@@ -54,6 +56,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
     const id_user = user._id
     const rate: any = user.payments.rate
     let nrate = rate.length
+    const corsi:any = user.courses_id
     return (
         <>
             <div className="container">
@@ -96,8 +99,8 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                  <div className='d-flex gap-4'>
                     <div className='w-50'>
                       <h1>Corsi</h1>
-
-
+                      
+                      <ViewCorsi corsi_id={corsi}/>
 
 
                       </div>
@@ -114,13 +117,6 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                         </tbody>
 
                       </table>
-                        
-                       
-                        
-                        
-                      
-
-
                       </div>
                     </div> }
 
