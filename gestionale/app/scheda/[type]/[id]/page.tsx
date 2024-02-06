@@ -74,6 +74,9 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                             <TableRow label="Email" value={user.info.email} />
                         </tbody>
                     </table>
+                    {(type == "students" ) && 
+                  <>
+                    
                     <div className='container'>
                         <h1>Totale:{user.payments.totale}</h1>
                         <h1>Saldati:{user.payments.saldati}</h1>
@@ -83,12 +86,33 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                         <Rate data={rate} id={id_user}/>
                         </div>
                     </div>
-                </div>
-                {(type == "students" ) && 
-                  <>
-                    
-                  </>
+                  
+                    </>
                   }
+                </div>
+                <div className=''>
+                    
+                {(type == "students" ) && 
+                 <div className='d-flex gap-4'>
+                    <div className=''>
+                      <h1>Corsi</h1>
+
+
+
+
+                      </div>
+                      <div>
+                      <h1>Documenti</h1>
+
+
+
+
+                      </div>
+                    </div> }
+
+                </div>
+              
+                 
                   
                 
                 {(type == "workers" ) && 
