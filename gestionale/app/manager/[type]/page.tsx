@@ -4,7 +4,7 @@ import  { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 import Link from "next/link";
 import StudentAdd from '@/app/components/StudentAdd'
-
+import CourseAdd from "@/app/components/CourseAdd";
 
 export const province = [
   "","AG", "AL", "AN", "AO", "AR", "AP", "AT", "AV", "BA", "BT", "BL", "BN", "BG", "BI", "BO", "BZ", "BS", "BR", "CA", "CL",
@@ -30,8 +30,8 @@ return (
         <Link  href="/manager"><p>Indietro</p></Link>
             
             
-            <StudentAdd />
-            
+           { type == "students" && <StudentAdd />} 
+           { type == "courses" && <CourseAdd />}  
             
       </div>
 

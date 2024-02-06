@@ -113,7 +113,7 @@ const StudentAdd  = () => {
     return   (
           <>
           <form  onSubmit={handleSubmit} className="d-flex flex-column gap-5 p-3">
-                  <label>Add Student</label>
+                  <label>Aggiungi Studente</label>
                   <button type="submit">Invia Dati</button>
   
   
@@ -413,4 +413,4 @@ const StudentAdd  = () => {
     )
   }
   
-  export default StudentAdd;
+export default StudentAdd;
