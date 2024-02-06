@@ -20,6 +20,7 @@ const StudentAdd  = () => {
       nome: '',
       secondo_nome: '',
       cognome: '',
+      sesso:'',
       dob: '',
       lob: '',
       prob: '',
@@ -28,14 +29,11 @@ const StudentAdd  = () => {
       res: '',
       res_city: '',
       res_prov: '',
-      cap_res: 0,
       state_res: '',
       dom: '',
       dom_city: '',
       dom_prov: '',
-      cap_dom: 0,
       state_dom: '',
-      prefix_cell: '',
       cellulare: '',
       email: '',
     },
@@ -180,11 +178,18 @@ const StudentAdd  = () => {
                    value={formData.info.cognome}
                    onChange={handleInputChange}
                     />
+                    <h3 className="">Sesso</h3>
+                    <input 
+                   type="text"
+                   name="info.sesso"
+                   value={formData.info.sesso}
+                   onChange={handleInputChange}
+                    />
                 </div>
                 
-                <div className="d-flex gap-3 form">
+                <div className="d-flex gap-3 form special">
                     <h3 className="">Data Nascita</h3>
-                    <input 
+                    <input className=""
                      type="date"
                      name="info.dob"
                      value={formData.info.dob}
@@ -245,11 +250,6 @@ const StudentAdd  = () => {
                          onChange={handleInputChange}/>
                       <h3 className="">Cellulare</h3>
                     <div className="d-flex gap-2">
-                      <input  type="text"
-                         name="info.prefix_cell"
-                         value={formData.info.prefix_cell}
-                         onChange={handleInputChange}
-                         className="selector-width"/>
                       <input 
                        type="text"
                        name="info.cellulare"
@@ -279,15 +279,7 @@ const StudentAdd  = () => {
                              onChange={handleInputChange}
                              />
                             <div className="d-flex gap-3">
-                              <div>
-                                <h3 className="">CAP</h3>
-                                <input 
-                                type="text"
-                                name="info.cap_res"
-                                value={formData.info.cap_res}
-                                onChange={handleInputChange}
-                                className="selector-width"/>
-                              </div>
+                          
                               <div>
                                 <h3 className="">Provincia</h3>
                                   <select 
@@ -342,15 +334,7 @@ const StudentAdd  = () => {
                             onChange={handleInputChange}
                             />
                             <div className="d-flex gap-3">
-                              <div>
-                                <h3 className="">CAP</h3>
-                                <input 
-                                type="text"
-                                name="info.cap_dom"
-                                value={formData.info.cap_dom}
-                                onChange={handleInputChange}
-                                className="selector-width"/>
-                              </div>
+                           
                               <div>
                                 <h3 className="">Provincia</h3>
                                   <select 
@@ -464,6 +448,10 @@ const StudentAdd  = () => {
         .form input {
           height: 30px;
           border: 2px;
+        }
+        .form input special{
+          width:100px
+      
         }
         .selector-width {
           width: 70px;

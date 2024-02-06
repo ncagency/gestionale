@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 // Import Navbar (update with the correct path)
 import Navbar from '@/app/components/Navbar';
 import Link from 'next/link';
-
+import Rate from '@/app/components/Rate';
 
 interface UserDetailsProps {
     user: any;
@@ -29,7 +29,8 @@ interface TabDetailsProps {
   }
 
   const TableRow = ({ label, value }) => (
-    <tr className="border-1 p-4">
+   
+   <tr className="border-1 p-4">
         <td>{label}</td>
         <td>{value}</td>
     </tr>
@@ -50,7 +51,9 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
         setTitle("Studente");
       }
     }, [type]); 
-
+    const id_user = user._id
+    const rate: any = user.payments.rate
+    let nrate = rate.length
     return (
         <>
             <div className="container">
@@ -58,25 +61,32 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                 <div className='m-4 d-flex '>
                     <table className="table table-bordered">
                         <tbody>
+                            
                             <TableRow label="ID" value={user._id} />
-                            <TableRow label="Nome" value={`${user.info.nome} ${user.info.secondo_nome}`} />
-                            <TableRow label="Cognome" value={user.info.cognome} />
+                            <TableRow label="Nome" value={`${user.info.nome}${user.info.secondo_nome ? ` ${user.info.secondo_nome}` : ''}`}/>                            <TableRow label="Cognome" value={user.info.cognome} />
                             <TableRow label="Sesso" value={user.info.sesso} />
                             <TableRow label="Data di Nascita" value={user.info.dob} />
-                            <TableRow label="Luogo di Nascita" value={`${user.info.city} (${user.info.prov}), ${user.info.state}`} />
+                            <TableRow label="Luogo di Nascita" value={`${user.info.lob} (${user.info.prob}), ${user.info.state}`} />
                             <TableRow label="Codice Fiscale" value={user.info.cf} />
-                            <TableRow label="Residenza" value={`${user.info.residenza.addr}, ${user.info.residenza.city} (${user.info.residenza.prov}), ${user.info.residenza.state}`} />
-                            <TableRow label="Domicilio" value={`${user.info.domicilio.addr}, ${user.info.domicilio.city} (${user.info.domicilio.prov}), ${user.info.domicilio.state}`} />
+                            <TableRow label="Residenza" value={`${user.info.res}, ${user.info.res_city} (${user.info.res_prov}), ${user.info.state_res}`} />
+                            <TableRow label="Domicilio" value={`${user.info.dom}, ${user.info.dom_city} (${user.info.dom_prov}), ${user.info.state_dom}`} />
                             <TableRow label="Cellulare" value={user.info.telefono} />
                             <TableRow label="Email" value={user.info.email} />
                         </tbody>
                     </table>
                     <div className='container'>
-                        <h1>CORSI</h1>
+                        <h1>Totale:{user.payments.totale}</h1>
+                        <h1>Saldati:{user.payments.saldati}</h1>
+                        <h1>In Sospeso:{user.payments.in_sospeso}</h1>
+                        <div>
+                        <p>Rate:{nrate}</p>
+                        <Rate data={rate} id={id_user}/>
+                        </div>
                     </div>
                 </div>
                 {(type == "students" ) && 
                   <>
+                    
                   </>
                   }
                   

@@ -108,3 +108,34 @@ app.post('/aggiungicorsoente/:ente_name/:corso_id', async (req, res) => {
         return res.status(500).json({ message: "Errore durante l'aggiunta dell'ID corso" });
     }
 });
+
+
+app.post('/edit/rate/:studentId/:rateIndex', async (req, res) => {
+    try {
+    const studentId = new ObjectId(req.params.studentId);
+      const rateIndex = parseInt(req.params.rateIndex);
+      const updatedRate = req.body;
+  
+      const studentsCollection = db.collection('students');
+  
+      const filter = { _id: new ObjectId(studentId) };
+      const updateQuery = {
+        $set: {
+          [`payments.rate.${rateIndex}`]: updatedRate
+        }
+      };
+  
+      const result = await studentsCollection.updateOne(filter, updateQuery);
+  
+      if (result.matchedCount === 0) {
+        res.status(404).json({ error: 'Studente non trovato' });
+        return;
+      }
+  
+      res.json({ message: 'Dati della rata dello studente aggiornati correttamente' });
+    } catch (error) {
+      console.error('Errore durante l\'aggiornamento delle rate dello studente:', error);
+      res.status(500).json({ error: 'Si è verificato un errore durante l\'aggiornamento delle rate dello studente' });
+    }
+  });
+  
