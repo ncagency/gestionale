@@ -46,6 +46,7 @@ const StudentAdd  = () => {
     courses_id: [],
     docs: {
       n_doc: '',
+      tipo:'',
       l_doc: '',
       city_doc: '',
       rilascio_doc: '',
@@ -449,6 +450,14 @@ const StudentAdd  = () => {
                       type="text"
                       name="docs.n_doc"
                       value={formData.docs.n_doc}
+                      onChange={handleInputChange} />
+                  </div>
+                  <div className="d-flex gap-2">
+                    <h3>Tipo Documento:</h3>
+                    <input
+                      type="text"
+                      name="docs.tipo"
+                      value={formData.docs.tipo}
                       onChange={handleInputChange} />
                   </div>
                   <div className="d-flex gap-2">

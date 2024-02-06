@@ -70,7 +70,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                             <TableRow label="Codice Fiscale" value={user.info.cf} />
                             <TableRow label="Residenza" value={`${user.info.res}, ${user.info.res_city} (${user.info.res_prov}), ${user.info.state_res}`} />
                             <TableRow label="Domicilio" value={`${user.info.dom}, ${user.info.dom_city} (${user.info.dom_prov}), ${user.info.state_dom}`} />
-                            <TableRow label="Cellulare" value={user.info.telefono} />
+                            <TableRow label="Cellulare" value={user.info.cellulare} />
                             <TableRow label="Email" value={user.info.email} />
                         </tbody>
                     </table>
@@ -94,7 +94,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                     
                 {(type == "students" ) && 
                  <div className='d-flex gap-4'>
-                    <div className=''>
+                    <div className='w-50'>
                       <h1>Corsi</h1>
 
 
@@ -103,8 +103,22 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                       </div>
                       <div>
                       <h1>Documenti</h1>
+                      <table className='table table-bordered'>
+                        <tbody>
+                           <TableRow label="Numero" value={user.docs.n_doc} />
+                           <TableRow label="Tipo" value=  {user.docs.tipo} />
+                           <TableRow label="Luogo Rilascio" value={user.docs.l_doc} />
+                           <TableRow label="Citta" value={user.docs.city_doc} />
+                           <TableRow label="Data Emissione" value={user.docs.rilascio_doc} />
+                           <TableRow label="Data Scadenza " value=  {user.docs.scadenza_doc} />
+                        </tbody>
 
-
+                      </table>
+                        
+                       
+                        
+                        
+                      
 
 
                       </div>
