@@ -7,7 +7,7 @@ import axios from "axios";
 
 
 const redirect = (query:string) => {
-    const destinationValue = `/search/${query}`;
+    const destinationValue = `/${query}`;
     window.location.href = destinationValue;
 }
 
@@ -21,7 +21,7 @@ const Calendar = () => {
 }
 
 const CorsiCard = () => {
-    let query = "courses";
+    let query = "search/courses";
     const handleRedirect = () => {
         redirect(query);
     }
@@ -38,7 +38,7 @@ const CorsiCard = () => {
 
   
 const EntiCard = () => {
-    let query = "enti";
+    let query = "search/enti";
     const handleRedirect = () => {
         redirect(query);
     }
@@ -56,7 +56,7 @@ const EntiCard = () => {
 
 const DipendentiCard: React.FC = () => {
     
-    let query = "workers"
+    let query = "search/workers"
     return (
         <div className='d-flex flex-column h-100 position-relative bg-warning p-4  rounded-4'>
             <h1 className='mt-5 mb-5  text-success'>Dipendenti</h1>
@@ -67,8 +67,12 @@ const DipendentiCard: React.FC = () => {
 
 
 const AddCard = () => {
+  let query = "manager"
+  const handleRedirect = () => {
+    redirect(query);
+}
     return (
-        <div className='bg-warning fs-1 d-flex flex-column h-100 justify-content-center align-items-center rounded-4'> {/* INSERISCI UNA FUNZIONE CHE AL CLICK REINDIRIZZI NELLA PAGINA DI ADD*/}
+        <div onClick={handleRedirect} style={{ cursor: 'pointer' }}   className='bg-warning fs-1 d-flex flex-column h-100 justify-content-center align-items-center rounded-4'> {/* INSERISCI UNA FUNZIONE CHE AL CLICK REINDIRIZZI NELLA PAGINA DI ADD*/}
         <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" className="bi bi-plus-square-fill" viewBox="0 0 16 16">
                     <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0"/>
         </svg>
@@ -88,7 +92,7 @@ const ContabileCard: React.FC = () => {
 
 
 const StudentiCard: React.FC = () => {
-    let query = "students"
+    let query = "search/students"
     const [students, setStudents] = useState([]);
 
     const apiUrl = `http://localhost:2000/students`;

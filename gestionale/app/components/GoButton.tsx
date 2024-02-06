@@ -15,7 +15,7 @@ const GoButton: React.FC<GoButtonProps> = ({ destination  }) => {
     
   
     const handleRedirect = () => {
-      const destinationValue = `/search/${destination}`;
+      const destinationValue = `/${destination}`;
       window.location.href = destinationValue;
     };
 
