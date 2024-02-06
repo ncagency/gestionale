@@ -109,7 +109,38 @@ app.post('/aggiungicorsoente/:ente_name/:corso_id', async (req, res) => {
     }
 });
 
+//aggiungi corso all'utente
+app.post('/aggiungicorsoutente/:utente_id/:corso_id', async (req, res) => {
+    try {
+       
+       let utente_id = new ObjectId(req.params.utente_id)
+       let corso_id = req.params.corso_id
 
+
+        const collection = db.collection('students');
+        
+        const studente = await collection.findOne({ _id: new ObjectId(utente_id) });
+
+        if (!studente) {
+            return res.status(404).json({ message: "Studente non trovato" });
+        }
+
+        // Aggiorna l'array corsi_id dell'ente trovato con il nuovo corsoId
+        await collection.updateOne(
+            { _id: new ObjectId(utente_id) },
+            { $push: { courses_id: corso_id } }
+        );
+
+        return res.json({ message: "ID corso aggiunto con successo", studente });
+    } catch (error) {
+        console.error("Errore durante l'aggiunta dell'ID corso:", error);
+        return res.status(500).json({ message: "Errore durante l'aggiunta dell'ID corso" });
+    }
+});
+
+
+
+//aggiorna rata
 app.post('/edit/rate/:id/:index', async (req, res) => {
     try {
       const studentId = new ObjectId(req.params.id);

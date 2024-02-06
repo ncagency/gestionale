@@ -98,11 +98,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                 {(type == "students" ) && 
                  <div className='d-flex gap-4'>
                     <div className='w-50'>
-                      <h1>Corsi</h1>
-                      
-                      <ViewCorsi corsi_id={corsi}/>
-
-
+                      <ViewCorsi user_id={user._id} corsi_id={corsi}/>
                       </div>
                       <div>
                       <h1>Documenti</h1>
