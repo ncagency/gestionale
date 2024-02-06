@@ -23,8 +23,7 @@ const EnteAdd  = () => {
             stato:"",
             email:"",
             cellulare:"",
-            altri_contatti:[
-            ],
+            note:"",
             payments:{
                 da_saldare:0,
                 saldati:0,
@@ -168,7 +167,14 @@ const EnteAdd  = () => {
                        value={formData.cellulare}
                        onChange={handleInputChange}
                        />
-                       //altri contatti aggiungi in sequenza
+                      
+                      
+                      <h3>Altri Contatti</h3>
+                      <textarea 
+                        name="note"
+                        value={formData.note}
+                        className="form-control"
+                    ></textarea>
                 </div>
                     
             
@@ -215,7 +221,7 @@ const EnteAdd  = () => {
                 
   
   
-              </form>
+          </form>
               <style jsx>{`
           
           .form h3{

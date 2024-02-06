@@ -78,3 +78,33 @@ app.post('/add/:type/', async (req,res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 })
+
+//aggiungi corso all'ente
+app.post('/aggiungicorsoente/:ente_name/:corso_id', async (req, res) => {
+    try {
+       
+       let ente_name = req.params.ente_name
+       let corso_id = req.params.corso_id
+
+
+        const collection = db.collection('enti');
+        
+        // Trova l'ente corrispondente per nome
+        const ente = await collection.findOne({ nome: ente_name });
+
+        if (!ente) {
+            return res.status(404).json({ message: "Ente non trovato" });
+        }
+
+        // Aggiorna l'array corsi_id dell'ente trovato con il nuovo corsoId
+        await collection.updateOne(
+            { nome: ente_name },
+            { $push: { corsi_id: corso_id } }
+        );
+
+        return res.json({ message: "ID corso aggiunto con successo", ente });
+    } catch (error) {
+        console.error("Errore durante l'aggiunta dell'ID corso:", error);
+        return res.status(500).json({ message: "Errore durante l'aggiunta dell'ID corso" });
+    }
+});

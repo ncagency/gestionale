@@ -216,12 +216,13 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type }) => {
                     <div className="col-7"> 
                         <p className="mb-0">{ente._id}</p>
                         <h2>{ente.nome}</h2>
-                        <h3>{ente.city} {ente.prob}</h3>
+                        <h3>{ente.indirizzo} {ente.citta} ({ente.prov}), {ente.stato}</h3>
+                        <h3>{ente.email} {ente.cellulare}</h3>
+                        <p>
+                           {ente.note}
+                        </p>
                     </div>
-                    <div className="col-5 text-right ml-auto">
-                        <p className="mb-1"></p>
-                        <p>{ente.payments.da_dare} {ente.payments.da_ricevere} || </p>
-                    </div>
+                   
                 </div>
               
             </div>

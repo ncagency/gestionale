@@ -64,17 +64,26 @@ const CourseAdd  = () => {
         }
       });
     };
-  
+   
+
+
+
+    
     const handleSubmit = async (e: FormEvent) => {
       e.preventDefault();
       
       try {
         // Effettua la chiamata POST utilizzando Axios
         const response = await axios.post(`http://127.0.0.1:2000/add/${type}`, formData);
-        
         // Gestisci la risposta qui, ad esempio loggando la risposta
         console.log('Risposta API:', response.data);
+
+        let ente = response.data.data.ente
         let id = response.data.data._id
+
+        const response2 = await axios.post(`http://127.0.0.1:2000/aggiungicorsoente/${ente}/${id}`);
+        console.log('Seconda risposta API:', response2.data);
+
         var query = `/scheda/${type}/${id}`
         redirectToHome(query)
 
@@ -82,7 +91,8 @@ const CourseAdd  = () => {
       } catch (error) {
         // Gestisci gli errori qui, ad esempio loggando l'errore
         console.error('Errore API:', error);
-      }
+      } 
+      
     };
     
     const [entiData, setEntiData] = useState([]);
