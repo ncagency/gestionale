@@ -14,28 +14,19 @@ const CourseAdd  = () => {
 
 
 
-    let type = "enti"
+    let type = "courses"
     const [formData, setFormData] = useState({
             nome:"",
-            indirizzo:" ",
-            citta:"",
-            prov:"",
-            stato:"",
-            email:"",
-            cellulare:"",
-            altri_contatti:[
-            ],
+            ente:" ",
+            n_iscritti:0,
+            utenti:[],
             payments:{
-                da_saldare:0,
-                saldati:0,
-                totale_dati:0,
-                
-            },
-            fatture:[
-                ""
-            ],
-            corsi_id:[""
-            ]
+              entrate:0,
+              uscite:0,
+              profitto:0,
+              costo_singolo:0,
+              stock:0
+            }
         });
 
     const handleInputChange = (
@@ -107,109 +98,43 @@ const CourseAdd  = () => {
                     value={formData.nome}
                     onChange={handleInputChange}
                     />
-                    <h3 className="">Indirizzo</h3>
+                    <h3 className="">Ente</h3>
                     <input 
                       type="text"
-                      name="indirizzo"
-                      value={formData.indirizzo}
+                      name="ente"
+                      value={formData.ente}
                       onChange={handleInputChange}
                     />
-                    <h3 className="">Città</h3>
+                    <h3 className="">Entrate</h3>
                     <input 
-                   type="text"
-                   name="citta"
-                   value={formData.citta}
-                   onChange={handleInputChange}
+                      type="text"
+                      name="payments.entrate"
+                      value={formData.payments.entrate}
+                      onChange={handleInputChange}
                     />
-                </div>
-                    <select 
-                    name="prov"
-                    value={formData.prov}
-                    onChange={handleInputChange} 
-                    className="selector-width">
-                        <option value="" disabled>Seleziona una provincia</option>
-                        {province.map((province, index) => (
-                          <option key={index} value={province}>
-                            {province}
-                          </option>
-                        ))}
-                      </select>
-                      
-                      <h3>Stato</h3>
-                      <select 
-                      name="stato"
-                      value={formData.stato}
-                      onChange={handleInputChange} 
-                      className="selector-width-state ">
-                        <option value="" disabled>Seleziona uno Stato</option>
-                        {paesiOrdinati.map((paese, index) => (
-                          <option key={index} value={paese}>
-                            {paese}
-                          </option>
-                        ))}
-                      </select>
-
-                <div className="d-flex gap-3 form">
-                    <h3 className="">Email</h3>
-                      <input 
-                         type="email"
-                         name="email"
-                         value={formData.email}
-                         onChange={handleInputChange}/>
-                      <h3 className="">Cellulare</h3>
+                    <h3 className="">Uscite</h3>
+                    <input 
+                      type="text"
+                      name="payments.uscite"
+                      value={formData.payments.uscite}
+                      onChange={handleInputChange}
+                    />
+                    <h3 className="">Costo Singolo</h3>
+                    <input 
+                      type="text"
+                      name="payments.costo_singolo"
+                      value={formData.payments.costo_singolo}
+                      onChange={handleInputChange}
+                    />
+                    <h3 className="">Stock</h3>
+                    <input 
+                      type="text"
+                      name="payments.stock"
+                      value={formData.payments.stock}
+                      onChange={handleInputChange}
+                    />
                  
-                      <input 
-                       type="text"
-                       name="cellulare"
-                       value={formData.cellulare}
-                       onChange={handleInputChange}
-                       />
-                       //altri contatti aggiungi in sequenza
                 </div>
-                    
-            
-                
-  
-                <div className="d-flex gap-5 form">
-                          
-                          <div className="d-flex flex-column gap-2">
-                            <h3 className="">da Saldare</h3>
-                            <input 
-                             type="text"
-                             name="payments.da_saldare"
-                             value={formData.payments.da_saldare}
-                             onChange={handleInputChange}
-                            />
-                            <h3 className="">Saldati</h3>
-                            <input    
-                            type="text"
-                             name="payments.saldati"
-                             value={formData.payments.saldati}
-                             onChange={handleInputChange}
-                             />
-                            <div className="d-flex gap-3">
-                              <div>
-                                <h3 className="">Totale</h3>
-                                <input 
-                                type="text"
-                                name="payments.totale_dati"
-                                value={formData.payments.totale_dati}
-                                onChange={handleInputChange}
-                                className="selector-width"/>
-                              </div>
-                             
-                             
-                            </div>
-                            
-                          </div>
-  
-                   
-                      
-  
-                </div>
-  
-                
-  
   
               </form>
               <style jsx>{`
