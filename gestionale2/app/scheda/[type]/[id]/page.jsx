@@ -17,7 +17,7 @@ const UserDetails = ({ user, type }) => {
 
     useEffect(() => {
    
-      if (type === "workers") {
+      if (type == "workers") {
         setTitle("Lavoratore");
       } else {
         setTitle("Studente");

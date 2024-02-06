@@ -28,104 +28,58 @@ interface TabDetailsProps {
 }
   }
 
-
+  const TableRow = ({ label, value }) => (
+    <tr className="border-1 p-4">
+        <td>{label}</td>
+        <td>{value}</td>
+    </tr>
+);
 
 
 
 const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
     
     
+    const [title, setTitle] = useState("");
+
+    useEffect(() => {
+   
+      if (type == "workers") {
+        setTitle("Lavoratore");
+      } else {
+        setTitle("Studente");
+      }
+    }, [type]); 
+
     return (
         <>
             <div className="container">
-                Indietro
-                <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
-                <div className="row mt-5">
-                    <div className="col-7"> 
-                        <p className="mb-0">{user._id}</p>
-                        <h2>{user.info.nome} {user.info.secondo_nome} {user.info.cognome}</h2>
-                        <h3>{user.info.cf}</h3>
-                    </div>
-                    <div className="col-5 text-right ml-auto">
-                        <p className="mb-1">{user.info.prefix_cell + " " + user.info.cellulare}</p>
-                        <p>{user.info.email}</p>
+                <h1>Dettagli {title}</h1>
+                <div className='m-4 d-flex '>
+                    <table className="table table-bordered">
+                        <tbody>
+                            <TableRow label="ID" value={user._id} />
+                            <TableRow label="Nome" value={`${user.info.nome} ${user.info.secondo_nome}`} />
+                            <TableRow label="Cognome" value={user.info.cognome} />
+                            <TableRow label="Sesso" value={user.info.sesso} />
+                            <TableRow label="Data di Nascita" value={user.info.dob} />
+                            <TableRow label="Luogo di Nascita" value={`${user.info.city} (${user.info.prov}), ${user.info.state}`} />
+                            <TableRow label="Codice Fiscale" value={user.info.cf} />
+                            <TableRow label="Residenza" value={`${user.info.residenza.addr}, ${user.info.residenza.city} (${user.info.residenza.prov}), ${user.info.residenza.state}`} />
+                            <TableRow label="Domicilio" value={`${user.info.domicilio.addr}, ${user.info.domicilio.city} (${user.info.domicilio.prov}), ${user.info.domicilio.state}`} />
+                            <TableRow label="Cellulare" value={user.info.telefono} />
+                            <TableRow label="Email" value={user.info.email} />
+                        </tbody>
+                    </table>
+                    <div className='container'>
+                        <h1>CORSI</h1>
                     </div>
                 </div>
-                <div className="row mt-0 mb-0">
-                    <div className="col-7">
-                            <label>
-                            Data di Nascita:
-                        </label>
-                        <h2>{user.info.dob}</h2>
-                        <label>
-                            Luogo di Nascita:
-                        </label>
-                        <h2 className="mt-0">{user.info.lob} ({user.info.prob}), {user.info.state}</h2>
-                        <label>
-                            {user.info.capb}
-                        </label>
-                    </div>
-                    {(type == "student" ) && <div className="col-5 bg-primary text-white p-3 border rounded-3 fs-3 ">
-                        <label className="fs-5">
-                            Pagamenti:
-                        </label>
-                        <p className="mb-0 ">Tot: {user.payments.totale}</p>
-                        <p className="mb-0">Ricevuti: {user.payments.totale}</p>
-                        <p className="mb-0">In Sospeso: {user.payments.totale}</p>
-                    </div>}
-                </div>
-                <div className="row mt-0">
-                    <div className="col-4">
-                        <label>
-                            Indirizzo Residenza:
-                        </label>
-                        <h3>{user.info.res}</h3>
-                        <p>{user.info.cap_res}</p>
-                    </div>
-                    <div className="col-4">
-                        <label>
-                            Indirizzo di Domicilio
-                        </label>
-                        <h3>{user.info.dom}</h3>
-                        <p>{user.info.cap_dom}</p>
-                    </div>
-                  
-                </div>
-                
-                
                 {(type == "students" ) && 
-                    <div className="row bg-primary mt-0">
-                            <div className="col-4 bg-secondary">
-                                <ul>
-                                    <li>
-                                        Corso1 | In corso
-                                    </li>
-                                    <li>
-                                        Corso2 | Completo
-                                    </li>
-                                    <li>
-                                        Corso1 | Annullato
-                                    </li>
-                                    <li>
-                                        Corso2 | In corso
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-4 bg-warning">
-                                <p>{user.docs.n_doc} {user.docs.l_doc} {user.docs.city_doc}</p>
-                                <p> Emissione: {user.docs.rilascio} Scadenza{user.docs.scadenza}</p>
-                                <div>
-                                    <ul> //IMPLEMENTA CON DEGLI SCARICABILI
-                                        <li>FRONTE</li>
-                                        <li>RETRO</li>
-                                        <li>SELFIE?</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="col-4 bg-secondary">
-                                <p>Vari documenti</p>
-                            </div>
-                    </div>}
+                  <>
+                  </>
+                  }
+                  
                 
                 {(type == "workers" ) && 
                     <div className="row bg-primary mt-0">
