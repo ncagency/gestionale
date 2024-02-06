@@ -1,5 +1,5 @@
 'use client'
-import  { useState, ChangeEvent, FormEvent, FC } from "react";
+import  { useState, ChangeEvent, FormEvent,useEffect, FC } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { province,paesiOrdinati } from "../manager/[type]/page";
@@ -8,6 +8,10 @@ import { province,paesiOrdinati } from "../manager/[type]/page";
 function redirectToHome(query:string) {
     location.href = `http://127.0.0.1:3000/${query}`;
   }
+
+interface Ente  {
+
+}
 
 
 const CourseAdd  = () => {
@@ -80,11 +84,46 @@ const CourseAdd  = () => {
         console.error('Errore API:', error);
       }
     };
+    
+    const [entiData, setEntiData] = useState([]);
+   
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
   
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get('http://127.0.0.1:2000/enti/');
+          let array:any = []
+          response.data.map((dato:any) => {
+              array.push(dato.nome)
+          })
+          setEntiData(array);
+          
+          setIsLoading(false);
+        } catch (error) {
+          setError(error);
+          setIsLoading(false);
+        }
+      };
+  
+      fetchData();
+  
+      // Clean-up function to cancel any ongoing requests if the component unmounts
+      return () => {
+        // Cleanup logic, e.g., cancel any ongoing requests
+      };
+    }, []); // Empty dependency array to ensure the effect runs only once after initial render
+  
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+  
+
     return   (
           <>
           <form  onSubmit={handleSubmit} className="d-flex flex-column gap-5 p-3">
-                  <label>Aggiungi Ente</label>
+                  <label>Aggiungi Corso</label>
                   <button type="submit">Invia Dati</button>
   
   
@@ -99,12 +138,19 @@ const CourseAdd  = () => {
                     onChange={handleInputChange}
                     />
                     <h3 className="">Ente</h3>
-                    <input 
-                      type="text"
+                    <select 
                       name="ente"
                       value={formData.ente}
-                      onChange={handleInputChange}
-                    />
+                      onChange={handleInputChange} 
+                      className="selector-width-state ">
+                        <option value="" disabled>Seleziona Ente</option>
+                        {entiData.map((ente, index) => (
+                          <option key={index} value={ente}>
+                            {ente}
+                          </option>
+                        ))}
+                      </select>
+
                     <h3 className="">Entrate</h3>
                     <input 
                       type="text"

@@ -1,5 +1,5 @@
 'use client'
-import  { useState, ChangeEvent, FormEvent, FC } from "react";
+import  { useState, ChangeEvent, FormEvent,useEffect, FC } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { province,paesiOrdinati } from "../manager/[type]/page";
@@ -71,6 +71,9 @@ const EnteAdd  = () => {
       });
     };
   
+    
+
+
     const handleSubmit = async (e: FormEvent) => {
       e.preventDefault();
       
