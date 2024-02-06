@@ -319,7 +319,7 @@ const StudentAdd  = () => {
                           </div>
   
                           <div className="d-flex flex-column gap-2">
-                            <h3 className="">Indirizzo Domciilio</h3>
+                            <h3 className="">Indirizzo Domcilio</h3>
                             <input 
                             type="text"
                             name="info.dom"
@@ -374,69 +374,128 @@ const StudentAdd  = () => {
                           </div>
   
                          </div>
-                          {/* Sezione per aggiungere pagamenti */}
-        <div className="d-flex flex-column gap-4 border border-dark rounded border-3 p-4">
-          <h3>Pagamenti</h3>
-          <div className="d-flex gap-2">
-            <h3>Totali:</h3>
-            <input
-              type="text"
-              name="payments.totale"
-              value={formData.payments.totale}
-              onChange={handleInputChange} />
-          </div>
-          <div className="d-flex gap-3">
-            <div className="d-flex gap-2">
-              <h3>Saldati:</h3>
-              <input
-                type="text"
-                name="payments.saldati"
-                value={formData.payments.saldati}
-                onChange={handleInputChange}
-                className="selector-width" />
-            </div>
-            <div className="d-flex gap-2">
-              <h3>In Sospeso:</h3>
-              <input
-                type="text"
-                name="payments.in_sospeso"
-                value={formData.payments.in_sospeso}
-                onChange={handleInputChange}
-                className="selector-width" />
-            </div>
-          </div>
+                         
+       
+       <div className="d-flex gap-4"> {/* Sezione per aggiungere pagamenti */}
+            <div className="d-flex flex-column gap-4 border border-dark rounded border-3 p-4">
+                <h3>Pagamenti</h3>
+                <div className="d-flex gap-2">
+                  <h3>Totali:</h3>
+                  <input
+                    type="text"
+                    name="payments.totale"
+                    value={formData.payments.totale}
+                    onChange={handleInputChange} />
+                </div>
+                <div className="d-flex gap-3">
+                  <div className="d-flex gap-2">
+                    <h3>Saldati:</h3>
+                    <input
+                      type="text"
+                      name="payments.saldati"
+                      value={formData.payments.saldati}
+                      onChange={handleInputChange}
+                      className="selector-width" />
+                  </div>
+                  <div className="d-flex gap-2">
+                    <h3>In Sospeso:</h3>
+                    <input
+                      type="text"
+                      name="payments.in_sospeso"
+                      value={formData.payments.in_sospeso}
+                      onChange={handleInputChange}
+                      className="selector-width" />
+                  </div>
+                </div>
 
-          {/* Sezione per aggiungere le rate di pagamento */}
-          <div>
-            <h3>Add Payment</h3>
-            <div>
-              <input
-                type="text"
-                placeholder="Value"
-                value={newPaymentValue}
-                onChange={handlePaymentValueChange}
-              />
-              <input
-                type="date"
-                value={newPaymentDueDate}
-                onChange={handlePaymentDueDateChange}
-              />
-              <button type="button" onClick={handleAddPayment}>Add Payment</button>
-            </div>
-          </div>
+                {/* Sezione per aggiungere le rate di pagamento */}
+                <div>
+                  <h3>Add Payment</h3>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Value"
+                      value={newPaymentValue}
+                      onChange={handlePaymentValueChange}
+                    />
+                    <input
+                      type="date"
+                      value={newPaymentDueDate}
+                      onChange={handlePaymentDueDateChange}
+                    />
+                    <button type="button" onClick={handleAddPayment}>Add Payment</button>
+                  </div>
+                </div>
 
-          {/* Visualizza le rate di pagamento aggiunte */}
-          <div>
-            <h3>Added Payments</h3>
-            <ul>
-              {formData.payments.rate.map((payment, index) => (
-                <li key={index}>
-                  Value: {payment.valorerata}, Due Date: {payment.datascadenza}, Pagata: {payment.pagata ? 'Sì' : 'No'}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+                {/* Visualizza le rate di pagamento aggiunte */}
+                <div>
+                  <h3>Added Payments</h3>
+                  <ul>
+                    {formData.payments.rate.map((payment, index) => (
+                      <li key={index}>
+                        Value: {payment.valorerata}, Due Date: {payment.datascadenza}, Pagata: {payment.pagata ? 'Sì' : 'No'}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            
+            <div> 
+                <p>Documenti</p>
+                <div>
+                  <div className="d-flex gap-2">
+                    <h3>Numero Documento:</h3>
+                    <input
+                      type="text"
+                      name="docs.n_doc"
+                      value={formData.docs.n_doc}
+                      onChange={handleInputChange} />
+                  </div>
+                  <div className="d-flex gap-2">
+                    <h3>Rilasciato da</h3>
+                    <input
+                      type="text"
+                      placeholder="Es. Comune, Motorizzazione"
+                      name="docs.l_doc"
+                      value={formData.docs.l_doc}
+                      onChange={handleInputChange} />
+                  </div>
+                  <div className="d-flex gap-2">
+                    <h3>Città rilascio </h3>
+                    <input
+                      type="text"
+                      name="docs.city_doc"
+                      value={formData.docs.city_doc}
+                      onChange={handleInputChange} />
+                  </div>
+                  <div className="d-flex gap-2">
+                    <h3 className="">Data Emissione</h3>
+                      <input className=""
+                      type="date"
+                      name="docs.rilascio_doc"
+                      value={formData.docs.rilascio_doc}
+                      onChange={handleInputChange}
+                      />
+                  
+                  </div>
+                  <div className="d-flex gap-2">
+                    <h3 className="">Data Scadenza</h3>
+                      <input className=""
+                      type="date"
+                      name="docs.scadenza_doc"
+                      value={formData.docs.scadenza_doc}
+                      onChange={handleInputChange}
+                      />
+                  
+                  </div>
+
+                  //gestione caricamento immagini
+                </div>
+            </div>
+        
+        
+        </div> 
+        
       </form>
       <style jsx>{`
         .form h3 {
