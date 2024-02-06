@@ -1,11 +1,19 @@
-import  { useState, ChangeEvent, FormEvent } from "react";
+'use client'
+import  { useState, ChangeEvent, FormEvent, FC } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { province,paesiOrdinati } from "../manager/[type]/page";
 
 
-const StudentAdd = () => {
-  
+function redirectToHome(query:string) {
+    location.href = `http://127.0.0.1:3000/${query}`;
+  }
+
+
+const StudentAdd  = () => {
+
+
+
     let type = "students"
     const [formData, setFormData] = useState({
       info: {
@@ -88,10 +96,13 @@ const StudentAdd = () => {
       try {
         // Effettua la chiamata POST utilizzando Axios
         const response = await axios.post(`http://127.0.0.1:2000/add/${type}`, formData);
-    
+        
         // Gestisci la risposta qui, ad esempio loggando la risposta
         console.log('Risposta API:', response.data);
-    
+        let id = response.data.data._id
+        var query = `/scheda/${type}/${id}`
+        redirectToHome(query)
+
         // Resetta il form o esegui altre azioni necessarie
       } catch (error) {
         // Gestisci gli errori qui, ad esempio loggando l'errore
