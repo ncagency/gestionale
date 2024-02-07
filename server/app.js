@@ -60,7 +60,7 @@ app.get('/:type/:id', async (req, res) => {
 
 
 
-//CHIAMATE POST
+//CHIAMATE POST v2
 
 app.post('/add/:type/', async (req,res) => {
     try {
@@ -137,8 +137,6 @@ app.post('/aggiungicorsoutente/:utente_id/:corso_id', async (req, res) => {
         return res.status(500).json({ message: "Errore durante l'aggiunta dell'ID corso" });
     }
 });
-
-
 
 //aggiorna rata
 app.post('/edit/rate/:id/:index', async (req, res) => {
