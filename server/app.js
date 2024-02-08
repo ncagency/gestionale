@@ -142,6 +142,11 @@ app.post('/aggiungicorsoente/:ente_name/:corso_id', async (req, res) => {
     }
 });
 
+
+
+
+
+
 //aggiungi corso all'utente
 app.post('/aggiungicorsoutente/:utente_id/:corso_id', async (req, res) => {
     try {
@@ -161,7 +166,7 @@ app.post('/aggiungicorsoutente/:utente_id/:corso_id', async (req, res) => {
         // Aggiorna l'array corsi_id dell'ente trovato con il nuovo corsoId
         await collection.updateOne(
             { _id: new ObjectId(utente_id) },
-            { $push: { courses_id: corso_id } }
+            { $push: { corsi: corso_id } }
         );
 
         return res.json({ message: "ID corso aggiunto con successo", studente });

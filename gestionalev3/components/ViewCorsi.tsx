@@ -34,20 +34,7 @@ const ViewCorsi = ({ corsi_id, user_id }) => {
   return (
     <div>
       <h1>Corsi</h1>
-      
-      <div>
-        <h2>Aggiungi corso</h2>
-        <select value={corsoSelezionato} onChange={(e) => setCorsoSelezionato(e.target.value)}>
-          <option value="">Seleziona un corso</option>
-          {/* Mappa sui corsi e visualizza le opzioni */}
-          {corsi.map((corso, index) => (
-            <option key={index} value={corso._id}>{corso.nome}</option>
-          ))}
-        </select>
-        <button onClick={handleAggiungiCorso}>+</button>
-      </div>
-      <hr />
-      <div>
+     
         <ul>
           {/* Mappa sui corsi dell'utente e visualizza i loro nomi */}
           {corsi
@@ -58,7 +45,6 @@ const ViewCorsi = ({ corsi_id, user_id }) => {
         </ul>
       </div>
     
-    </div>
   );
 }
 
