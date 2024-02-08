@@ -276,3 +276,35 @@ app.post('/add/corso/', async (req,res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 })
+
+//addstudent
+app.post('/add/student/', async (req,res) => {
+
+    try {
+   
+        studentData = req.body
+        const collezione = db.collection('students');
+        const coll_contabile = db.collection('contabile');
+
+        await collezione.insertOne(studentData);
+
+        res.status(200).json({ message: 'Dati ricevuti con successo', data: studentData });
+        student_id = studentData._id.toString()
+        let student_contabile = {
+            _id:student_id,
+            totale:0,
+            saldati:0,
+            in_sospeso:0,
+            rate:[]
+          }
+        
+       
+        await coll_contabile.updateOne(
+        {}, 
+        { $push: { students: student_contabile } }
+    )
+    } catch (error) {
+        console.error('Errore durante il salvataggio', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
