@@ -415,25 +415,40 @@ app.delete('/elimina/courses/:id', async (req, res) => {
     try {
         const id = req.params.id
 
-
         collection2 = db.collection('students');        
         const users = await collection2.find({ corsi: id }).toArray();
         for (const user of users) {
         await collection2.updateOne(
-                    { _id: user._id },
-                    { $pull: { corsi: id } }
-                );
-            }
+                 { _id: user._id },
+                 { $pull: { corsi: id } }
+            );
+       }
+        let collection = db.collection('courses');
+        collection3 = db.collection('enti')
+        const corso = await collection.findOne({ _id:  new ObjectId(id)})
+        // Trova il documento nella collezione e ottieni l'oggetto su cui chiamare updateOne()
+        const ente = await collection3.findOne({ nome: corso.ente });
 
+        // Assicurati che il documento sia stato trovato prima di chiamare updateOne()
+        if (ente) {
+            // Esegui l'aggiornamento sul documento trovato
+            await collection3.updateOne(
+                { _id: ente._id }, // Utilizza l'ID del documento trovato
+                { $pull: { corsi: new ObjectId(id) } }
+            );
+            console.log("Corso rimosso dall'ente correttamente.");
+        } else {
+            console.log("Ente non trovato.");
+        }
        
     
-        let collection = db.collection('courses');
+      
         const result = await collection.deleteOne({ _id: new ObjectId(id) });
 
-       if (result.deletedCount === 0) {
-           res.status(404).json({ error: `Courses with ID ${id} not found` });
+        if (result.deletedCount === 0) {
+          res.status(404).json({ error: `Courses with ID ${id} not found` });
         return;
-        }
+       }
        
         res.json({ message: `Courses  with ID ${id} deleted successfully` });     
 
