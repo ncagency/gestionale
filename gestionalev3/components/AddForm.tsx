@@ -2,10 +2,96 @@
 
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
+import { ObjectId } from 'mongodb'
 
 
 
 
+export const AddCourses = () => {
+  
+  const [formData,setFormData] = useState({
+    nome:'',
+    ente:'',
+    utenti:[]
+  })
+
+  
+  const handleInputChange = (e) => {
+    const {name , value} = e.target;
+    console.log(e.target)
+    setFormData({
+      ...formData,
+      [name]:value
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://127.0.0.1:2000/add/corso', formData);
+      console.log(response.data); 
+    } catch (error) {
+      console.error('Errore durante l\'invio dei dati:', error);
+    }
+  };
+
+  const [entiData, setEntiData] = useState([]);
+   
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:2000/enti/');
+        let array:any = []
+        response.data.map((dato:any) => {
+            array.push(dato.nome)
+        })
+        setEntiData(array);
+        
+        setIsLoading(false);
+      } catch (error) {
+        setError(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+
+    // Clean-up function to cancel any ongoing requests if the component unmounts
+    return () => {
+      // Cleanup logic, e.g., cancel any ongoing requests
+    };
+  }, []); // Empty dependency array to ensure the effect runs only once after initial render
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  return (
+    <>
+        <form className='d-flex flex-column align-items-center gap-2 '>
+          <label>Nome</label>
+          <input type='text' name="nome" value={formData.nome} onChange={handleInputChange}/>
+          <label>Ente</label>
+          <select 
+                      name="ente"
+                      value={formData.ente}
+                      onChange={handleInputChange} 
+                      className="selector-width-state ">
+                        <option value="" disabled>Seleziona Ente</option>
+                        {entiData.map((ente, index) => (
+                          <option key={index} value={ente}>
+                            {ente}
+                          </option>
+                        ))}
+                      </select>
+          
+          <button onClick={handleSubmit} className='mt-2' >Invia</button>
+        </form>
+    </>
+  )
+}
 
 
 export const AddEnti = () => {
@@ -21,7 +107,7 @@ export const AddEnti = () => {
     altri_contatti:'',
     corsi:[]
   })
-  
+
   const handleInputChange = (e) => {
     const {name , value} = e.target;
     console.log(e.target)
@@ -35,7 +121,7 @@ export const AddEnti = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:2000/add/ente', formData);
-      console.log(response.data); // Fai qualcosa con la risposta se necessario
+      console.log(response.data); 
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
@@ -77,7 +163,7 @@ const AddForm = () => {
   
   return (
     <div  style={divStyle}  className='bg-primary rounded-4'> 
-        <AddEnti />
+        <AddCourses />
     </div>
   )
 }

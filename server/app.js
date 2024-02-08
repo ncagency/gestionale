@@ -207,18 +207,70 @@ app.post('/edit/rate/:id/:index', async (req, res) => {
 
 
 
-
+//add ente
 app.post('/add/ente/', async (req,res) => {
+
     try {
    
         enteData = req.body
-        console.log(enteData)
         const collezione = db.collection('enti');
+        const coll_contabile = db.collection('contabile');
 
         // Inserisci lo studente nella collezione
         await collezione.insertOne(enteData);
 
         res.status(200).json({ message: 'Dati ricevuti con successo', data: enteData });
+        ente_id = enteData._id.toString()
+        ente_name = enteData.nome
+        let ente_contabile = {
+            _id:ente_id,
+            nome:ente_name,
+            totale:0,
+            inviati:0,
+            da_inviare:0
+          }
+        
+        // Aggiorna l'array 'enti' nell'unico oggetto nella collezione 'contabile'
+        await coll_contabile.updateOne(
+        {}, // Filtra l'aggiornamento sull'oggetto principale (senza alcun filtro)
+        { $push: { enti: ente_contabile } } // Aggiungi 'ente_contabile' all'array 'enti  
+    )
+    } catch (error) {
+        console.error('Errore durante il salvataggio', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
+//addcorso
+app.post('/add/corso/', async (req,res) => {
+
+    try {
+   
+        corsoData = req.body
+        const collezione = db.collection('courses');
+        const coll_contabile = db.collection('contabile');
+
+        await collezione.insertOne(corsoData);
+
+        res.status(200).json({ message: 'Dati ricevuti con successo', data: corsoData });
+        corso_id = corsoData._id.toString()
+        corso_name = corsoData.nome
+        let corso_contabile = {
+            _id:corso_id,
+            name:corso_name,
+            costo:0,
+            stock:0,
+            venduti:0,
+            totale_entrate:0,
+            totale_uscite:0,
+            totale_profit:0
+          }
+        
+       
+        await coll_contabile.updateOne(
+        {}, 
+        { $push: { corsi: corso_contabile } }
+    )
     } catch (error) {
         console.error('Errore durante il salvataggio', error);
         res.status(500).json({ error: 'Internal Server Error' });
