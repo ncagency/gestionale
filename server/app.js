@@ -95,22 +95,6 @@ app.get('/contabile/:type/:id', async (req, res) => {
 });
 //CHIAMATE POST v2
 
-app.post('/add/c/', async (req,res) => {
-    try {
-   
-        datiUtente = req.body
-        let type = req.params.type
-        const collezione = db.collection(type);
-
-        // Inserisci lo studente nella collezione
-        await collezione.insertOne(datiUtente);
-
-        res.status(200).json({ message: 'Dati ricevuti con successo', data: datiUtente });
-    } catch (error) {
-        console.error('Errore durante il salvataggio', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-})
 
 //aggiungi corso all'ente
 app.post('/aggiungicorsoente/:ente_name/:corso_id', async (req, res) => {
@@ -356,3 +340,56 @@ app.post('/add/student/', async (req,res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 })
+
+
+
+
+
+
+//delete
+app.delete('/elimina/:type/:id', async (req, res) => {
+    try {
+        const type = req.params.type;
+        const id = new ObjectId(req.params.id);
+        
+        if (type === 'courses') {
+            collection2 = db.collection('courses');
+
+            
+        } else if (type === 'enti') {
+            collection2 = db.collection('enti');
+
+
+        } else if (type === 'students') {
+        
+            collection2 = db.collection('courses');
+            const courses = await collection2.find({ utenti: id }).toArray();
+            for (const course of courses) {
+                await collection2.updateOne(
+                    { _id: new ObjectId(course._id) },
+                    { $pull: { utenti: id } }
+                );
+            }
+
+
+       let collection = db.collection(type);
+       const result = await collection.deleteOne({ _id: id });
+
+       if (result.deletedCount === 0) {
+           res.status(404).json({ error: `${type} with ID ${id} not found` });
+           return;
+       }
+       
+       res.json({ message: `${type} with ID ${id} deleted successfully` });     
+
+        } else {
+            res.status(400).json({ error: `Invalid type ${type}` });
+            return;
+        }
+                
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+

@@ -254,13 +254,49 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
     }, []); // Assicurati di passare un array vuoto come secondo argomento per eseguire l'effetto solo al mount del componente
 
 
-
+    
     let link = `/search/${params.type}`
-
+    
+    const handleDelete = async (id) => {
+      try {
+          // Chiedi all'utente conferma prima di procedere con l'eliminazione
+          const confirmDelete = window.confirm("Sei sicuro di voler eliminare questo elemento?");
+  
+          // Se l'utente ha confermato l'eliminazione, procedi
+          if (confirmDelete) {
+              const response = await fetch(`http://localhost:2000/elimina/${params.type}/${id}`, {
+                  method: 'DELETE',
+              });
+  
+              if (!response.ok) {
+                  const errorMessage = await response.text();
+                  throw new Error(`Errore durante l'eliminazione: ${errorMessage}`);
+              }
+  
+              // Se l'eliminazione è avvenuta con successo, puoi fare qualcosa, ad esempio aggiornare lo stato del tuo componente.
+              console.log(`Elemento con ID ${id} eliminato con successo`);
+  
+              // Aggiorna lo stato o esegui altre azioni necessarie dopo l'eliminazione.
+          } else {
+              console.log("Eliminazione annullata dall'utente");
+          }
+  
+      } catch (error) {
+          console.error('Errore durante l\'eliminazione:', error.message);
+          // Gestisci l'errore in base alle tue esigenze, ad esempio visualizzando un messaggio di errore all'utente.
+      }
+  };
     return (
         <div className="col-md-10 p-4">
+            <div>
             <Link  href={link}><p>Indietro</p></Link>
+            <p onClick={() => handleDelete(params.id)}>Elimina</p>
+            </div>
             <Details data={data} type={params.type} contabile={contabileData}/>
+
+
+            
+            
         </div>
     );
   };
