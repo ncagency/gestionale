@@ -264,7 +264,10 @@ export const AddStudents = () => {
 
 //addWorkers
 
-const AddForm = () => {
+const AddForm = ({params}) => {
+
+  let type = params.type
+  console.log(type)
   const divStyle = {
     width: '700px',
     padding: '60px',
@@ -272,9 +275,14 @@ const AddForm = () => {
 
   
   return (
-    <div  style={divStyle}  className='bg-primary rounded-4'> 
-        <AddStudents />
+    <div className='d-flex '>
+        <div  style={divStyle}  className='bg-primary rounded-4'> 
+              { type == "students" && <AddStudents />}
+              { type == "courses" && <AddCourses />}
+              { type == "enti" && <AddEnti />}
+          </div>
     </div>
+  
   )
 }
 
