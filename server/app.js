@@ -62,7 +62,7 @@ app.get('/:type/:id', async (req, res) => {
 
 //CHIAMATE POST v2
 
-app.post('/add/:type/', async (req,res) => {
+app.post('/add/c/', async (req,res) => {
     try {
    
         datiUtente = req.body
@@ -202,3 +202,25 @@ app.post('/edit/rate/:id/:index', async (req, res) => {
     }
   });
   
+
+//POST V3
+
+
+
+
+app.post('/add/ente/', async (req,res) => {
+    try {
+   
+        enteData = req.body
+        console.log(enteData)
+        const collezione = db.collection('enti');
+
+        // Inserisci lo studente nella collezione
+        await collezione.insertOne(enteData);
+
+        res.status(200).json({ message: 'Dati ricevuti con successo', data: enteData });
+    } catch (error) {
+        console.error('Errore durante il salvataggio', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
