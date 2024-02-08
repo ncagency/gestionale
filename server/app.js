@@ -71,8 +71,8 @@ app.get('/contabile/:type/:id', async (req, res) => {
         }
 
         let item;
-        if (type === 'corsi') {
-            item = result.corsi.find(course => course._id === id);
+        if (type === 'courses') {
+            item = result.courses.find(course => course._id === id);
         } else if (type === 'enti') {
             item = result.enti.find(ente => ente._id === id);
         } else if (type === 'students') {
@@ -156,9 +156,11 @@ app.post('/aggiungicorsoutente/:utente_id/:corso_id', async (req, res) => {
 
 
         const collection = db.collection('students');
-        
-        const studente = await collection.findOne({ _id: new ObjectId(utente_id) });
+        const collection_corsi = db.collection('courses');
 
+
+
+        const studente = await collection.findOne({ _id: new ObjectId(utente_id) });
         if (!studente) {
             return res.status(404).json({ message: "Studente non trovato" });
         }
@@ -167,6 +169,16 @@ app.post('/aggiungicorsoutente/:utente_id/:corso_id', async (req, res) => {
         await collection.updateOne(
             { _id: new ObjectId(utente_id) },
             { $push: { corsi: corso_id } }
+        );
+        
+        const corso = await collection_corsi.findOne({ _id: new ObjectId(corso_id) });
+        if (!corso) {
+            return res.status(404).json({ message: "Corso non trovato" });
+        }
+
+        await collection_corsi.updateOne(
+            { _id: new ObjectId(corso_id) },
+            { $push: { utenti: utente_id } }
         );
 
         return res.json({ message: "ID corso aggiunto con successo", studente });
@@ -242,8 +254,6 @@ app.post('/edit/rate/:id/:index', async (req, res) => {
   
 
 //POST V3
-
-
 
 //add ente
 app.post('/add/ente/', async (req,res) => {

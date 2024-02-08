@@ -16,6 +16,7 @@ interface UserDetailsProps {
 interface CourseDetailsProps {
     course: any;
     type: string;
+    contabile:any;
   }
 interface EntiDetailsProps {
     ente: any;
@@ -129,68 +130,56 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     )
 }
  
-const CourseDetails: FC<CourseDetailsProps> = ({ course, type }) => {
- 
+const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
+
+        const [usersData, setUsersData] = useState<any[]>([]);
+    
+        useEffect(() => {
+          const fetchUsersData = async () => {
+              try {
+                  // Esegui la query per ottenere tutti gli utenti dal database
+                  const response = await fetch('http://127.0.0.1:2000/students');
+                  const userData = await response.json();
+                  setUsersData(userData);
+              } catch (error) {
+                  console.error('Errore durante il recupero degli utenti dal database', error);
+              }
+          };
+  
+          fetchUsersData();
+      }, []);
+  
+       let utenti_iscritti = course.utenti       
+
+       const filtrati = usersData.filter(oggetto => utenti_iscritti.includes(oggetto._id));
+       let numero_utenti = filtrati.length
+    // Stampa dell'array risultante
+        if (!usersData) {
+          return <p>Loading...</p>
+        }
         return (
-        <>
             <div className="container">
-                Indietro
-                <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
+                
+                <h1>Dettagli Corso</h1>
                 <div className="row mt-5">
                     <div className="col-7"> 
                         <p className="mb-0">{course._id}</p>
                         <h2>{course.nome}</h2>
                         <h3>{course.ente}</h3>
+                        <p>Numero Iscritti: {numero_utenti}</p>
                     </div>
-                    <div className="col-5 text-right ml-auto">
-                        <p className="mb-1"></p>
-                        <p></p>
-                    </div>
-                </div>
-                <div className="row mt-4">
-                    <div className="col-7">
-                            <label>
-                            Data di Nascita:
-                        </label>
-                        <h2></h2>
-                        <label>
-                            Luogo di Nascita:
-                        </label>
-                        <h2></h2>
-                        <label>
-                          
-                        </label>
-                    </div>
-                    <div className="col-5 bg-primary text-white p-3 border rounded-3 fs-3 ">
-                        <label className="fs-5">
-                            Pagamenti:
-                        </label>
-                        <p className="mb-0 mt-4">Tot: </p>
-                        <p className="mb-0">Ricevuti: </p>
-                        <p className="mb-0">In Sospeso: </p>
-                    </div>
-                </div>
-                <div className="row mt-4">
-                    
-                    <div className="col-4">
-                        <label>
-                            Indirizzo Residenza:
-                        </label>
-                        <h3></h3>
-                        <p></p>
-                    </div>
-                    <div className="col-4">
-                        <label>
-                            Indirizzo di Domicilio
-                        </label>
-                        <h3></h3>
-                        <p></p>
-                    </div>
-                  
-                </div>
-            </div>
+                    <div>
+                    {
+                      filtrati.map((utente, index) => (
+                        <p key={index}>{utente.nome}</p>
+                      ))
+                    }
 
-        </>
+                    </div>
+                    
+                </div>
+              
+            </div>
     )
 }
 
@@ -198,7 +187,6 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type }) => {
     return (
         <>
             <div className="container">
-                Indietro
                 <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
                 <div className="row mt-5">
                     <div className="col-7"> 
