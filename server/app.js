@@ -97,38 +97,44 @@ app.get('/contabile/:type/:id', async (req, res) => {
 
 
 //aggiungi corso all'ente
-app.post('/aggiungicorsoente/:ente_name/:corso_id', async (req, res) => {
+app.post('/aggiungicorsoente/:ente_id/:corso_id', async (req, res) => {
     try {
        
-       let ente_name = req.params.ente_name
-       let corso_id = req.params.corso_id
-
-
-        const collection = db.collection('enti');
-        
-        // Trova l'ente corrispondente per nome
-        const ente = await collection.findOne({ nome: ente_name });
-
-        if (!ente) {
-            return res.status(404).json({ message: "Ente non trovato" });
-        }
-
-        // Aggiorna l'array corsi_id dell'ente trovato con il nuovo corsoId
-        await collection.updateOne(
-            { nome: ente_name },
-            { $push: { corsi_id: corso_id } }
-        );
-
-        return res.json({ message: "ID corso aggiunto con successo", ente });
-    } catch (error) {
-        console.error("Errore durante l'aggiunta dell'ID corso:", error);
-        return res.status(500).json({ message: "Errore durante l'aggiunta dell'ID corso" });
-    }
+        let ente_id = new ObjectId(req.params.ente_id)
+        let corso_id = req.params.corso_id
+ 
+ 
+         const collection = db.collection('enti');
+         const collection_corsi = db.collection('courses');
+ 
+ 
+ 
+         const ente = await collection.findOne({ _id: new ObjectId(ente_id) });
+         if (!ente) {
+             return res.status(404).json({ message: "Ente non trovato" });
+         }
+ 
+         // Aggiorna l'array corsi_id dell'ente trovato con il nuovo corsoId
+         await collection.updateOne(
+             { _id: new ObjectId(ente_id) },
+             { $push: { corsi: corso_id } }
+         );
+         
+         const corso = await collection_corsi.findOne({ _id: new ObjectId(corso_id) });
+         if (!corso) {
+             return res.status(404).json({ message: "Corso non trovato" });
+         }
+ 
+         await collection_corsi.updateOne(
+             { _id: new ObjectId(corso_id) },
+         );
+ 
+         return res.json({ message: "ID corso aggiunto con successo", ente });
+     } catch (error) {
+         console.error("Errore durante l'aggiunta dell'ID corso:", error);
+         return res.status(500).json({ message: "Errore durante l'aggiunta dell'ID corso" });
+     }
 });
-
-
-
-
 
 
 //aggiungi corso all'utente
@@ -275,37 +281,65 @@ app.post('/add/ente/', async (req,res) => {
 
 //addcorso
 app.post('/add/corso/', async (req,res) => {
+    let responseSent = false; // Variabile per tenere traccia se la risposta è già stata inviata
 
     try {
-   
-        corsoData = req.body
+        const corsoData = req.body;
         const collezione = db.collection('courses');
         const coll_contabile = db.collection('contabile');
+        const coll_ente = db.collection('enti');
 
+        let ente_nome = corsoData.ente;
+        // Inserisci i dati del corso nella collezione 'courses'
         await collezione.insertOne(corsoData);
 
-        res.status(200).json({ message: 'Dati ricevuti con successo', data: corsoData });
-        corso_id = corsoData._id.toString()
-        corso_name = corsoData.nome
-        let corso_contabile = {
-            _id:corso_id,
-            name:corso_name,
-            costo:0,
-            stock:0,
-            venduti:0,
-            totale_entrate:0,
-            totale_uscite:0,
-            totale_profit:0
-          }
-        
-       
+        // Aggiorna un elemento nella collezione 'contabile'
+        const corso_id = corsoData._id.toString();
+        const corso_name = corsoData.nome;
+        const corso_contabile = {
+            _id: corso_id,
+            name: corso_name,
+            costo: 0,
+            stock: 0,
+            venduti: 0,
+            totale_entrate: 0,
+            totale_uscite: 0,
+            totale_profit: 0
+        };
+
+        // Aggiungi il corso_contabile nella collezione 'contabile'
         await coll_contabile.updateOne(
-        {}, 
-        { $push: { corsi: corso_contabile } }
-    )
+            {}, 
+            { $push: { courses: corso_contabile } }
+        );
+
+        // Trova il documento dell'ente corrispondente al nome
+        const ente = await coll_ente.findOne({ nome: ente_nome });
+        
+        if (ente) {
+            // Aggiungi il corso ai dati dell'ente nella collezione 'ente'
+            await coll_ente.updateOne(
+                { nome: ente_nome }, 
+                { $push: { corsi: corsoData._id } }
+            );
+
+            // Invia la risposta solo se non è stata inviata precedentemente
+            if (!responseSent) {
+                res.status(200).json({ message: 'Dati ricevuti con successo', data: corsoData._id });
+                responseSent = true; // Imposta la variabile a true per indicare che la risposta è stata inviata
+            }
+        } else {
+            // Se non esiste un documento per l'ente, gestisci l'errore di conseguenza
+            throw new Error(`Ente con nome ${ente_nome} non trovato`);
+        }
     } catch (error) {
+        // Gestione degli errori
         console.error('Errore durante il salvataggio', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        // Invia una risposta di errore solo se non è stata inviata precedentemente
+        if (!responseSent) {
+            res.status(500).json({ error: 'Internal Server Error' });
+            responseSent = true; // Imposta la variabile a true per indicare che la risposta è stata inviata
+        }
     }
 })
 
@@ -347,45 +381,29 @@ app.post('/add/student/', async (req,res) => {
 
 
 //delete
-app.delete('/elimina/:type/:id', async (req, res) => {
+app.delete('/elimina/students/:id', async (req, res) => {
     try {
-        const type = req.params.type;
         const id = new ObjectId(req.params.id);
         
-        if (type === 'courses') {
-            collection2 = db.collection('courses');
 
-            
-        } else if (type === 'enti') {
-            collection2 = db.collection('enti');
-
-
-        } else if (type === 'students') {
-        
-            collection2 = db.collection('courses');
-            const courses = await collection2.find({ utenti: id }).toArray();
-            for (const course of courses) {
-                await collection2.updateOne(
+        collection2 = db.collection('courses');
+        const courses = await collection2.find({ utenti: id }).toArray();
+        for (const course of courses) {
+        await collection2.updateOne(
                     { _id: new ObjectId(course._id) },
                     { $pull: { utenti: id } }
-                );
-            }
+)}
 
-
-       let collection = db.collection(type);
+       let collection = db.collection('students');
        const result = await collection.deleteOne({ _id: id });
 
        if (result.deletedCount === 0) {
-           res.status(404).json({ error: `${type} with ID ${id} not found` });
+           res.status(404).json({ error: `Students with ID ${id} not found` });
            return;
        }
        
-       res.json({ message: `${type} with ID ${id} deleted successfully` });     
+       res.json({ message: `Students with ID ${id} deleted successfully` });     
 
-        } else {
-            res.status(400).json({ error: `Invalid type ${type}` });
-            return;
-        }
                 
     } catch (error) {
         console.error('Errore durante la query al database', error);
@@ -393,3 +411,35 @@ app.delete('/elimina/:type/:id', async (req, res) => {
     }
 });
 
+app.delete('/elimina/courses/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+
+
+        collection2 = db.collection('students');        
+        const users = await collection2.find({ corsi: id }).toArray();
+        for (const user of users) {
+        await collection2.updateOne(
+                    { _id: user._id },
+                    { $pull: { corsi: id } }
+                );
+            }
+
+       
+    
+        let collection = db.collection('courses');
+        const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+       if (result.deletedCount === 0) {
+           res.status(404).json({ error: `Courses with ID ${id} not found` });
+        return;
+        }
+       
+        res.json({ message: `Courses  with ID ${id} deleted successfully` });     
+
+                
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});

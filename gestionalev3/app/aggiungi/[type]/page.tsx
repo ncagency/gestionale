@@ -267,7 +267,7 @@ export const AddStudents = () => {
 const AddForm = ({params}) => {
 
   let type = params.type
-  console.log(type)
+
   const divStyle = {
     width: '700px',
     padding: '60px',
