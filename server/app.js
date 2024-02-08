@@ -385,7 +385,7 @@ app.delete('/elimina/students/:id', async (req, res) => {
     try {
         const id = new ObjectId(req.params.id);
         
-
+        //aggiorna in courses
         collection2 = db.collection('courses');
         const courses = await collection2.find({ utenti: id }).toArray();
         for (const course of courses) {
@@ -393,6 +393,22 @@ app.delete('/elimina/students/:id', async (req, res) => {
                     { _id: new ObjectId(course._id) },
                     { $pull: { utenti: id } }
 )}
+        
+         //aggiorna in array contabilità
+         let collection_contabile = db.collection('contabile');
+
+         // Trova gli oggetti contabilità che contengono l'ID del corso
+         const students = await collection_contabile.find({ "students._id": req.params.id }).toArray();
+         // Loop attraverso gli oggetti contabilità
+         for (const student of students) {
+             // Utilizza il metodo $pull per rimuovere l'oggetto corso dall'array courses
+             await collection_contabile.updateOne(
+                 { _id: student._id },
+                 { $pull: { students: { _id: req.params.id } } } // Utilizza il riferimento corretto all'ID del corso
+             );
+         }
+
+
 
        let collection = db.collection('students');
        const result = await collection.deleteOne({ _id: id });
@@ -415,6 +431,8 @@ app.delete('/elimina/courses/:id', async (req, res) => {
     try {
         const id = req.params.id
 
+
+        //aggiorna in array studenti
         collection2 = db.collection('students');        
         const users = await collection2.find({ corsi: id }).toArray();
         for (const user of users) {
@@ -423,6 +441,22 @@ app.delete('/elimina/courses/:id', async (req, res) => {
                  { $pull: { corsi: id } }
             );
        }
+
+        //aggiorna in array contabilità
+        let collection_contabile = db.collection('contabile');
+
+        // Trova gli oggetti contabilità che contengono l'ID del corso
+        const corsi = await collection_contabile.find({ "courses._id": id }).toArray();
+        // Loop attraverso gli oggetti contabilità
+        for (const corso of corsi) {
+            // Utilizza il metodo $pull per rimuovere l'oggetto corso dall'array courses
+            await collection_contabile.updateOne(
+                { _id: corso._id },
+                { $pull: { courses: { _id: id } } } // Utilizza il riferimento corretto all'ID del corso
+            );
+        }
+
+       //aggiorna in array enti
         let collection = db.collection('courses');
         collection3 = db.collection('enti')
         const corso = await collection.findOne({ _id:  new ObjectId(id)})
@@ -441,8 +475,8 @@ app.delete('/elimina/courses/:id', async (req, res) => {
             console.log("Ente non trovato.");
         }
        
-    
-      
+       
+
         const result = await collection.deleteOne({ _id: new ObjectId(id) });
 
         if (result.deletedCount === 0) {
