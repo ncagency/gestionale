@@ -22,8 +22,8 @@ export default function RootLayout({
         {/* Mettere qui i tuoi metadati */}
       </head>
       <body className={inter.className} style={{ display: "flex", flexDirection: "row" }}>
-        <Navbar  />
-        <div style={{ marginLeft: "200px", width: "calc(100% - 200px)" }}>
+        <Navbar style={{ position: "fixed", left: 0, top: 0, height: "100vh" }} />
+        <div style={{ marginLeft: "30px", width: "calc(100% - 200px)" }}>
           {children}
         </div>
       </body>

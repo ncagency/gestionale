@@ -1,19 +1,17 @@
+
 'use client'
 import { FC, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { useRouter } from 'next/router';
 
 // Import Navbar (update with the correct path)
-import Navbar from '@/app/components/Navbar';
 import Link from 'next/link';
-import Rate from '@/app/components/Rate';
-import ViewCorsi from '@/app/components/ViewCorsi';
+import { Rate,ViewCorsi } from '@/components';
 
 
 interface UserDetailsProps {
     user: any;
     type: string;
+    contabile:any
   }
 interface CourseDetailsProps {
     course: any;
@@ -40,11 +38,11 @@ interface TabDetailsProps {
 
 
 
-const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
+const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     
     
     const [title, setTitle] = useState("");
-
+ 
     useEffect(() => {
    
       if (type == "workers") {
@@ -54,9 +52,9 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
       }
     }, [type]); 
     const id_user = user._id
-    const rate: any = user.payments.rate
+    const rate: any = contabile.rate
     let nrate = rate.length
-    const corsi:any = user.courses_id
+    const corsi:any = user.corsi
     return (
         <>
             <div className="container">
@@ -66,24 +64,25 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                         <tbody>
                             
                             <TableRow label="ID" value={user._id} />
-                            <TableRow label="Nome" value={`${user.info.nome}${user.info.secondo_nome ? ` ${user.info.secondo_nome}` : ''}`}/>                            <TableRow label="Cognome" value={user.info.cognome} />
-                            <TableRow label="Sesso" value={user.info.sesso} />
-                            <TableRow label="Data di Nascita" value={user.info.dob} />
-                            <TableRow label="Luogo di Nascita" value={`${user.info.lob} (${user.info.prob}), ${user.info.state}`} />
-                            <TableRow label="Codice Fiscale" value={user.info.cf} />
-                            <TableRow label="Residenza" value={`${user.info.res}, ${user.info.res_city} (${user.info.res_prov}), ${user.info.state_res}`} />
-                            <TableRow label="Domicilio" value={`${user.info.dom}, ${user.info.dom_city} (${user.info.dom_prov}), ${user.info.state_dom}`} />
-                            <TableRow label="Cellulare" value={user.info.cellulare} />
-                            <TableRow label="Email" value={user.info.email} />
+                            <TableRow label="Nome" value={`${user.nome}${user.secondo_nome ? ` ${user.secondo_nome}` : ''}`}/>                      
+                                  <TableRow label="Cognome" value={user.cognome} />
+                            <TableRow label="Sesso" value={user.sesso} />
+                            <TableRow label="Data di Nascita" value={user.dob} />
+                            <TableRow label="Luogo di Nascita" value={`${user.lob} (${user.prov_b}), ${user.state_b}`} />
+                            <TableRow label="Codice Fiscale" value={user.cf} />
+                            <TableRow label="Residenza" value={`${user.indirizzo_res}, ${user.citta_res} (${user.prov_res}), ${user.stato_res}`} />
+                            <TableRow label="Domicilio" value={`${user.indirizzo_dom}, ${user.citta_dom} (${user.prov_dom}), ${user.stato_dom}`} />
+                            <TableRow label="Cellulare" value={user.cellulare} />
+                            <TableRow label="Email" value={user.email} />
                         </tbody>
                     </table>
                     {(type == "students" ) && 
                   <>
                     
                     <div className='container'>
-                        <h1>Totale:{user.payments.totale}</h1>
-                        <h1>Saldati:{user.payments.saldati}</h1>
-                        <h1>In Sospeso:{user.payments.in_sospeso}</h1>
+                        <h1>Totale:{contabile.totale}</h1>
+                        <h1>Saldati:{contabile.saldati}</h1>
+                        <h1>In Sospeso:{contabile.in_sospeso}</h1>
                         <div>
                         <p>Rate:{nrate}</p>
                         <Rate data={rate} id={id_user}/>
@@ -104,12 +103,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type }) => {
                       <h1>Documenti</h1>
                       <table className='table table-bordered'>
                         <tbody>
-                           <TableRow label="Numero" value={user.docs.n_doc} />
-                           <TableRow label="Tipo" value=  {user.docs.tipo} />
-                           <TableRow label="Luogo Rilascio" value={user.docs.l_doc} />
-                           <TableRow label="Citta" value={user.docs.city_doc} />
-                           <TableRow label="Data Emissione" value={user.docs.rilascio_doc} />
-                           <TableRow label="Data Scadenza " value=  {user.docs.scadenza_doc} />
+                          
                         </tbody>
 
                       </table>
@@ -226,29 +220,41 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type }) => {
 }
 
 
-const Details = ({ data, type }) => {
-    if (!data) {
+const Details = ({ data, type, contabile }) => {
+    if (!data || !contabile) {
       return <p>Loading...</p>; // o qualsiasi altra logica per gestire il caricamento
     }
     return (
       <>
-        { (type == "students" || type == "workers") && (<UserDetails user={data} type={type} />)}
-        { type == "courses" && (<CourseDetails course={data} type={type} />)}
-        { type == "enti" && (<EntiDetails ente={data} type={type} />)}
+        { (type == "students" || type == "workers") && (<UserDetails user={data} type={type} contabile={contabile}/>)}
+        { type == "courses" && (<CourseDetails course={data} type={type} contabile={contabile}/>)}
+        { type == "enti" && (<EntiDetails ente={data} type={type} contabile={contabile}/>)}
       </>
     );
   };
 
+
+
+
+
+
 const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
    
+    
     const apiUrl = `http://localhost:2000/${params.type}/${params.id}`;
+    const apiUrl_contabile = `http://localhost:2000/contabile/${params.type}/${params.id}`;
 
     const [data,setData] = useState(null);
+    const [contabileData, setContabileData] = useState(null)
+
     const fetchData = async () => {
       try {
         const response = await axios.get(apiUrl);
         setData(response.data)
+        const response2 = await axios.get(apiUrl_contabile);
+        setContabileData(response2.data)
+       
       } catch (error) {
         console.error('Errore durante la richiesta GET:', error);
       }
@@ -264,13 +270,10 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
     let link = `/search/${params.type}`
 
     return (
-      <div className="container-fluid d-flex flex-row">
-        <Navbar />
         <div className="col-md-10 p-4">
             <Link  href={link}><p>Indietro</p></Link>
-            <Details data={data} type={params.type}/>
+            <Details data={data} type={params.type} contabile={contabileData}/>
         </div>
-      </div>
     );
   };
   

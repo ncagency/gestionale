@@ -58,8 +58,41 @@ app.get('/:type/:id', async (req, res) => {
     }
 });
 
+app.get('/contabile/:type/:id', async (req, res) => {
+    try {
+        let type = req.params.type;
+        const id = req.params.id;
 
+        const result = await db.collection('contabile').findOne({});
 
+        if (!result) {
+            res.status(404).json({ error: `${type} not Found` });
+            return;
+        }
+
+        let item;
+        if (type === 'corsi') {
+            item = result.corsi.find(course => course._id === id);
+        } else if (type === 'enti') {
+            item = result.enti.find(ente => ente._id === id);
+        } else if (type === 'students') {
+            item = result.students.find(student => student._id === id);
+        } else {
+            res.status(400).json({ error: `Invalid type ${type}` });
+            return;
+        }
+
+        if (!item) {
+            res.status(404).json({ error: `${type} with ID ${id} not found` });
+            return;
+        }
+
+        res.json(item);
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 //CHIAMATE POST v2
 
 app.post('/add/c/', async (req,res) => {
