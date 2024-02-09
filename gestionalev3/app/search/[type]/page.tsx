@@ -2,15 +2,23 @@
 import React, { useEffect, useState } from 'react'
 
 
-
+const Row = (data_single) => {
+  return (
+        <div className='d-flex justify-content-between p-4'>
+          <p>Nome Cognome</p>
+          <div>View</div>
+        </div>
+  )
+}
 
 const Visualizer = (data) => {
-  console.log(data.data)
+  
+  let mapping = data.data
   
   return (
-    <>
-    
-    </>
+    <div>
+        
+    </div>
   )
 }
 
@@ -34,15 +42,14 @@ const Search = ({params}) => {
           fetchUsersData();
       }, []);
 
-      console.log(data)
 
   return (
     <div className=' p-4 h-100'>
-      <div className='bg-primary w-100 h-100 flex-column'>
+      <div className='w-100 h-100 flex-column'>
             <div className='bg-warning h-25'>
               x
             </div>
-            <div className='bg-danger h-75'>
+            <div className=' h-75'>
                 <Visualizer data={data}/>
             </div>
       </div>
