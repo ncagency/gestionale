@@ -18,7 +18,7 @@ const Visualizer = ({data, type_s} : {data:any, type_s:string})  => {
   
   let mapping = data
   return (
-    <div className='p-3 border border-3 border-primary h-100 rounded-3'>
+    <div className='d-flex flex-column gap-2 p-3 border border-3 border-primary h-100 rounded-3'>
         {mapping.map((item:any, index:number) => (
             <Row key={index} data={item} type={type_s}/>
         ))} 
@@ -28,6 +28,7 @@ const Visualizer = ({data, type_s} : {data:any, type_s:string})  => {
 
 const Search = ({params}) => {
 
+  let type:string = params.type
 
   const [data,setData] = useState<any[]>([]);
 
@@ -35,7 +36,7 @@ const Search = ({params}) => {
           const fetchUsersData = async () => {
               try {
                   // Esegui la query per ottenere tutti gli utenti dal database
-                  const response = await fetch('http://127.0.0.1:2000/students');
+                  const response = await fetch(`http://127.0.0.1:2000/${type}`);
                   const userData = await response.json();
                   setData(userData);
               } catch (error) {
@@ -46,7 +47,6 @@ const Search = ({params}) => {
           fetchUsersData();
       }, []);
     
-  let type:string = params.type
   
   return (
     <div className=' p-4 h-100'>
