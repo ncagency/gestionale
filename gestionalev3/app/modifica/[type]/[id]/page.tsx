@@ -106,7 +106,7 @@ export const EditCourses = ({id}) => {
 }
 
 
-export const AddEnti = ({id}) => {
+export const EditEnti = ({id}) => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -120,6 +120,22 @@ export const AddEnti = ({id}) => {
     corsi:[]
   })
 
+  useEffect(() => {
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:2000/enti/${id}`);
+      const entiData = response.data;
+      setFormData(entiData);
+    } catch (error) {
+      console.error('Errore durante il recupero dei dati dello studente:', error);
+    }
+  };
+
   const handleInputChange = (e) => {
     const {name , value} = e.target;
     console.log(e.target)
@@ -132,7 +148,7 @@ export const AddEnti = ({id}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:2000/add/ente', formData);
+      const response = await axios.put(`http://127.0.0.1:2000/update/enti/${id}`, formData);
       console.log(response.data); 
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
@@ -306,7 +322,7 @@ const EditForm = ({params}) => {
         <div  style={divStyle}  className='bg-primary rounded-4'> 
               { type == "students" && <EditStudents id={id}/>}
               { type == "courses" && <EditCourses id={id}/>}
-              { type == "enti" && <AddEnti id={id}/>}
+              { type == "enti" && <EditEnti id={id}/>}
           </div>
     </div>
   
