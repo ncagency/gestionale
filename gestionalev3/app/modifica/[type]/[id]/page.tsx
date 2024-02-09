@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb'
 
 
 
-export const AddCourses = () => {
+export const EditCourses = ({id}) => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -28,12 +28,13 @@ export const AddCourses = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:2000/add/corso', formData);
+      const response = await axios.put(`http://127.0.0.1:2000/update/courses/${id}`, formData);
       console.log(response.data); 
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
   };
+
 
   const [entiData, setEntiData] = useState([]);
    
@@ -57,13 +58,24 @@ export const AddCourses = () => {
       }
     };
 
-    fetchData();
 
+    fetchData();
+    fetchData2()
     // Clean-up function to cancel any ongoing requests if the component unmounts
     return () => {
       // Cleanup logic, e.g., cancel any ongoing requests
     };
   }, []); // Empty dependency array to ensure the effect runs only once after initial render
+
+  const fetchData2 = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:2000/courses/${id}`);
+      const courseData = response.data;
+      setFormData(courseData);
+    } catch (error) {
+      console.error('Errore durante il recupero dei dati del corso:', error);
+    }
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -94,7 +106,7 @@ export const AddCourses = () => {
 }
 
 
-export const AddEnti = () => {
+export const AddEnti = ({id}) => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -293,8 +305,8 @@ const EditForm = ({params}) => {
     <div className='d-flex '>
         <div  style={divStyle}  className='bg-primary rounded-4'> 
               { type == "students" && <EditStudents id={id}/>}
-              { type == "courses" && <AddCourses />}
-              { type == "enti" && <AddEnti />}
+              { type == "courses" && <EditCourses id={id}/>}
+              { type == "enti" && <AddEnti id={id}/>}
           </div>
     </div>
   
