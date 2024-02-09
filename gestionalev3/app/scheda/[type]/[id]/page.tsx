@@ -21,6 +21,7 @@ interface CourseDetailsProps {
 interface EntiDetailsProps {
     ente: any;
     type: string;
+    contabile: any;
   }
 interface TabDetailsProps {
   params:{
@@ -42,31 +43,27 @@ interface TabDetailsProps {
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     
     
-    const [title, setTitle] = useState("");
- 
-    useEffect(() => {
-   
-      if (type == "workers") {
-        setTitle("Lavoratore");
-      } else {
-        setTitle("Studente");
-      }
-    }, [type]); 
+
+
     const id_user = user._id
     const rate: any = contabile.rate
     let nrate = rate.length
     const corsi:any = user.corsi
+
+
+
+
     return (
         <>
             <div className="container">
-                <h1>Dettagli {title}</h1>
+                <h1>Dettagli { type == "students" ? "Studente" : "Worker"}</h1>
                 <div className='m-4 d-flex '>
                     <table className="table table-bordered">
                         <tbody>
                             
                             <TableRow label="ID" value={user._id} />
                             <TableRow label="Nome" value={`${user.nome}${user.secondo_nome ? ` ${user.secondo_nome}` : ''}`}/>                      
-                                  <TableRow label="Cognome" value={user.cognome} />
+                              <TableRow label="Cognome" value={user.cognome} />
                             <TableRow label="Sesso" value={user.sesso} />
                             <TableRow label="Data di Nascita" value={user.dob} />
                             <TableRow label="Luogo di Nascita" value={`${user.lob} (${user.prov_b}), ${user.state_b}`} />
@@ -183,7 +180,36 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
     )
 }
 
-const EntiDetails: FC<EntiDetailsProps> = ({ ente, type }) => {
+const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
+
+  const [courseData, setCourseData] = useState<any[]>([]);
+    
+  useEffect(() => {
+    const fetchUsersData = async () => {
+        try {
+            // Esegui la query per ottenere tutti gli utenti dal database
+            const response = await fetch('http://127.0.0.1:2000/courses');
+            const courseData = await response.json();
+            setCourseData(courseData);
+        } catch (error) {
+            console.error('Errore durante il recupero degli utenti dal database', error);
+        }
+    };
+
+    fetchUsersData();
+}, []);
+
+        
+    let corsi_ente = ente.corsi    
+    
+    const filtrati = courseData.filter(oggetto => corsi_ente.includes(oggetto._id));
+    
+    if (!courseData) {
+      return <p>Loading...</p>
+    }
+
+    
+
     return (
         <>
             <div className="container">
@@ -197,6 +223,12 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type }) => {
                         <p>
                            {ente.note}
                         </p>
+                        
+                        <div>
+                          {filtrati.map((corso, index) => (
+                            <p key={index}>{corso.nome}</p>
+                          ))}
+                        </div>
                     </div>
                    
                 </div>
