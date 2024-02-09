@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from 'react'
 
 
-const Row = (data_single) => {
+const Row = (data) => {
+  
+  let single = data.data
   return (
         <div className='d-flex justify-content-between p-4'>
-          <p>Nome Cognome</p>
+          <p>{single.nome} {single.secondo_nome} {single.cognome}</p>
           <div>View</div>
         </div>
   )
@@ -17,7 +19,9 @@ const Visualizer = (data) => {
   
   return (
     <div>
-        
+        {mapping.map((item:any, index:number) => (
+            <Row key={index} data={item}/>
+        ))} 
     </div>
   )
 }
