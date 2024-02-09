@@ -492,3 +492,33 @@ app.delete('/elimina/courses/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
+
+
+//update
+app.put('/update/:type/:id', async (req, res) => {
+    const { type, id } = req.params;
+    const updateData = req.body;
+    delete updateData._id;
+
+    try {
+   
+      // Effettua l'aggiornamento del record nella collezione corrispondente
+      const result = await db.collection(type).updateOne(
+        { _id: new ObjectId(id) }, // Converti l'ID in un ObjectId
+        { $set: updateData } // Aggiorna i dati
+      );
+    
+    if (!result.value) {
+        return res.status(404).json({ message: "Record non trovato" });
+      }
+
+      return res.status(200).json(result.value);
+     
+    
+    } catch (error) {
+      console.error('Errore durante l\'aggiornamento dello studente:', error);
+      return res.status(500).json({ message: 'Errore durante l\'aggiornamento dello studente' });
+    }
+  });
