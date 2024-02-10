@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import ViewButton from '@/components/ViewButton'
 import { redirect } from 'next/dist/server/api-utils'
+import axios from 'axios'
 
 const Row = ({data, type} : {data:any, type:string}) => {
 
@@ -32,22 +33,87 @@ const Search = ({ params }) => {
 
   const [data, setData] = useState<any[]>([]);
   const [activeIndex, setActiveIndex] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [birthYearRange, setBirthYearRange] = useState({ start: "", end: "" });
+ 
 
+
+
+
+
+
+  
+
+  const handleSearch = (array:any,type:string) => {
+    let filteredData = []
+
+    if (Array.isArray(array)) {
+      filteredData = array.filter((data) => {
+        //Cerca per Nome
+        const fullName = `${data.nome} ${data.secondo_nome} ${data.cognome}`.toLowerCase() 
+        const isNameMatch = fullName.includes(searchQuery.toLowerCase());
+
+        //Cerca per Range anno
+        const isBirthYearMatch =
+          (!birthYearRange.start || parseInt(data.dob.split("-")[0]) >= parseInt(birthYearRange.start)) &&
+          (!birthYearRange.end || parseInt(data.dob.split("-")[0]) <= parseInt(birthYearRange.end));
+
+
+
+
+        return isNameMatch && isBirthYearMatch
+      })
+    } else {console.error("Errore")}
+
+
+
+
+
+
+
+    return <Visualizer data={filteredData} type_s={type}/>
+  }
+
+ 
+
+
+
+
+
+
+  const [courses,setCourses] = useState<any[]>([]);
+  const [enti,setEnti] = useState<any[]>([]);
+
+
+
+
+//GET
   useEffect(() => {
     const fetchUsersData = async () => {
       try {
-        // Esegui la query per ottenere tutti gli utenti dal database
-        const response = await fetch(`http://127.0.0.1:2000/${type}`);
-        const userData = await response.json();
-        setData(userData);
 
-        // Imposta l'indice attivo in base al tipo
+        const response = await fetch(`http://127.0.0.1:2000/${type}`);
+        const dbData = await response.json();
+        setData(dbData);
+
+
+        
         if (type === "students") {
+          const courses = await axios.get("http://127.0.0.1:2000/courses")
+          const enti = await axios.get("http://127.0.0.1:2000/enti")
+          setCourses(courses.data)
+          setEnti(enti.data)
           setActiveIndex(0);
+
         } else if (type === "courses") {
+          const enti = await axios.get("http://127.0.0.1:2000/enti")
+          setEnti(enti.data)
+
           setActiveIndex(1);
         } else if (type === "enti") {
+          const courses = await axios.get("http://127.0.0.1:2000/courses")
+          setCourses(courses.data)
+
           setActiveIndex(2);
         } else if (type === "workers") {
           setActiveIndex(3);
@@ -60,6 +126,7 @@ const Search = ({ params }) => {
     fetchUsersData();
   }, [type]); // Esegui l'effetto ogni volta che il valore di "type" cambia
 
+  //TABS LOGIC
   const tabs = [
     { text: "Students", path: "/search/students" },
     { text: "Corsi", path: "/search/courses" },
@@ -75,11 +142,9 @@ const Search = ({ params }) => {
     window.location.href = path;
   };
 
-  const filteredData = data.filter(item =>
-    (item.hasOwnProperty('nome') && item.nome.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (item.hasOwnProperty('secondo_nome') && item.secondo_nome.toLowerCase().includes(searchTerm.toLowerCase())) || 
-    (item.hasOwnProperty('cognome') && item.cognome.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+
+
+
 
   return (
     <div className='p-4 h-100'>
@@ -102,18 +167,35 @@ const Search = ({ params }) => {
           </div>
         </div>
         <div>
-          {/* Barra di ricerca */}
-          <input
-            type="text"
-            placeholder="Cerca per nome..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="form-control"
-          />
+            
+
+        <input
+          type="text"
+          placeholder="Cerca per Nome o Cognome"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+
+        
+        <label>
+                  Anno di nascita:
+                  <input
+                    type="text"
+                    placeholder="Inizio"
+                    value={birthYearRange.start}
+                    onChange={(e) => setBirthYearRange({ ...birthYearRange, start: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Fine"
+                    value={birthYearRange.end}
+                    onChange={(e) => setBirthYearRange({ ...birthYearRange, end: e.target.value })}
+                  />
+                </label>
+
         </div>
         <div className='h-75'>
-          {/* Passa l'array filtrato al componente Visualizer */}
-          <Visualizer data={filteredData} type_s={type} />
+          {handleSearch(data, type)}
         </div>
       </div>
     </div>
