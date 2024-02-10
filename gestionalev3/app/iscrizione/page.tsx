@@ -6,11 +6,18 @@ import axios from 'axios';
 
 
 const Iscrizione = () => {
+  const todayDate: Date = new Date();
+  const year: number = todayDate.getFullYear();
+  const month: number = todayDate.getMonth() + 1; // i mesi sono indicizzati da 0 a 11
+  const day: number = todayDate.getDate();
+
+const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
   const [formData, setFormData] = useState({
     user_id: '',
     course_id: '',
-    data: '',
-    costo_transazione: 0,
+    data:formattedDate,
+    totale: 0,
     rate: [],
   });
   const [students, setStudents] = useState<any[]>([]);
@@ -18,15 +25,21 @@ const Iscrizione = () => {
   const [enti, setEnti] = useState<any[]>([]);
   const [totale, setTotale] = useState<number>(0);
   const [numRate, setNumRate] = useState<number>(0);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+    if (name === 'totale') {
+      setTotale(parseFloat(value));
+    }
   };
 
+  const handleSetTotale = (value) => {
+    setTotale(parseFloat(value));
+  };
+  
   const handleRateChange = (index, field, value) => {
     const updatedRates = [...formData.rate];
     if (!updatedRates[index]) {
@@ -43,7 +56,7 @@ const Iscrizione = () => {
     e.preventDefault();
     console.log(formData)
     try {
-      const response = await axios.post('http://127.0.0.1:2000/', formData);
+      const response = await axios.post('http://127.0.0.1:2000/iscrizione/', formData);
       console.log(response.data);
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
@@ -138,7 +151,7 @@ const Iscrizione = () => {
 
           <label>
             Totale:
-            <input type="number" value={totale} onChange={(e) => setTotale(parseFloat(e.target.value))} required />
+            <input type="number" value={totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
           </label>
 
           <label>
