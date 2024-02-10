@@ -3,6 +3,7 @@ import Link from "next/link";
 let navlinks = [
     { text: "Dashboard", icon: "bi bi-grid-1x2-fill", url: "/" },
     { text: "Search", icon: "bi bi-search", url: "/search" },
+    { text: "Iscrizioni", icon: "bi bi-search", url: "/iscrizione" },
     { text: "Contabile", icon: "bi bi-calculator-fill", url: "/contabile" },
     { text: "Aggiungi", icon: "bi bi-sliders", url: "/aggiungi" },
     { text: "Calendar", icon: "bi bi-calendar", url: "/calendar" }
