@@ -35,7 +35,8 @@ const Search = ({ params }) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [birthYearRange, setBirthYearRange] = useState({ start: "", end: "" });
- 
+  const [selectedCourse, setSelectedCourse] = useState("");
+
 
 
 
@@ -58,10 +59,10 @@ const Search = ({ params }) => {
           (!birthYearRange.start || parseInt(data.dob.split("-")[0]) >= parseInt(birthYearRange.start)) &&
           (!birthYearRange.end || parseInt(data.dob.split("-")[0]) <= parseInt(birthYearRange.end));
 
+        //Cerca x Corso
+        const isCourseMatch = !selectedCourse || data.corsi.includes(selectedCourse);
 
-
-
-        return isNameMatch && isBirthYearMatch
+        return isNameMatch && isBirthYearMatch && isCourseMatch
       })
     } else {console.error("Errore")}
 
@@ -191,6 +192,16 @@ const Search = ({ params }) => {
                     value={birthYearRange.end}
                     onChange={(e) => setBirthYearRange({ ...birthYearRange, end: e.target.value })}
                   />
+                </label>
+
+                <label>
+                  Corso:
+                    <select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
+                      <option value="">Tutti i corsi</option>
+                      {courses.map((corso, index) => (
+                        <option key={index} value={corso._id} >{corso.nome}</option>
+                      ))}
+                      </select>
                 </label>
 
         </div>
