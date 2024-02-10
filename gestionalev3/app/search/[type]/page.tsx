@@ -50,6 +50,8 @@ const Search = ({ params }) => {
 
     if (Array.isArray(array)) {
       filteredData = array.filter((data) => {
+        
+        
         //Cerca per Nome
         const fullName = `${data.nome} ${data.secondo_nome} ${data.cognome}`.toLowerCase() 
         const isNameMatch = fullName.includes(searchQuery.toLowerCase());
@@ -62,9 +64,12 @@ const Search = ({ params }) => {
         //Cerca x Corso
         const isCourseMatch = !selectedCourse || data.corsi.includes(selectedCourse);
 
-        //Cerca x Ente
+       
+       
         const isEnteMatch = !selectedEnte || data.ente === selectedEnte;
-        
+
+
+
         return isNameMatch && isBirthYearMatch && isCourseMatch && isEnteMatch 
       })
     } else {console.error("Errore")}
@@ -104,7 +109,9 @@ const Search = ({ params }) => {
         
         if (type === "students") {
           const courses = await axios.get("http://127.0.0.1:2000/courses")
+          const enti = await axios.get("http://127.0.0.1:2000/enti")
           setCourses(courses.data)
+          setEnti(enti.data)
           setActiveIndex(0);
 
         } else if (type === "courses") {
@@ -172,13 +179,13 @@ const Search = ({ params }) => {
 
         <input
           type="text"
-          placeholder="Cerca per Nome o Cognome"
+          placeholder="Digita Nome..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
 
         
-        <label>
+        { type == "students" && <label>
                   Anno di nascita:
                   <input
                     type="text"
@@ -193,8 +200,9 @@ const Search = ({ params }) => {
                     onChange={(e) => setBirthYearRange({ ...birthYearRange, end: e.target.value })}
                   />
                 </label>
-
-                <label>
+              }
+                
+        { type != "courses" && <label>
                   Corso:
                     <select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
                       <option value="">Tutti i corsi</option>
@@ -202,16 +210,17 @@ const Search = ({ params }) => {
                         <option key={index} value={corso._id} >{corso.nome}</option>
                       ))}
                       </select>
-                </label>
-                <label>
+                </label> }
+
+        { type != "enti" && type != "students"   &&     <label>
                   Enti:
                     <select value={selectedEnte} onChange={(e) => setSelectedEnte(e.target.value)}>
-                      <option value="">Tutti i corsi</option>
+                      <option value="">Tutti</option>
                       {enti.map((ente, index) => (
                         <option key={index} value={ente.nome} >{ente.nome}</option>
                       ))}
                       </select>
-                </label>
+                </label> }
             
 
         </div>
