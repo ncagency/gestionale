@@ -421,23 +421,29 @@ app.post('/iscrizione', async (req,res) => {
     const contabile = await collection_contabile.findOne({})
     
     const studente_contabile = contabile.students.find(studente => studente._id === utente_id);
-    const corso_contabile = contabile.courses.find(course => course._id === corso_id)
-
-    console.log(corso_contabile)
 
     let student_totale = parseInt(studente_contabile.totale) +  parseInt(data.totale)
     let student_in_sospeso = (student_totale - studente_contabile.saldati) + studente_contabile.in_sospeso
         
+
+    const corso_contabile = contabile.courses.find(course => course._id === corso_id)
+
+    let stock = corso_contabile.stock - 1
+    let vendite = corso_contabile.venduti + 1
+
     await collection_contabile.updateOne(
         {},
         { $push: {"cronologia_transazioni": cronologia },
           $set: { "students.$[student].totale": student_totale ,
-                "students.$[student].in_sospeso": student_in_sospeso},
+                "students.$[student].in_sospeso": student_in_sospeso,
+                "courses.$[course].stock":stock,
+                "courses.$[course].venduti":vendite },
           $push:{"students.$[student].rate": data.rate },
-
-
             },
-          { arrayFilters: [{ "student._id": utente_id }] } // Filtra per l'ID dello studente
+          {arrayFilters: [
+            { "student._id": utente_id },
+            { "course._id": corso_id }
+        ]} 
 
     );
 
