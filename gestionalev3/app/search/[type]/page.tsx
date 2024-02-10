@@ -36,7 +36,7 @@ const Search = ({ params }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [birthYearRange, setBirthYearRange] = useState({ start: "", end: "" });
   const [selectedCourse, setSelectedCourse] = useState("");
-
+  const [selectedEnte, setSelectedEnte] = useState("")
 
 
 
@@ -62,7 +62,10 @@ const Search = ({ params }) => {
         //Cerca x Corso
         const isCourseMatch = !selectedCourse || data.corsi.includes(selectedCourse);
 
-        return isNameMatch && isBirthYearMatch && isCourseMatch
+        //Cerca x Ente
+        const isEnteMatch = !selectedEnte || data.ente === selectedEnte;
+        
+        return isNameMatch && isBirthYearMatch && isCourseMatch && isEnteMatch 
       })
     } else {console.error("Errore")}
 
@@ -101,15 +104,12 @@ const Search = ({ params }) => {
         
         if (type === "students") {
           const courses = await axios.get("http://127.0.0.1:2000/courses")
-          const enti = await axios.get("http://127.0.0.1:2000/enti")
           setCourses(courses.data)
-          setEnti(enti.data)
           setActiveIndex(0);
 
         } else if (type === "courses") {
           const enti = await axios.get("http://127.0.0.1:2000/enti")
           setEnti(enti.data)
-
           setActiveIndex(1);
         } else if (type === "enti") {
           const courses = await axios.get("http://127.0.0.1:2000/courses")
@@ -203,6 +203,16 @@ const Search = ({ params }) => {
                       ))}
                       </select>
                 </label>
+                <label>
+                  Enti:
+                    <select value={selectedEnte} onChange={(e) => setSelectedEnte(e.target.value)}>
+                      <option value="">Tutti i corsi</option>
+                      {enti.map((ente, index) => (
+                        <option key={index} value={ente.nome} >{ente.nome}</option>
+                      ))}
+                      </select>
+                </label>
+            
 
         </div>
         <div className='h-75'>
