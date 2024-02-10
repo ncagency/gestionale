@@ -58,6 +58,18 @@ app.get('/:type/:id', async (req, res) => {
     }
 });
 
+app.get('/get/s/cronologia', async (req, res) => {
+    try {
+        const result = await db.collection('contabile').findOne({});
+        const cronologia = result.cronologia_transazioni
+
+        res.json(cronologia);
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.get('/contabile/:type/:id', async (req, res) => {
     try {
         let type = req.params.type;
