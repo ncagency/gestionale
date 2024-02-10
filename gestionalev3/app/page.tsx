@@ -96,7 +96,14 @@ const ContabileCard: React.FC = () => {
 
 
 export default function Home() {
-
+   const [cronologia, setCronologia] = useState([])
+   useEffect(() => {
+    const fetch = async () => {
+        const response = await axios.get('http://127.0.0.1:2000/get/s/cronologia')
+        setCronologia(response.data)
+    }
+    fetch()
+   })
    
     return (
         <div className='container '>
@@ -106,12 +113,26 @@ export default function Home() {
                 <div className='col'><DipendentiCard /></div>
             </div>
             <div className='row mt-4 h-100'>
-                <div className='col-5'>Cronologia</div>
+          
+
                 <div className='col-2 flex-column h-100 '>
                     <div className='mb-3'><EntiCard /></div>
                     <div><CorsiCard /></div>
                 </div>
-                <div className='col'><Calendar /></div>
+                <div className="col">
+                <h1>Transazioni</h1>
+                <div className=' border border-2 m-2 rounded-4' style={{ height: '255px', overflowY: 'auto', padding: '20px' }}>
+                    {cronologia.map((record, index) => (
+                        <div key={index} className="d-flex gap-3 justify-content-between align-items-center bg-primary p-4 text-white fs-5 rounded-2" style={{ marginBottom: '4px', overflowWrap: 'break-word', wordBreak: 'break-all' }}>
+                            <div className="w-25">{record.utente_nome}</div> 
+                            <div className="w-25">{record.course_nome}</div> 
+                            <div className="w-25">{record.data}</div> 
+                            <div>{record.costo}</div> 
+                        </div>
+                    ))}
+                </div>
+                </div>
+                
             </div>
         </div>
       )}
