@@ -6,7 +6,7 @@ import axios from 'axios';
 // Import Navbar (update with the correct path)
 import Link from 'next/link';
 import { Rate,ViewCorsi } from '@/components';
-
+import { Row } from '@/app/search/[type]/page';
 
 interface UserDetailsProps {
     user: any;
@@ -51,7 +51,10 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     const corsi:any = user.corsi
 
 
-
+    const redirec = () => {
+      const destinationValue = `/upload/docs/${user._id}`;
+      window.location.href = destinationValue;
+  }
 
     return (
         <>
@@ -63,7 +66,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                             
                             <TableRow label="ID" value={user._id} />
                             <TableRow label="Nome" value={`${user.nome}${user.secondo_nome ? ` ${user.secondo_nome}` : ''}`}/>                      
-                              <TableRow label="Cognome" value={user.cognome} />
+                            <TableRow label="Cognome" value={user.cognome} />
                             <TableRow label="Sesso" value={user.sesso} />
                             <TableRow label="Data di Nascita" value={user.dob} />
                             <TableRow label="Luogo di Nascita" value={`${user.lob} (${user.prov_b}), ${user.state_b}`} />
@@ -94,7 +97,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                     
                 {(type == "students" ) && 
                  <div className='d-flex gap-4'>
-                    <div className='w-50'>
+                    <div className='w-75'>
                       <ViewCorsi user_id={user._id} corsi_id={corsi}/>
                       </div>
                       <div>
@@ -105,6 +108,9 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                         </tbody>
 
                       </table>
+                      <div className='d-flex p-2 bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
+                                  <p>Carica Documenti</p>
+                        </div>
                       </div>
                     </div> }
 
@@ -149,6 +155,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
        let utenti_iscritti = course.utenti       
 
        const filtrati = usersData.filter(oggetto => utenti_iscritti.includes(oggetto._id));
+       
        let numero_utenti = filtrati.length
     // Stampa dell'array risultante
         if (!usersData) {
@@ -166,11 +173,17 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                         <p>Numero Iscritti: {numero_utenti}</p>
                     </div>
                     <div>
-                    {
-                      filtrati.map((utente, index) => (
-                        <p key={index}>{utente.nome}</p>
-                      ))
-                    }
+                    <h1>Iscritti</h1>
+          
+                      <div className=' w-50 border border-2 m-2 rounded-4' style={{ height: '255px', overflowY: 'auto', padding: '20px' }}>
+                      <div className='d-flex flex-column gap-2 '>
+                        {
+                              filtrati.map((utente, index) => (
+                                <Row key={index} data={utente} type="students"/>
+                              ))
+                            }
+                      </div>
+                      </div>
 
                     </div>
                     
@@ -183,7 +196,6 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
 const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
 
   const [courseData, setCourseData] = useState<any[]>([]);
-    
   useEffect(() => {
     const fetchUsersData = async () => {
         try {
@@ -207,7 +219,11 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
     if (!courseData) {
       return <p>Loading...</p>
     }
-
+    const redirec = () => {
+      const destinationValue = `/upload/fattura/${ente._id}`;
+      window.location.href = destinationValue;
+  }
+  
     
 
     return (
@@ -215,19 +231,36 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
             <div className="container">
                 <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
                 <div className="row mt-5">
-                    <div className="col-7"> 
-                        <p className="mb-0">{ente._id}</p>
-                        <h2>{ente.nome}</h2>
-                        <h3>{ente.indirizzo} {ente.citta} ({ente.prov}), {ente.stato}</h3>
-                        <h3>{ente.email} {ente.cellulare}</h3>
-                        <p>
-                           {ente.note}
-                        </p>
+                    <div className="d-flex justify-content-center row w-100 "> 
                         
-                        <div>
-                          {filtrati.map((corso, index) => (
-                            <p key={index}>{corso.nome}</p>
-                          ))}
+                         <div className='col'>
+                              <p className="mb-0">{ente._id}</p>
+                              <h2>{ente.nome}</h2>
+                              <h3>{ente.indirizzo} {ente.citta} ({ente.prov}), {ente.stato}</h3>
+                              <h3>{ente.email} {ente.cellulare}</h3>
+                              <p>
+                                {ente.note}
+                              </p>    
+                         </div>
+                         <div className='col border border-2 m-2 rounded-4 p-4'>
+                            <p>{contabile.totale}</p>
+                            <p>{contabile.inviati}</p>
+                            <p>{contabile.da_inviare}</p>
+              
+                                <div className='d-flex  p-2 bg-primary w-25 text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
+                                  <p>Carica Fattura</p>
+                                </div>
+                         
+                         </div>
+                  
+                      </div>
+                      <div className='w-100 border border-2 m-2 rounded-4 row' style={{height: '255px', overflowY: 'auto', padding: '20px' }}>
+                        <div className='d-flex flex-column gap-2 '>
+                          {
+                                filtrati.map((corso, index) => (
+                                  <Row key={index} data={corso} type="courses"/>
+                                ))
+                              }
                         </div>
                     </div>
                    

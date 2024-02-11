@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Row } from '@/app/search/[type]/page';
 
 const ViewCorsi = ({ corsi_id, user_id }) => {
   const [corsi, setCorsi] = useState([]);
@@ -20,29 +21,22 @@ const ViewCorsi = ({ corsi_id, user_id }) => {
   }, []);
 
 
-  
-  const handleAggiungiCorso = async () => {
-    try {
-      // Esegui la chiamata POST per aggiungere il corso all'utente
-      await axios.post(`http://127.0.0.1:2000/aggiungicorsoutente/${user_id}/${corsoSelezionato}`);
-      console.log("Corso aggiunto con successo all'utente.");
-    } catch (error) {
-      console.error('Errore durante l\'aggiunta del corso:', error);
-    }
-  };
 
   return (
     <div>
       <h1>Corsi</h1>
      
-        <ul>
-          {/* Mappa sui corsi dell'utente e visualizza i loro nomi */}
-          {corsi
+      <div className=' border border-2 m-2 rounded-4' style={{ height: '255px', overflowY: 'auto', padding: '20px' }}>
+      <div className='d-flex flex-column gap-2 '>
+       {corsi
             .filter(corso => corsi_id.includes(corso._id))
             .map((corso, index) => (
-              <li key={index}>{corso.nome}</li>
+              <Row key={index} data={corso}  type="courses"/>
+    
             ))}
-        </ul>
+      </div>
+         </div>
+   
       </div>
     
   );

@@ -106,8 +106,32 @@ app.post('/upload_other', upload.fields([{ name: 'image', maxCount: 1 }]), async
     res.json({ message: 'Immagine caricata con successo', id: id });
 });
 
+app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), async (req, res) => {
 
+    let id = req.body.id
+    let costo = req.body.costo
+    
+    //CONTABILITA'
+    
+    
+    const file = req.files['image'][0]; // Accedi al file caricato
   
+    
+
+    if (!file) {
+        res.status(400).json({ error: 'Nessun file inviato' });
+        return;
+    }
+
+    const uploadPath = path.join(__dirname, 'images', id); // Percorso della cartella di destinazione
+    if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath, { recursive: true }); // Crea la cartella se non esiste già
+    }
+
+    const fileName = `${file.originalname}.jpg`;
+    fs.renameSync(file.path, path.join(uploadPath, fileName));
+    res.json({ message: 'Immagine caricata con successo', id: id });
+});
 
 //GET CALL 
 

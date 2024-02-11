@@ -16,12 +16,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+ const style = { 
+  display: "flex", 
+  flexDirection: "row",
+  background: "linear-gradient(to right, #ffffff, #f2f2f2)",
+};
+
   return (
     <html lang="en">
       <head>
         {/* Mettere qui i tuoi metadati */}
       </head>
-      <body className={inter.className} style={{ display: "flex", flexDirection: "row" }}>
+      <body className={inter.className} style={style}>
         <Navbar style={{ position: "fixed", left: 0, top: 0, height: "100vh" }} />
         <div style={{ marginLeft: "30px", width: "calc(100% - 200px)" }}>
           {children}

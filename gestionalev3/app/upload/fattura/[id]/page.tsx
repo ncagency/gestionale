@@ -38,11 +38,10 @@ function UploadForm({params}) {
     const formData = new FormData();
     formData.append('id', id);
     formData.append('costo', costo);
-    formData.append('data', data);
-    formData.append('image', image);
+    formData.append('image', image, data);
    
     try {
-      const response = await axios.post('http://127.0.0.1:2000/upload_fattura', formData, {
+      const response = await axios.post('http://127.0.0.1:2000/upload_fatture', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

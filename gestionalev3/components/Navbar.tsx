@@ -11,12 +11,16 @@ let navlinks = [
 
 
 export default function Navbar() {
+    const style = {
+      background: "linear-gradient(to right, #f58b8b, #aa1414)",
+
+    }
      return (
-        <div className="bg-dark col-auto col-md-2 min-vh-100 rounded-end">
+        <div style={style} className=" col-auto col-md-2 min-vh-100 rounded-end">
           <div className="bg-dark">
             <a className="d-flex text-decoration-none align-items-center">
               <i className="fs-5 bi bi-gauge"></i>
-              <span className="fs-4 d-none d-sm-inline">NAME</span>
+              <span className="fs-4 d-none d-sm-inline"></span>
             </a>
           </div>
           <ul className="nav gap-1 fs-5 flex-column mt-5">

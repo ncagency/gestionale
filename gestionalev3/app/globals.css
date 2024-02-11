@@ -1,4 +1,8 @@
 
+body {
+  color:linear-gradient(to right, #f58b8b, #aa1414)
+}
+
 
 input {
   padding: 10px;

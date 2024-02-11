@@ -4,7 +4,7 @@ import ViewButton from '@/components/ViewButton'
 import { redirect } from 'next/dist/server/api-utils'
 import axios from 'axios'
 
-const Row = ({data, type} : {data:any, type:string}) => {
+export const Row = ({data, type} : {data:any, type:string}) => {
 
   let single = data
   let id = single._id.toString()
