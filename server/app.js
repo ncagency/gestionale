@@ -28,25 +28,56 @@ connectToDb((err) => {
 
 // Middleware per gestire l'upload dei file
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      const id = req.body.id;
-      const uploadPath = `images/${id}`;
-      fs.mkdirSync(uploadPath, { recursive: true });
-      cb(null, uploadPath);
-    },
-    filename: (req, file, cb) => {
-      const fileName = file.fieldname === 'image_front' ? 'fronte.jpg' : 'retro.jpg';
-      cb(null, fileName);
-    }
-  });
+  destination: (req, file, cb) => {
+    const id = req.body.id;
+    const uploadPath = `images/${id}`;
+    fs.mkdirSync(uploadPath, { recursive: true });
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const fileName = file.fieldname === 'image_front' ? 'fronte.jpg' : 'retro.jpg';
+    cb(null, fileName);
+  }
+});
 
   const upload = multer({ storage });
 
   // Endpoint per l'upload dell'immagine
-app.post('/upload', upload.fields([{ name: 'image_front', maxCount: 1 }, { name: 'image_retro', maxCount: 1 }]), (req, res) => {
+  app.post('/upload', upload.fields([{ name: 'image_front', maxCount: 1 }, { name: 'image_retro', maxCount: 1 }]), async (req, res) => {
     const id = req.body.id;
-    res.json({ message: 'Immagini caricate con successo', id: id });
-  });
+    const data = req.body
+    console.log(data)
+    try {
+        const collection = db.collection('students');
+        const student = await collection.findOne({ _id: new ObjectId(id) });
+
+
+        if (!student) {
+            res.status(404).json({ error: `Studente non trovato con ID: ${id}` });
+            return;
+        }
+
+        await collection.updateOne(
+            { _id: new ObjectId(id) },
+            { $set: { 
+                "docs.doc_type": data.doc_type ,
+                "docs.n_doc": data.n_doc ,
+                "docs.l_doc": data.l_doc,
+                "docs.city_doc": data.city_doc, 
+                "docs.state_doc": data.state_doc,  
+                "docs.emi": data.emi,  
+                "docs.scad": data.scad,  
+            } }
+        );
+
+        res.json({ message: 'Immagini caricate con successo e parametri dello studente aggiornati', id: id });
+    } catch (error) {
+        console.error('Errore durante la ricerca dello studente o l\'aggiornamento dei parametri:', error);
+        res.status(500).json({ error: 'Errore interno del server' });
+    }
+});
+
+
   
 
 //GET CALL 

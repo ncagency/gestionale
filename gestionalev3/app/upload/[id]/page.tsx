@@ -11,6 +11,7 @@ function UploadForm({params}) {
   const [n_doc, setNdoc] = useState("");
   const [l_doc, setLdoc] = useState("");
   const [city_doc, setCity] = useState("");
+  const [state_doc, setState] = useState("");
   const [emi, setEmi] = useState("");
   const [scad, setScad] = useState("");
   const [image_front, setImageFront] = useState(null);
@@ -33,6 +34,10 @@ function UploadForm({params}) {
 
   const handleCityChange = (event) => {
     setCity(event.target.value)
+  }
+
+  const handleStateChange = (event) => {
+    setState(event.target.value)
   }
 
   const handleEmiChange = (event) => {
@@ -61,6 +66,13 @@ function UploadForm({params}) {
 
     const formData = new FormData();
     formData.append('id', id);
+     formData.append('doc_type', doc_type);
+    formData.append('n_doc', n_doc);
+    formData.append('l_doc', l_doc);
+    formData.append('city_doc', city_doc);
+    formData.append('state_doc', state_doc);
+    formData.append('emi', emi);
+    formData.append('scad', scad);
     formData.append('image_front', image_front);
     formData.append('image_retro', image_retro);
     try {
@@ -95,6 +107,10 @@ function UploadForm({params}) {
         <div>
           <label htmlFor="city_doc">Città Rilascio:</label>
           <input type="text" id="city_doc" value={city_doc} placeholder="Città" onChange={handleCityChange} />
+        </div>
+        <div>
+          <label htmlFor="state_doc">Stato:</label>
+          <input type="text" id="state_doc" value={state_doc} placeholder="Stato" onChange={handleStateChange} />
         </div>
         <div>
           <label htmlFor="emi">Emissione</label>
