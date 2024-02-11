@@ -35,18 +35,24 @@ const storage = multer.diskStorage({
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
-    const fileName = file.fieldname === 'image_front' ? 'fronte.jpg' : 'retro.jpg';
-    cb(null, fileName);
+    if ( file.fieldname === 'image_front' || file.fieldname === 'image_retro') {
+        const fileName = file.fieldname === 'image_front' ? 'fronte.jpg' : 'retro.jpg';
+        cb(null, fileName);
+    } else {
+        const fileName =  `${file.fieldname}.jpg`
+        cb(null, fileName);
+    }
+
   }
 });
 
   const upload = multer({ storage });
 
   // Endpoint per l'upload dell'immagine
-  app.post('/upload', upload.fields([{ name: 'image_front', maxCount: 1 }, { name: 'image_retro', maxCount: 1 }]), async (req, res) => {
+app.post('/upload', upload.fields([{ name: 'image_front', maxCount: 1 }, { name: 'image_retro', maxCount: 1 }]), async (req, res) => {
     const id = req.body.id;
     const data = req.body
-    console.log(data)
+
     try {
         const collection = db.collection('students');
         const student = await collection.findOne({ _id: new ObjectId(id) });
@@ -75,6 +81,29 @@ const storage = multer.diskStorage({
         console.error('Errore durante la ricerca dello studente o l\'aggiornamento dei parametri:', error);
         res.status(500).json({ error: 'Errore interno del server' });
     }
+});
+
+app.post('/upload_other', upload.fields([{ name: 'image', maxCount: 1 }]), async (req, res) => {
+      
+    let id = req.body.id
+    const file = req.files['image'][0]; // Accedi al file caricato
+    
+
+    if (!file) {
+        res.status(400).json({ error: 'Nessun file inviato' });
+        return;
+    }
+
+    const uploadPath = path.join(__dirname, 'images', id); // Percorso della cartella di destinazione
+    if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath, { recursive: true }); // Crea la cartella se non esiste già
+    }
+
+    const fileName = `${file.originalname}.jpg`;
+
+    // Sposta il file nella cartella di destinazione
+    fs.renameSync(file.path, path.join(uploadPath, fileName));
+    res.json({ message: 'Immagine caricata con successo', id: id });
 });
 
 
