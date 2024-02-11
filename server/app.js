@@ -3,6 +3,9 @@ const { connectToDb, getDb} = require('./db')
 const cors = require('cors');
 const { ObjectId } = require('mongodb');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
+const multer = require('multer');
 
 
 
@@ -23,6 +26,24 @@ connectToDb((err) => {
     }
 })
 
+// Middleware per gestire l'upload dei file
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      const { codice, path } = req.body;
+      const uploadPath = path ? `images/${path}` : 'images';
+      fs.mkdirSync(uploadPath, { recursive: true });
+      cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    }
+  });
+  const upload = multer({ storage });
+
+  // Endpoint per l'upload dell'immagine
+app.post('/upload', upload.single('image'), (req, res) => {
+    res.json({ message: 'Immagine caricata con successo' });
+  });
 
 //GET CALL 
 
@@ -467,6 +488,17 @@ app.post('/iscrizione', async (req,res) => {
 }
 
 })
+
+
+
+
+
+
+
+
+
+
+
 
 
 //delete
