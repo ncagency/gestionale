@@ -29,21 +29,25 @@ connectToDb((err) => {
 // Middleware per gestire l'upload dei file
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      const { codice, path } = req.body;
-      const uploadPath = path ? `images/${path}` : 'images';
+      const id = req.body.id;
+      const uploadPath = `images/${id}`;
       fs.mkdirSync(uploadPath, { recursive: true });
       cb(null, uploadPath);
     },
     filename: (req, file, cb) => {
-      cb(null, `${Date.now()}-${file.originalname}`);
+      const fileName = file.fieldname === 'image_front' ? 'fronte.jpg' : 'retro.jpg';
+      cb(null, fileName);
     }
   });
+
   const upload = multer({ storage });
 
   // Endpoint per l'upload dell'immagine
-app.post('/upload', upload.single('image'), (req, res) => {
-    res.json({ message: 'Immagine caricata con successo' });
+app.post('/upload', upload.fields([{ name: 'image_front', maxCount: 1 }, { name: 'image_retro', maxCount: 1 }]), (req, res) => {
+    const id = req.body.id;
+    res.json({ message: 'Immagini caricate con successo', id: id });
   });
+  
 
 //GET CALL 
 

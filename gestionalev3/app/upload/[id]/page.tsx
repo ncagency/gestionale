@@ -13,7 +13,8 @@ function UploadForm({params}) {
   const [city_doc, setCity] = useState("");
   const [emi, setEmi] = useState("");
   const [scad, setScad] = useState("");
-  const [image, setImage] = useState(null);
+  const [image_front, setImageFront] = useState(null);
+  const [image_retro, setImageRetro] = useState(null);
   const [message, setMessage] = useState('');
 
 
@@ -43,9 +44,16 @@ function UploadForm({params}) {
   }
 
   const handleImageChange = (event) => {
-    setImage(event.target.files[0]);
+    setImageFront(event.target.files[0]);
   
   };
+
+
+  const handleImageChange2 = (event) => {
+    setImageRetro(event.target.files[0]);
+  
+  };
+  
   
   
   const handleSubmit = async (event) => {
@@ -53,8 +61,8 @@ function UploadForm({params}) {
 
     const formData = new FormData();
     formData.append('id', id);
-    formData.append('image', image);
-
+    formData.append('image_front', image_front);
+    formData.append('image_retro', image_retro);
     try {
       const response = await axios.post('http://127.0.0.1:2000/upload', formData, {
         headers: {
@@ -99,8 +107,12 @@ function UploadForm({params}) {
        
        
         <div>
-          <label htmlFor="image">Immagine:</label>
-          <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
+          <label htmlFor="image_front">Immagine:</label>
+          <input type="file" id="image_front" accept="image_front/*" onChange={handleImageChange} />
+        </div>
+        <div>
+          <label htmlFor="image_retro">Immagine:</label>
+          <input type="file" id="image_retro" accept="image_retro/*" onChange={handleImageChange2} />
         </div>
         
         <button type="submit">Carica</button>
