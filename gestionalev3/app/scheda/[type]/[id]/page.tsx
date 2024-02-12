@@ -166,13 +166,31 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                 
                 <h1>Dettagli Corso</h1>
                 <div className="row mt-5">
-                    <div className="col-7"> 
-                        <p className="mb-0">{course._id}</p>
-                        <h2>{course.nome}</h2>
-                        <h3>{course.ente}</h3>
-                        <p>Numero Iscritti: {numero_utenti}</p>
+                    
+                    <div className='d-flex gap-2'>
+                      <div className="col-7"> 
+                          <p className="mb-0">{course._id}</p>
+                          <h2>{course.nome}</h2>
+                          <h3>{course.ente}</h3>
+                          <p>Numero Iscritti: {numero_utenti}</p>
+                      </div>
+                      <div className='col-5 w-50'>
+                          <div className='bg-primary text-white p-5 rounded-4'>
+                                  <h2>Entrate:{contabile.totale_entrate}</h2>
+                                  <h2>Uscite:{contabile.totale_uscite}</h2>
+                                  <h2>Profit{contabile.totale_profit}</h2>
+                                  <hr />
+                                  <div className='d-flex gap-4 fs-5'>
+                                    <h4>Stock:{contabile.stock}</h4>
+                                    <h4>Costo:{contabile.costo}</h4>
+                                    <h4>Venduti:{contabile.venduti}</h4>
+                                  </div>
+                          </div>
+                      
+                      </div>
+                     
+
                     </div>
-                    <div>
                     <h1>Iscritti</h1>
           
                       <div className=' w-50 border border-2 m-2 rounded-4' style={{ height: '255px', overflowY: 'auto', padding: '20px' }}>
@@ -184,8 +202,6 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                             }
                       </div>
                       </div>
-
-                    </div>
                     
                 </div>
               
@@ -246,7 +262,7 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
                             <p>{contabile.totale}</p>
                             <p>{contabile.inviati}</p>
                             <p>{contabile.da_inviare}</p>
-              
+                            
                                 <div className='d-flex  p-2 bg-primary w-25 text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
                                   <p>Carica Fattura</p>
                                 </div>

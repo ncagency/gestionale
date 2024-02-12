@@ -111,11 +111,7 @@ app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), asy
     let id = req.body.id
     let costo = req.body.costo
     
-    //CONTABILITA'
-    
-    
     const file = req.files['image'][0]; // Accedi al file caricato
-  
     
 
     if (!file) {
@@ -129,6 +125,8 @@ app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), asy
     }
 
     const fileName = `${file.originalname}.jpg`;
+
+    // Sposta il file nella cartella di destinazione
     fs.renameSync(file.path, path.join(uploadPath, fileName));
     res.json({ message: 'Immagine caricata con successo', id: id });
 });
@@ -496,6 +494,38 @@ app.post('/add/student/', async (req,res) => {
     }
 })
 
+app.post('/stock/', async (req,res) => {
+
+    try {
+   
+        data = req.body
+        
+        const collezione_enti = db.collection('enti');
+        const coll_contabile = db.collection('contabile');
+
+
+        await collezione.insertOne(studentData);
+
+        res.status(200).json({ message: 'Dati ricevuti con successo', data: studentData });
+        student_id = studentData._id.toString()
+        let student_contabile = {
+            _id:student_id,
+            totale:0,
+            saldati:0,
+            in_sospeso:0,
+            rate:[]
+          }
+        
+       
+        await coll_contabile.updateOne(
+        {}, 
+        { $push: { students: student_contabile } }
+    )
+    } catch (error) {
+        console.error('Errore durante il salvataggio', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
 
 
 app.post('/iscrizione', async (req,res) => {
@@ -552,13 +582,22 @@ app.post('/iscrizione', async (req,res) => {
     let stock = corso_contabile.stock - 1
     let vendite = corso_contabile.venduti + 1
 
+    let corso_entrate = corso_contabile.totale_entrate + parseInt(data.totale)
+    
+    let corso_uscite = vendite * corso_contabile.costo
+   
+    let profit = corso_entrate - corso_uscite
+
     await collection_contabile.updateOne(
         {},
         { $push: {"cronologia_transazioni": cronologia },
           $set: { "students.$[student].totale": student_totale ,
                 "students.$[student].in_sospeso": student_in_sospeso,
                 "courses.$[course].stock":stock,
-                "courses.$[course].venduti":vendite },
+                "courses.$[course].venduti":vendite,
+                "courses.$[course].totale_entrate":corso_entrate,
+                "courses.$[course].totale_uscite":corso_uscite,
+                "courses.$[course].totale_profit":profit  },
           $push:{"students.$[student].rate": data.rate },
             },
           {arrayFilters: [

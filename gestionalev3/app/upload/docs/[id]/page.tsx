@@ -19,7 +19,6 @@ function UploadForm({params}) {
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
-    // Aggiungi il campo al FormData con il nome corretto
    
   };
 
