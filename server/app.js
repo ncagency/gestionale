@@ -18,16 +18,22 @@ app.use(bodyParser.json());
 
 let db
 
+
+
 connectToDb((err) => {
     if (!err) {
+        db = getDb()
         app.listen(2000, () => {
             console.log('app listen on port 2000')
+            cron.schedule('0 0 * * *', () => {
+                controllaDataEInviaEmail();
+            });
         })
-        db = getDb()
-
-         controllaDataEInviaEmail();
+        
+     
+       
     }
-})
+})   
 
 //email transporter
 const my_email = "gerardo.dagostino12@gmail.com"
@@ -80,7 +86,7 @@ function inviaEmail(destinatario, messaggio) {
                     const value = singola.valore
                     const data = singola.data
                     const stato = singola.pagata
-                    const messaggio = `Ciao devi darmi ${value} Euro`
+                    const messaggio = ` ${value} Buonanotte Coglione`
 
 
                     if (data === oggi && stato != true) { //metti true
@@ -102,12 +108,7 @@ function inviaEmail(destinatario, messaggio) {
   }
   
   // Esegui la funzione ogni giorno a mezzanotte
-  cron.schedule('0 0 * * *', () => {
-    const stato = true
-    const dataDaControllare = '2024-02-12';
-    const destinatarioEmail = 'ssbangete@gmail.com';
-    controllaDataEInviaEmail(dataDaControllare, destinatarioEmail,stato);
-  });
+
 
 
 
