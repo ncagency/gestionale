@@ -6,6 +6,10 @@ import { ObjectId } from 'mongodb'
 
 
 
+const redirec = (id, type) => {
+  const destinationValue = `/scheda/${type}/${id}`;
+  window.location.href = destinationValue;
+}
 
 export const AddCourses = () => {
   
@@ -29,7 +33,8 @@ export const AddCourses = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:2000/add/corso', formData);
-      console.log(response.data); 
+      redirec(response.data.data, 'courses')
+
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
@@ -121,7 +126,7 @@ export const AddEnti = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:2000/add/ente', formData);
-      console.log(response.data); 
+      redirec(response.data.data._id, 'enti')
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
@@ -199,7 +204,7 @@ export const AddStudents = () => {
     e.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:2000/add/student', formData);
-      console.log(response.data); 
+      redirec(response.data.data._id, 'students')
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
