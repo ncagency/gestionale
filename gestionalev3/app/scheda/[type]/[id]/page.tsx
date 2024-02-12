@@ -169,7 +169,6 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
 const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
 
         const [usersData, setUsersData] = useState<any[]>([]);
-    
         useEffect(() => {
           const fetchUsersData = async () => {
               try {
@@ -186,7 +185,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
       }, []);
       
       const redirec = () => {
-        const destinationValue = `/inventario/${course._id}`;
+        const destinationValue = `/stock/`;
         window.location.href = destinationValue;
     }
        let utenti_iscritti = course.utenti       
@@ -194,7 +193,9 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
        const filtrati = usersData.filter(oggetto => utenti_iscritti.includes(oggetto._id));
        
        let numero_utenti = filtrati.length
-    // Stampa dell'array risultante
+    
+
+       
         if (!usersData) {
           return <p>Loading...</p>
         }
@@ -212,7 +213,9 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                           <p>Numero Iscritti: {numero_utenti}</p>
                       </div>
                       <div className='col-5 w-50'>
-                          <div className='bg-primary text-white p-5 rounded-4'>
+                          <div className='bg-primary text-white p-3 rounded-4'>
+                                 {  (contabile.stock < 10 && contabile.stock > 0) && <div className='bg-warning fs-4 p-3 rounded-3 m-2'>Stock in Esaurimento</div>} 
+                                 {  contabile.stock === 0 && <div className='bg-danger fs-4 p-3 rounded-3 m-2'>Stock Esaurito</div>} 
                                   <h2>Entrate:{contabile.totale_entrate}</h2>
                                   <h2>Uscite:{contabile.totale_uscite}</h2>
                                   <h2>Profit{contabile.totale_profit}</h2>
