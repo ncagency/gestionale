@@ -184,7 +184,11 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
   
           fetchUsersData();
       }, []);
-  
+      
+      const redirec = () => {
+        const destinationValue = `/inventario/${course._id}`;
+        window.location.href = destinationValue;
+    }
        let utenti_iscritti = course.utenti       
 
        const filtrati = usersData.filter(oggetto => utenti_iscritti.includes(oggetto._id));
@@ -218,6 +222,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                                     <h4>Costo:{contabile.costo}</h4>
                                     <h4>Venduti:{contabile.venduti}</h4>
                                   </div>
+                                  <div style={{cursor:'pointer'}} onClick={redirec} className='bg-warning p-3 w-25 rounded-5 mt-5'> Stock</div>
                           </div>
                       
                       </div>

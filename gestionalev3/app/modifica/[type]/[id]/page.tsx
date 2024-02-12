@@ -30,6 +30,7 @@ export const EditCourses = ({id}) => {
     try {
       const response = await axios.put(`http://127.0.0.1:2000/update/courses/${id}`, formData);
       console.log(response.data); 
+      redirec()
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
@@ -80,6 +81,10 @@ export const EditCourses = ({id}) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+  const redirec = () => {
+    const destinationValue = `/scheda/courses/${id}`;
+    window.location.href = destinationValue;
+}
   return (
     <>
         <form className='d-flex flex-column align-items-center gap-2 '>
@@ -150,11 +155,15 @@ export const EditEnti = ({id}) => {
     try {
       const response = await axios.put(`http://127.0.0.1:2000/update/enti/${id}`, formData);
       console.log(response.data); 
+      redirec()
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
   };
-
+  const redirec = () => {
+      const destinationValue = `/scheda/courses/${id}`;
+      window.location.href = destinationValue;
+  }
   return (
     <>
         <form className='d-flex flex-column align-items-center gap-2 '>
@@ -242,11 +251,15 @@ export const EditStudents = ({id}) => {
     try {
       const response = await axios.put(`http://127.0.0.1:2000/update/students/${id}`, formData);
       console.log(response.data); 
+      redirec()
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
   };
-
+  const redirec = () => {
+    const destinationValue = `/scheda/courses/${id}`;
+    window.location.href = destinationValue;
+}
 
   return (
     <>

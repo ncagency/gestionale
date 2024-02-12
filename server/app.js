@@ -575,21 +575,20 @@ app.post('/add/student/', async (req,res) => {
     }
 })
 
-app.post('/stock/', async (req,res) => {
-
+app.put('/stock/:courseId', async (req, res) => { // Modifica il percorso per includere l'ID del corso
     try {
-   
-        data = req.body
+        const courseId = req.params.courseId; // Ottieni l'ID del corso dai parametri della richiesta
+        const data = req.body;
         const coll_contabile = db.collection('contabile');
-
+        console.log(data)
         let stock = parseInt(data.stock)
         let costo = parseFloat(data.costo)
         let tot = stock * costo
         const contabile = await coll_contabile.findOne({});
 
         const enteTrovato = contabile.enti.find(ente => ente.nome === data.ente);
-        const corsoTrovato = contabile.courses.find(corso => corso._id === data.course_id);
-        
+        const corsoTrovato = contabile.courses.find(corso => corso._id === courseId); // Utilizza l'ID del corso estratto dai parametri della richiesta
+
         let totale_ente = enteTrovato.totale + tot
         let da_inviare = enteTrovato.da_inviare + tot
 
@@ -608,9 +607,10 @@ app.post('/stock/', async (req,res) => {
                 },
               {arrayFilters: [
                 { "ente.nome": data.ente },
-                { "course._id": data.course_id }
+                { "course._id": courseId } // Utilizza l'ID del corso estratto dai parametri della richiesta
             ]} )
-       
+        
+        res.status(200).send('Dati aggiornati con successo'); // Invia una risposta di successo
     } catch (error) {
         console.error('Errore durante il salvataggio', error);
         res.status(500).json({ error: 'Internal Server Error' });
