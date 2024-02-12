@@ -51,7 +51,6 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     let nrate = rate.length
     const corsi:any = user.corsi
 
-    console.log(id_user)
     const redirec = () => {
       const destinationValue = `/upload/docs/${user._id}`;
       window.location.href = destinationValue;

@@ -54,10 +54,9 @@ const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${da
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
     try {
       const response = await axios.post('http://127.0.0.1:2000/iscrizione/', formData);
-      console.log(response.data);
+      redirec(response.data.studente._id)
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
@@ -109,6 +108,10 @@ const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${da
     fetch();
   }, []);
 
+  const redirec = (id) => {
+    const destinationValue = `/scheda/students/${id}`;
+    window.location.href = destinationValue;
+}
   return (
     <div className='d-flex '>
       <div style={divStyle} className='bg-primary rounded-4'>
