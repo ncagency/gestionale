@@ -47,14 +47,20 @@ function UploadForm({params}) {
         }
       });
       setMessage(response.data.message);
+      redirec()
     } catch (error) {
       setMessage('Errore durante il caricamento dell\'immagine.');
     }
   };
+    
+  const redirec = () => {
+    const destinationValue = `/scheda/enti/${id}`;
+    window.location.href = destinationValue;
+}
 
   return (
-    <div>
-      <h2>Carica un'immagine</h2>
+    <div className='p-5'>
+      <h2>Carica Fattura</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
         <div>

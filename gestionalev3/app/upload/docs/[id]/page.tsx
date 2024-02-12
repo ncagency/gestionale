@@ -41,14 +41,19 @@ function UploadForm({params}) {
         }
       });
       setMessage(response.data.message);
+      redirec()
     } catch (error) {
       setMessage('Errore durante il caricamento dell\'immagine.');
     }
   };
   
+  const redirec = () => {
+    const destinationValue = `/scheda/students/${id}`;
+    window.location.href = destinationValue;
+}
 
   return (
-    <div>
+    <div className='p-5'>
       <h2>Carica Altri Documenti</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>

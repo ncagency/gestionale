@@ -129,6 +129,35 @@ app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), asy
     // Sposta il file nella cartella di destinazione
     fs.renameSync(file.path, path.join(uploadPath, fileName));
     res.json({ message: 'Immagine caricata con successo', id: id });
+
+    try {
+        const collection = db.collection('contabile');
+        const contabile = await collection.findOne({});
+        
+        if (!contabile) {
+            res.status(404).json({ error: `Non trovato ` });
+            return;
+        }
+
+        await collection.updateOne(
+            {},
+            { $set: { 
+                "docs.doc_type": data.doc_type ,
+                "docs.n_doc": data.n_doc ,
+                "docs.l_doc": data.l_doc,
+                "docs.city_doc": data.city_doc, 
+                "docs.state_doc": data.state_doc,  
+                "docs.emi": data.emi,  
+                "docs.scad": data.scad,  
+            } }
+        );
+
+        res.json({ message: 'Immagini caricate con successo e parametri dello studente aggiornati', id: id });
+    } catch (error) {
+        console.error('Errore durante la ricerca dello studente o l\'aggiornamento dei parametri:', error);
+        res.status(500).json({ error: 'Errore interno del server' });
+    }
+
 });
 
 //GET CALL 
