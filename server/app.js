@@ -779,3 +779,22 @@ app.put('/update/:type/:id', async (req, res) => {
       return res.status(500).json({ message: 'Errore durante l\'aggiornamento dello studente' });
     }
   });
+
+
+
+  app.get('/contabilita', async (req, res) => {
+    try {
+      // Connessione al database
+      await client.connect();
+      const contabilitaCollection = db.collection('contabile');
+      
+      const contabilitaData = await contabilitaCollection.findOne({});
+      
+      res.json(contabilitaData);
+    } catch (error) {
+      console.error('Errore durante il recupero dei dati dalla collezione contabilita:', error);
+      res.status(500).json({ error: 'Errore durante il recupero dei dati dalla collezione contabilita' });
+    } finally {
+      await client.close();
+    }
+  });

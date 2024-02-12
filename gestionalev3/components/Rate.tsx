@@ -5,6 +5,7 @@ import axios from 'axios';
 const Rate = ({ data, id }) => {
   const [editIndex, setEditIndex] = useState(-1);
   const [modifiedData, setModifiedData] = useState([...data]);
+  console.log(data[0])
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -52,16 +53,16 @@ const Rate = ({ data, id }) => {
             <tr key={index}>
               <td>
                 {editIndex === index ? (
-                  <input type="text" value={item.valorerata} onChange={(e) => handleInputChange(e, 'valorerata', index)} />
+                  <input type="text" value={item.valore} onChange={(e) => handleInputChange(e, 'valorerata', index)} />
                 ) : (
-                  item.valorerata
+                  item.valore
                 )}
               </td>
               <td>
                 {editIndex === index ? (
-                  <input type="text" value={item.datascadenza} onChange={(e) => handleInputChange(e, 'datascadenza', index)} />
+                  <input type="text" value={item.data} onChange={(e) => handleInputChange(e, 'datascadenza', index)} />
                 ) : (
-                  item.datascadenza
+                  item.data
                 )}
               </td>
               <td>

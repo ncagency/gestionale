@@ -5,7 +5,7 @@ import axios from 'axios';
 
 // Import Navbar (update with the correct path)
 import Link from 'next/link';
-import { Rate,ViewCorsi } from '@/components';
+import { Rate,ViewCorsi,Debts } from '@/components';
 import { Row } from '@/app/search/[type]/page';
 
 interface UserDetailsProps {
@@ -44,7 +44,6 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     
     
 
-
     const id_user = user._id
     const rate: any = contabile.rate
     let nrate = rate.length
@@ -81,14 +80,11 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                   <>
                     
                     <div className='container'>
-                        <h1>Totale:{contabile.totale}</h1>
-                        <h1>Saldati:{contabile.saldati}</h1>
-                        <h1>In Sospeso:{contabile.in_sospeso}</h1>
-                        <div>
-                        <p>Rate:{nrate}</p>
-                        <Rate data={rate} id={id_user}/>
-                        </div>
-                    </div>
+              <h1>Totale:{contabile.totale}</h1>
+              <h1>Saldati:{contabile.saldati}</h1>
+              <h1>In Sospeso:{contabile.in_sospeso}</h1>
+              <Debts rates={rate} userId={id_user} />
+            </div>
                   
                     </>
                   }
