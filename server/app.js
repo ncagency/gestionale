@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
-
+const nodemailer = require('nodemailer');
+const cron = require('node-cron');
 
 
 const app = express()
@@ -23,8 +24,96 @@ connectToDb((err) => {
             console.log('app listen on port 2000')
         })
         db = getDb()
+
+         const destinatarioEmail = 'ssbangete@gmail.com';
+         controllaDataEInviaEmail(destinatarioEmail);
     }
 })
+
+//email transporter
+const my_email = "gerardo.dagostino12@gmail.com"
+const my_password = "twlz odnu hmjp bexf"
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: my_email,
+      pass: my_password
+    }
+  });
+
+
+// Funzione per inviare l'email
+function inviaEmail(destinatario, messaggio) {
+
+    const mailOptions = {
+      from: my_email,
+      to: destinatario,
+      subject: 'Scadenza Rata',
+      text: messaggio
+    };
+  
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log('Errore nell\'invio dell\'email:', error);
+      } else {
+        console.log('Email inviata con successo:', info.response);
+      }
+    });
+  }
+  
+  const controllaDataEInviaEmail = async (destinatario) => {
+    try {
+
+        const oggi = new Date().toISOString().slice(0, 10);
+   
+   
+        const contabileDocument = await db.collection('contabile').findOne({});
+        students = contabileDocument.students
+       
+        students.map((student, index) => (
+            student.rate.map((rata, index) => (
+                rata.map((singola, index) => {
+                    const value = singola.valore
+                    const data = singola.data
+                    const stato = singola.pagata
+                    const messaggio = `Ciao devi darmi ${value} Euro`
+
+
+                    if (data === oggi && stato != true) {
+                        console.log("Inviata")
+                        inviaEmail(destinatario, messaggio);
+                      } 
+
+
+
+                })
+            ))
+        ))
+        
+    } catch (error) {
+        console.error('Errore ', error);
+    }
+    
+  }
+  
+  // Esegui la funzione ogni giorno a mezzanotte
+  cron.schedule('0 0 * * *', () => {
+    const stato = true
+    const dataDaControllare = '2024-02-12';
+    const destinatarioEmail = 'ssbangete@gmail.com';
+    controllaDataEInviaEmail(dataDaControllare, destinatarioEmail,stato);
+  });
+
+
+
+
+
+
+
+
+
+
 
 // Middleware per gestire l'upload dei file
 const storage = multer.diskStorage({
@@ -48,7 +137,9 @@ const storage = multer.diskStorage({
 
   const upload = multer({ storage });
 
-  // Endpoint per l'upload dell'immagine
+
+//API
+// Endpoint per l'upload dell'immagine
 app.post('/upload', upload.fields([{ name: 'image_front', maxCount: 1 }, { name: 'image_retro', maxCount: 1 }]), async (req, res) => {
     const id = req.body.id;
     const data = req.body
