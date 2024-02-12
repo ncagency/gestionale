@@ -25,8 +25,7 @@ connectToDb((err) => {
         })
         db = getDb()
 
-         const destinatarioEmail = 'ssbangete@gmail.com';
-         controllaDataEInviaEmail(destinatarioEmail);
+         controllaDataEInviaEmail();
     }
 })
 
@@ -62,25 +61,29 @@ function inviaEmail(destinatario, messaggio) {
     });
   }
   
-  const controllaDataEInviaEmail = async (destinatario) => {
+  const controllaDataEInviaEmail = async () => {
     try {
 
         const oggi = new Date().toISOString().slice(0, 10);
    
    
         const contabileDocument = await db.collection('contabile').findOne({});
+       
         students = contabileDocument.students
        
-        students.map((student, index) => (
-            student.rate.map((rata, index) => (
-                rata.map((singola, index) => {
+        students.map((student) => { 
+
+            const destinatario = student.email
+            student.rate.map((rata) => (
+                rata.map((singola) => {
+                    
                     const value = singola.valore
                     const data = singola.data
                     const stato = singola.pagata
                     const messaggio = `Ciao devi darmi ${value} Euro`
 
 
-                    if (data === oggi && stato != true) {
+                    if (data === oggi && stato != true) { //metti true
                         console.log("Inviata")
                         inviaEmail(destinatario, messaggio);
                       } 
@@ -88,8 +91,9 @@ function inviaEmail(destinatario, messaggio) {
 
 
                 })
-            ))
-        ))
+            )) 
+            
+            })
         
     } catch (error) {
         console.error('Errore ', error);
@@ -652,7 +656,8 @@ app.post('/add/student/', async (req,res) => {
             totale:0,
             saldati:0,
             in_sospeso:0,
-            rate:[]
+            rate:[],
+            email: studentData.email
           }
         
        
