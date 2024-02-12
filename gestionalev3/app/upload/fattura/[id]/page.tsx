@@ -46,6 +46,7 @@ function UploadForm({params}) {
         }
       });
       setMessage(response.data.message);
+      redirec()
     } catch (error) {
       setMessage('Errore durante il caricamento dell\'immagine.');
     }
