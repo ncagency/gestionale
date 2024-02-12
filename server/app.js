@@ -678,7 +678,6 @@ app.post('/iscrizione', async (req,res) => {
     let corso_uscite = vendite * corso_contabile.costo
    
     let profit = corso_entrate - corso_uscite
-        console.log(cronologia)
     await collection_contabile.updateOne(
         {},
         { $push: {"cronologia_transazioni": cronologia ,
