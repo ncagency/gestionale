@@ -43,7 +43,6 @@ interface TabDetailsProps {
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     
     
-
     const id_user = user._id
     const rate: any = contabile.rate
     let nrate = rate.length

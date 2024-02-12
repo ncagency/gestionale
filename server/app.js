@@ -298,69 +298,43 @@ app.post('/aggiungicorsoutente/:utente_id/:corso_id', async (req, res) => {
 });
 
 //aggiorna rata
-app.post('/edit/rate/:id/:index', async (req, res) => {
+app.post('/edit/rate/:studentId/:rateIndex', async (req, res) => {
     try {
-      const studentId = new ObjectId(req.params.id);
-      const rateIndex = parseInt(req.params.index);
-      const updatedRate = req.body;
-  
-      // Recupera il documento dello studente dal database
-      const student = await db.collection('students').findOne({ _id: studentId });
-  
-      if (!student) {
-        return res.status(404).json({ error: 'Studente non trovato' });
-      }
-  
-      // Determina il valore della rata pagata
-      const rateValue = parseFloat(updatedRate.valorerata);
-  
-      // Calcola i nuovi valori per i campi 'payments.totale', 'payments.saldati', 'payments.in_sospeso'
-      
+        const studentId = req.params.studentId;
+        const rateIndex = req.params.rateIndex;
+        const updatedRate = req.body;
 
-      // Calcola i nuovi valori per i campi 'payments.totale', 'payments.saldati', 'payments.in_sospeso'
-        let newSaldati = student.payments.saldati;
-        let newSospesi = student.payments.in_sospeso;
-        let newTotale = student.payments.totale;
+       
+        // Trova il documento contabile che contiene gli studenti
+        const contabileDocument = await db.collection('contabile').findOne({});
 
-        if (updatedRate.pagata) {
-        // Se la rata è stata contrassegnata come pagata, aggiungi il valore a 'saldati' e sottrai da 'in_sospeso'
-        newSaldati += rateValue;
-        newSospesi -= rateValue;
-        } else {
-        // Se la rata non è stata pagata, aggiungi il valore a 'in_sospeso' e sottrai da 'saldati'
-        newSaldati -= rateValue;
-        newSospesi += rateValue;
+        if (!contabileDocument) {
+            return res.status(404).json({ error: 'Documento contabile non trovato' });
         }
 
+        // Trova lo studente all'interno dell'array 'students' con l'ID specificato
+        const studentToUpdate = contabileDocument.students.find(student => student._id === studentId);
 
-      // Aggiorna lo stato della rata e i dati relativi al pagamento
-      const result = await db.collection('students').updateOne(
-        { 
-          _id: studentId,
-          'payments.rate.valorerata': updatedRate.valorerata
-        },
-        { 
-          $set: { 
-            ['payments.rate.' + rateIndex + '.datascadenza']: updatedRate.datascadenza, 
-            ['payments.rate.' + rateIndex + '.pagata']: updatedRate.pagata,
-            'payments.in_sospeso': newSospesi,
-            'payments.saldati': newSaldati,
-            'payments.totale': newTotale
-          }
+        if (!studentToUpdate) {
+            return res.status(404).json({ error: 'Studente non trovato' });
         }
-      );
-  
-      if (result.matchedCount === 0) {
-        return res.status(404).json({ error: 'Studente non trovato o rata non trovata' });
-      }
-  
-      res.json({ message: 'Rata aggiornata con successo e valore scalato dal totale' });
+
+        // Aggiorna la rate desiderata all'interno dell'array delle rate dello studente
+        console.log(rateIndex)
+        console.log(studentToUpdate.rate[0][rateIndex])
+        console.log(updatedRate)
+
+        // Aggiorna il documento contabile nel database
+       // await db.collection('contabile').updateOne({}, { $set: { "students": contabileDocument.students } });
+
+        res.json({ message: 'Rate aggiornate con successo' });
     } catch (error) {
-      console.error('Errore durante l\'aggiornamento della rata e scalare il valore dal totale:', error);
-      res.status(500).json({ error: 'Si è verificato un errore durante l\'aggiornamento della rata e scalare il valore dal totale' });
+        console.error('Errore durante l\'aggiornamento delle rate:', error);
+        res.status(500).json({ error: 'Si è verificato un errore durante l\'aggiornamento delle rate' });
     }
-  });
-  
+});
+
+
 
 //POST V3
 

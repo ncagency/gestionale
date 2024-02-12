@@ -5,7 +5,7 @@ import axios from 'axios';
 const Rate = ({ data, id }) => {
   const [editIndex, setEditIndex] = useState(-1);
   const [modifiedData, setModifiedData] = useState([...data]);
-  console.log(data[0])
+  console.log(data)
 
   const handleEdit = (index) => {
     setEditIndex(index);
