@@ -657,6 +657,7 @@ app.post('/iscrizione', async (req,res) => {
     );
     
     let nrate = data.rate.length
+   
     const cronologia = { utente_id:utente_id, utente_nome: studente.nome, course_id: corso_id, course_nome: corso.nome, costo: data.totale, rate:nrate, data: data.data}
     
     const contabile = await collection_contabile.findOne({})
@@ -677,10 +678,11 @@ app.post('/iscrizione', async (req,res) => {
     let corso_uscite = vendite * corso_contabile.costo
    
     let profit = corso_entrate - corso_uscite
-
+        console.log(cronologia)
     await collection_contabile.updateOne(
         {},
-        { $push: {"cronologia_transazioni": cronologia },
+        { $push: {"cronologia_transazioni": cronologia ,
+                 "students.$[student].rate": data.rate },
           $set: { "students.$[student].totale": student_totale ,
                 "students.$[student].in_sospeso": student_in_sospeso,
                 "courses.$[course].stock":stock,
@@ -688,7 +690,7 @@ app.post('/iscrizione', async (req,res) => {
                 "courses.$[course].totale_entrate":corso_entrate,
                 "courses.$[course].totale_uscite":corso_uscite,
                 "courses.$[course].totale_profit":profit  },
-          $push:{"students.$[student].rate": data.rate },
+       
             },
           {arrayFilters: [
             { "student._id": utente_id },
