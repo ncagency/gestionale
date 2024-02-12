@@ -390,7 +390,7 @@ app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {
         if (!contabileDocument) {
             return res.status(404).json({ error: 'Documento contabile non trovato' });
         }
-
+        console.log(contabileDocument.students)
         // Trova lo studente all'interno dell'array 'students' con l'ID specificato
         const studentToUpdate = contabileDocument.students.find(student => student._id === studentId);
 
@@ -401,10 +401,39 @@ app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {
         // Aggiorna la rate desiderata all'interno dell'array delle rate dello studente
       
         studentToUpdate.rate[debtIndex][rateIndex] = updatedRate //zero deve cambiare in base al numero del debito
+        
+        const value = parseFloat(updatedRate.valore)
+
+        let saldati;
+        let in_sospeso;
+        if (updatedRate.pagata == true) {
+            saldati = studentToUpdate.saldati + value
+             in_sospeso = studentToUpdate.in_sospeso - value
+        } else {
+            saldati = studentToUpdate.saldati - value
+            in_sospeso = studentToUpdate.in_sospeso + value
+        }
+       
 
         // Aggiorna il documento contabile nel database
-        await db.collection('contabile').updateOne({}, { $set: { "students": contabileDocument.students } });
+        await db.collection('contabile').updateOne(
+            {}, 
+            { $set: {
+                "students": contabileDocument.students,
+            }});
 
+        await db.collection('contabile').updateOne(
+            {}, 
+            { $set: { 
+                "students.$[student].saldati":saldati,
+                "students.$[student].in_sospeso":in_sospeso,               
+            }
+        },
+        {arrayFilters: [
+            { "student._id": studentId },
+        ]} );
+
+    
         res.json({ message: 'Rate aggiornate con successo' });
     } catch (error) {
         console.error('Errore durante l\'aggiornamento delle rate:', error);
