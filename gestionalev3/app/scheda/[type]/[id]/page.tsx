@@ -42,23 +42,46 @@ interface TabDetailsProps {
 
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     
+    const [fileNames, setFileNames] = useState([]);
     
+   
+  
     const id_user = user._id
     const rate: any = contabile.rate
     let nrate = rate.length
     const corsi:any = user.corsi
 
-
+    console.log(id_user)
     const redirec = () => {
       const destinationValue = `/upload/docs/${user._id}`;
       window.location.href = destinationValue;
   }
+  useEffect(() => {
+    const fetchFileNames = async () => {
+      try {
+        const response = await axios.get(`http://127.0.0.1:2000/api/files/${id_user}`);
+        setFileNames(response.data.fileNames);
+      } catch (error) {
+        console.error('Errore durante il recupero dei nomi dei file:', error);
+      }
+    };
 
+    fetchFileNames();
+  }, [id_user]);
+
+  const handleFileDownload = async (fileName) => {
+    try {
+      // Sostituisci 'example.com' con l'indirizzo del tuo server remoto
+      window.open(`http://127.0.0.1:2000/api/files/${id_user}/${fileName}`, '_blank');
+    } catch (error) {
+      console.error('Errore durante il download del file:', error);
+    }
+  };
     return (
         <>
-            <div className="container">
+            <div className="container flex-column align-content-center ">
                 <h1>Dettagli { type == "students" ? "Studente" : "Worker"}</h1>
-                <div className='m-4 d-flex '>
+                <div className='container m-4 d-flex '>
                     <table className="table table-bordered">
                         <tbody>
                             
@@ -75,42 +98,58 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                             <TableRow label="Email" value={user.email} />
                         </tbody>
                     </table>
-                    {(type == "students" ) && 
-                  <>
-                    
-                    <div className='container'>
-              <h1>Totale:{contabile.totale}</h1>
-              <h1>Saldati:{contabile.saldati}</h1>
-              <h1>In Sospeso:{contabile.in_sospeso}</h1>
-              <Debts rates={rate} userId={id_user} />
-            </div>
-                  
-                    </>
-                  }
+                 
                 </div>
-                <div className=''>
-                    
+                
                 {(type == "students" ) && 
                  <div className='d-flex gap-4'>
-                    <div className='w-75'>
+                    <div className='w-50'>
                       <ViewCorsi user_id={user._id} corsi_id={corsi}/>
                       </div>
-                      <div>
+                      <div className='w-50'>
                       <h1>Documenti</h1>
-                      <table className='table table-bordered'>
-                        <tbody>
-                          
-                        </tbody>
+                      <div className='d-flex gap-2'>
+                          <table className='table table-bordered'>
+                            <tbody>
+                            <TableRow label="Tipo" value={user.docs.doc_type} />
+                            <TableRow label="Numero" value={user.docs.n_doc} />
+                            <TableRow label="Luogo" value={user.docs.l_doc}  />
+                            <TableRow label="Città" value={user.docs.city_doc} />
+                            <TableRow label="Stato"  value={user.docs.state_doc}  />
+                            <TableRow label="Emissione"  value={user.docs.emi}  />
+                            <TableRow label="Scadenza"  value={user.docs.scad}  />
 
-                      </table>
-                      <div className='d-flex p-2 bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
+                            </tbody>
+
+                          </table>
+                          <div className='border border-2 m-2 rounded-4' style={{ width: '280px', height: '255px', overflowY: 'auto', padding: '20px' }}>
+                            <div className='d-flex flex-column gap-2'>
+                              {fileNames.map((fileName, index) => (
+                                <div key={index} onClick={() => handleFileDownload(fileName)} style={{ cursor: 'pointer' }}>
+                                  {fileName}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                      </div>
+                      <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
                                   <p>Carica Documenti</p>
                         </div>
                       </div>
                     </div> }
-
-                </div>
-              
+               
+                {(type == "students" ) && 
+                
+                    
+                <div className='bg-primary w-75 mt-4 p-3 text-white rounded-4'>
+                      <h1>Totale:{contabile.totale}</h1>
+                      <h1>Saldati:{contabile.saldati}</h1>
+                      <h1>In Sospeso:{contabile.in_sospeso}</h1>
+                      <Debts rates={rate} userId={id_user} />
+              </div>
+                  
+            
+                  }
                  
                   
                 

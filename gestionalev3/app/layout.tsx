@@ -30,7 +30,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className} style={style}>
         <Navbar style={{ position: "fixed", left: 0, top: 0, height: "100vh" }} />
-        <div style={{ marginLeft: "30px", width: "calc(100% - 200px)" }}>
+        <div style={{ marginLeft: "30px", width: "calc(100% - 200px)", padding:'20px' }}>
           {children}
         </div>
       </body>

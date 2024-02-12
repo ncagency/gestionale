@@ -5,8 +5,13 @@ import axios from 'axios';
 
 function UploadForm({params}) {
 
-  let id = params.id
   
+  let id = params.id
+  const redirec = () => {
+    const destinationValue = `/scheda/students/${id}`;
+    window.location.href = destinationValue;
+}
+
   const [doc_type, setDocType] = useState("");
   const [n_doc, setNdoc] = useState("");
   const [l_doc, setLdoc] = useState("");
@@ -82,13 +87,14 @@ function UploadForm({params}) {
         }
       });
       setMessage(response.data.message);
+      redirec()
     } catch (error) {
       setMessage('Errore durante il caricamento dell\'immagine.');
     }
   };
 
   return (
-    <div>
+    <div className='container p-4'>
       <h2>Carica un'immagine</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>

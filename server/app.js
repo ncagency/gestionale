@@ -212,7 +212,51 @@ app.get('/contabile/:type/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-//CHIAMATE POST v2
+
+app.get('/api/files/:userId', (req, res) => {
+    const userId = req.params.userId;
+    const userFolderPath = path.join(__dirname, 'images', userId);
+  
+    // Verifica se la cartella dell'utente esiste
+    if (fs.existsSync(userFolderPath)) {
+      // Leggi i nomi dei file nella cartella dell'utente
+      fs.readdir(userFolderPath, (err, files) => {
+        if (err) {
+          console.error('Errore durante la lettura della cartella dell\'utente:', err);
+          return res.status(500).json({ error: 'Errore durante la lettura dei file dell\'utente' });
+        }
+        // Invia i nomi dei file al client
+        res.json({ fileNames: files });
+      });
+    } else {
+      // Se la cartella dell'utente non esiste, restituisci un errore 404
+      res.status(404).json({ error: 'Cartella dell\'utente non trovata' });
+    }
+  });
+
+// Definisci l'endpoint per il download dei file
+app.get('/api/files/:userId/:fileName', (req, res) => {
+    const userId = req.params.userId;
+    const fileName = req.params.fileName;
+    const filePath = path.join(__dirname, 'images', userId, fileName);
+  
+    // Verifica se il file esiste
+    if (fs.existsSync(filePath)) {
+      // Esegui il download del file
+      res.download(filePath, fileName, (err) => {
+        if (err) {
+          console.error('Errore durante il download del file:', err);
+          res.status(500).json({ error: 'Errore durante il download del file' });
+        }
+      });
+    } else {
+      // Se il file non esiste, restituisci un errore 404
+      res.status(404).json({ error: 'File non trovato' });
+    }
+  });
+
+
+
 
 
 //aggiungi corso all'ente
