@@ -2,10 +2,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Rate = ({ data, id }) => {
+const Rate = ({ data, id , index_debito}) => {
   const [editIndex, setEditIndex] = useState(-1);
   const [modifiedData, setModifiedData] = useState([...data]);
-  console.log(data)
 
   const handleEdit = (index) => {
     setEditIndex(index);
@@ -13,7 +12,7 @@ const Rate = ({ data, id }) => {
 
   const handleSave = async (index) => {
     try {
-      await axios.post(`http://127.0.0.1:2000/edit/rate/${id}/${index}`, modifiedData[index]);
+      await axios.post(`http://127.0.0.1:2000/edit/rate/${id}/${index}/${index_debito}`, modifiedData[index]);
       setEditIndex(-1);
     } catch (error) {
       console.error('Errore durante il salvataggio:', error);
@@ -53,14 +52,14 @@ const Rate = ({ data, id }) => {
             <tr key={index}>
               <td>
                 {editIndex === index ? (
-                  <input type="text" value={item.valore} onChange={(e) => handleInputChange(e, 'valorerata', index)} />
+                  <input type="text" value={item.valore} onChange={(e) => handleInputChange(e, 'valore', index)} />
                 ) : (
                   item.valore
                 )}
               </td>
               <td>
                 {editIndex === index ? (
-                  <input type="text" value={item.data} onChange={(e) => handleInputChange(e, 'datascadenza', index)} />
+                  <input type="text" value={item.data} onChange={(e) => handleInputChange(e, 'data', index)} />
                 ) : (
                   item.data
                 )}

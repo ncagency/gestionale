@@ -298,10 +298,11 @@ app.post('/aggiungicorsoutente/:utente_id/:corso_id', async (req, res) => {
 });
 
 //aggiorna rata
-app.post('/edit/rate/:studentId/:rateIndex', async (req, res) => {
+app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {
     try {
         const studentId = req.params.studentId;
         const rateIndex = req.params.rateIndex;
+        const debtIndex = req.params.debitoIndex
         const updatedRate = req.body;
 
        
@@ -320,12 +321,11 @@ app.post('/edit/rate/:studentId/:rateIndex', async (req, res) => {
         }
 
         // Aggiorna la rate desiderata all'interno dell'array delle rate dello studente
-        console.log(rateIndex)
-        console.log(studentToUpdate.rate[0][rateIndex])
-        console.log(updatedRate)
+      
+        studentToUpdate.rate[debtIndex][rateIndex] = updatedRate //zero deve cambiare in base al numero del debito
 
         // Aggiorna il documento contabile nel database
-       // await db.collection('contabile').updateOne({}, { $set: { "students": contabileDocument.students } });
+        await db.collection('contabile').updateOne({}, { $set: { "students": contabileDocument.students } });
 
         res.json({ message: 'Rate aggiornate con successo' });
     } catch (error) {

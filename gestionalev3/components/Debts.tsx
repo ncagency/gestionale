@@ -7,7 +7,7 @@ const Debts = ({ rates, userId }) => {
       {rates.map((rateGroup, index) => (
         <div key={index}>
           <h2>Debito {index + 1}</h2>
-          <Rate data={rateGroup} id={userId} />
+          <Rate data={rateGroup} id={userId} index_debito={index} />
         </div>
       ))}
     </div>
