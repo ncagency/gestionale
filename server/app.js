@@ -499,28 +499,37 @@ app.post('/stock/', async (req,res) => {
     try {
    
         data = req.body
-        
-        const collezione_enti = db.collection('enti');
         const coll_contabile = db.collection('contabile');
 
+        let stock = parseInt(data.stock)
+        let costo = parseFloat(data.costo)
+        let tot = stock * costo
+        const contabile = await coll_contabile.findOne({});
 
-        await collezione.insertOne(studentData);
-
-        res.status(200).json({ message: 'Dati ricevuti con successo', data: studentData });
-        student_id = studentData._id.toString()
-        let student_contabile = {
-            _id:student_id,
-            totale:0,
-            saldati:0,
-            in_sospeso:0,
-            rate:[]
-          }
+        const enteTrovato = contabile.enti.find(ente => ente.nome === data.ente);
+        const corsoTrovato = contabile.courses.find(corso => corso._id === data.course_id);
         
-       
+        let totale_ente = enteTrovato.totale + tot
+        let da_inviare = enteTrovato.da_inviare + tot
+
+        let uscite = corsoTrovato.totale_uscite + da_inviare
+
         await coll_contabile.updateOne(
-        {}, 
-        { $push: { students: student_contabile } }
-    )
+            {},
+            { 
+              $set: { "enti.$[ente].totale": totale_ente ,
+                    "enti.$[ente].da_inviare": da_inviare,
+                    "courses.$[course].stock":stock,
+                    "courses.$[course].costo":costo,
+                    "courses.$[course].totale_uscite":uscite,
+                 },
+              
+                },
+              {arrayFilters: [
+                { "ente.nome": data.ente },
+                { "course._id": data.course_id }
+            ]} )
+       
     } catch (error) {
         console.error('Errore durante il salvataggio', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -573,8 +582,8 @@ app.post('/iscrizione', async (req,res) => {
     
     const studente_contabile = contabile.students.find(studente => studente._id === utente_id);
 
-    let student_totale = parseInt(studente_contabile.totale) +  parseInt(data.totale)
-    let student_in_sospeso = (student_totale - studente_contabile.saldati) + studente_contabile.in_sospeso
+    let student_totale = parseInt(studente_contabile.totale) + parseInt(data.totale)
+    let student_in_sospeso = student_totale 
         
 
     const corso_contabile = contabile.courses.find(course => course._id === corso_id)

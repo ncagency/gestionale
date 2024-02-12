@@ -1,0 +1,9 @@
+{
+  "_id": {
+    "$oid": "65c50bb035424b351287beea"
+  },
+  "cronologia_transazioni": [],
+  "enti": [],
+  "students": [],
+  "courses": []
+}
