@@ -39,7 +39,6 @@ function UploadForm({params}) {
     formData.append('id', id);
     formData.append('costo', costo);
     formData.append('image', image, data);
-   
     try {
       const response = await axios.post('http://127.0.0.1:2000/upload_fatture', formData, {
         headers: {
@@ -47,7 +46,6 @@ function UploadForm({params}) {
         }
       });
       setMessage(response.data.message);
-      redirec()
     } catch (error) {
       setMessage('Errore durante il caricamento dell\'immagine.');
     }

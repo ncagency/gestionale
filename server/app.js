@@ -109,7 +109,7 @@ app.post('/upload_other', upload.fields([{ name: 'image', maxCount: 1 }]), async
 app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), async (req, res) => {
 
     let id = req.body.id
-    let costo = req.body.costo
+    let costo = parseFloat(req.body.costo)
     
     const file = req.files['image'][0]; // Accedi al file caricato
     
@@ -128,30 +128,35 @@ app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), asy
 
     // Sposta il file nella cartella di destinazione
     fs.renameSync(file.path, path.join(uploadPath, fileName));
-    res.json({ message: 'Immagine caricata con successo', id: id });
 
     try {
         const collection = db.collection('contabile');
         const contabile = await collection.findOne({});
-        
+
         if (!contabile) {
             res.status(404).json({ error: `Non trovato ` });
             return;
         }
 
+        const ente = contabile.enti.find(ente => ente._id === id);
+        
+        
+        const inviati = parseFloat(ente.inviati) + costo
+        const da_inviare = parseFloat(ente.da_inviare) - costo
+
         await collection.updateOne(
             {},
-            { $set: { 
-                "docs.doc_type": data.doc_type ,
-                "docs.n_doc": data.n_doc ,
-                "docs.l_doc": data.l_doc,
-                "docs.city_doc": data.city_doc, 
-                "docs.state_doc": data.state_doc,  
-                "docs.emi": data.emi,  
-                "docs.scad": data.scad,  
-            } }
+            {
+              $set: {
+                    "enti.$[ente].inviati": inviati,
+                    "enti.$[ente].da_inviare":da_inviare,
+                    },
+                },
+              {arrayFilters: [
+                { "ente._id": id },
+            ]} 
+    
         );
-
         res.json({ message: 'Immagini caricate con successo e parametri dello studente aggiornati', id: id });
     } catch (error) {
         console.error('Errore durante la ricerca dello studente o l\'aggiornamento dei parametri:', error);
