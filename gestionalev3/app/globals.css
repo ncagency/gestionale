@@ -23,30 +23,21 @@ form label {
 }
 form button {
   background-color: #feed01;
-  padding: 10px 40px 10px 40px;
+  padding: 10px 40px;
   font-weight: 500;
   font-size: larger;
   color: black;
   border-radius: 12px;
   background-image: none;
-  border: solid black 1px; /* Rimuove il bordo predefinito */
+  border: solid black 1px;
   box-shadow: 0px 0px 0px 0px rgb(0, 0, 0);
   transform: translateX(0px);
-
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 
 form button:hover {
-  background-color: #feed01;
-  padding: 10px 40px 10px 40px;
-  font-weight: 500;
-  font-size: larger;
-  color: black;
-  border-radius: 12px;
-  background-image: none;
-  border: solid black 1px; /* Rimuove il bordo predefinito */
   box-shadow: 6px 2px 0px 0px rgb(0, 0, 0);
   transform: translateX(-6px);
-
 }
+
 
