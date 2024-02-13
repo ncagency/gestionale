@@ -7,6 +7,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { Rate,ViewCorsi,Debts } from '@/components';
 import { Row } from '@/app/search/[type]/page';
+import { redirect } from 'next/dist/server/api-utils';
 
 interface UserDetailsProps {
     user: any;
@@ -131,8 +132,13 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                             </div>
                           </div>
                       </div>
-                      <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
-                                  <p>Carica Documenti</p>
+                      <div className='d-flex gap-4'>
+                        <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
+                                    <p>Carica Documenti Identità</p>
+                          </div>
+                          <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
+                                    <p>Altri Documenti</p>
+                          </div>
                         </div>
                       </div>
                     </div> }
@@ -375,7 +381,10 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
       fetchData();
     }, []); // Assicurati di passare un array vuoto come secondo argomento per eseguire l'effetto solo al mount del componente
 
-
+    const redirec = () => {
+      const destinationValue = `/search/${params.type}`;
+      window.location.href = destinationValue;
+  }
     
     let link = `/search/${params.type}`
     
@@ -393,6 +402,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
               if (!response.ok) {
                   const errorMessage = await response.text();
                   throw new Error(`Errore durante l'eliminazione: ${errorMessage}`);
+               
               }
   
               // Se l'eliminazione è avvenuta con successo, puoi fare qualcosa, ad esempio aggiornare lo stato del tuo componente.
@@ -412,7 +422,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
         <div className="col-md-10 p-4">
             <div>
             <Link  href={link}><p>Indietro</p></Link>
-            <p onClick={() => handleDelete(params.id)}>Elimina</p>
+            { params.type != "courses" && params.type != "enti" && <p onClick={() => handleDelete(params.id)}>Elimina</p>}
             </div>
             <Details data={data} type={params.type} contabile={contabileData}/>
 

@@ -16,16 +16,14 @@ export const Row = ({data, type} : {data:any, type:string}) => {
   )
 }
 
-const Visualizer = ({data, type_s} : {data:any, type_s:string})  => {
-  
-  let mapping = data
+const Visualizer = ({ data, type_s }: { data: any, type_s: string }) => {
   return (
-    <div className='d-flex flex-column gap-2 p-3 border border-3 border-primary h-100 rounded-3'>
-        {mapping.map((item:any, index:number) => (
-            <Row key={index} data={item} type={type_s}/>
-        ))} 
+    <div className='d-flex flex-column gap-2 p-3 border border-3 border-primary h-100 rounded-3' style={{ maxHeight: '500px', overflowY: 'auto' }}>
+      {data.map((item: any, index: number) => (
+        <Row key={index} data={item} type={type_s} />
+      ))}
     </div>
-  )
+  );
 }
 
 const Search = ({ params }) => {
@@ -224,7 +222,7 @@ const Search = ({ params }) => {
             
 
         </div>
-        <div className='h-75'>
+        <div className=' mt-5'>
           {handleSearch(data, type)}
         </div>
       </div>
