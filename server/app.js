@@ -690,23 +690,30 @@ app.put('/stock/:courseId', async (req, res) => { // Modifica il percorso per in
         const courseId = req.params.courseId; // Ottieni l'ID del corso dai parametri della richiesta
         const data = req.body;
         const coll_contabile = db.collection('contabile');
-        console.log(data)
-        let stock = parseInt(data.stock)
-        let costo = parseFloat(data.costo)
-        let tot = stock * costo
+     
+        
         const contabile = await coll_contabile.findOne({});
 
         const enteTrovato = contabile.enti.find(ente => ente.nome === data.ente);
         const corsoTrovato = contabile.courses.find(corso => corso._id === courseId); // Utilizza l'ID del corso estratto dai parametri della richiesta
 
+       console.log(corsoTrovato)
+
+        let stock = corsoTrovato.stock + parseInt(data.stock)
+        let costo = corsoTrovato.costo  + parseFloat(data.costo)
+        let tot = stock * costo
+
         let totale_ente = enteTrovato.totale + tot
         let da_inviare = enteTrovato.da_inviare + tot
 
-        let uscite = corsoTrovato.totale_uscite + da_inviare
+        let uscite = corsoTrovato.totale_uscite + tot
+
+        let cronologia = {ente_id: enteTrovato._id, ente_name: enteTrovato.nome, corso_id: corsoTrovato._id, corso_nome: corsoTrovato.name, n_stock: stock, prezzo: costo, tot: tot,data: data.data, type:"inv" }
 
         await coll_contabile.updateOne(
             {},
             { 
+              $push:{"cronologia_transazioni":cronologia},
               $set: { "enti.$[ente].totale": totale_ente ,
                     "enti.$[ente].da_inviare": da_inviare,
                     "courses.$[course].stock":stock,
@@ -780,7 +787,7 @@ app.post('/iscrizione', async (req,res) => {
     const corso_contabile = contabile.courses.find(course => course._id === corso_id)
 
 
-    const cronologia = { utente_id:utente_id, utente_nome: studente.nome, course_id: corso_id, course_nome: corso.nome, costo: parseFloat(data.totale), prezzo_acquisto:corso_contabile.costo, rate:nrate, data: data.data}
+    const cronologia = { utente_id:utente_id, utente_nome: studente.nome, course_id: corso_id, course_nome: corso.nome, costo: parseFloat(data.totale), prezzo_acquisto:corso_contabile.costo, rate:nrate, data: data.data, type:"ricev"}
 
 
     let stock = corso_contabile.stock - 1

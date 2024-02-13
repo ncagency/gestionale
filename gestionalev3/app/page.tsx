@@ -124,12 +124,25 @@ export default function Home() {
                 <h1>Transazioni</h1>
                 <div className=' border border-2 m-2 rounded-4' style={{ height: '255px', overflowY: 'auto', padding: '20px' }}>
                     {cronologia.map((record, index) => (
-                        <div key={index} className="d-flex gap-3 justify-content-between align-items-center bg-primary p-4 text-white fs-5 rounded-2" style={{ marginBottom: '4px', overflowWrap: 'break-word', wordBreak: 'break-all' }}>
-                            <div className="w-25">{record.utente_nome}</div> 
-                            <div className="w-25">{record.course_nome}</div> 
-                            <div className="w-25">{record.data}</div> 
-                            <div>{record.costo}</div> 
-                        </div>
+                           <div>
+                               { record.type == "ricev" && <div key={index} className="d-flex gap-3 justify-content-between align-items-center bg-primary p-4 text-white fs-5 rounded-2" style={{ marginBottom: '4px', overflowWrap: 'break-word', wordBreak: 'break-all' }}>
+                                    <div className="w-25">{record.utente_nome}</div> 
+                                    <div className="w-25">{record.course_nome}</div> 
+                                    <div className="w-25">{record.data}</div> 
+                                    <div>{record.costo}</div>
+                                    <div>Ricevuti</div> 
+                                </div>}
+                                { record.type == "inv" && <div key={index} className="d-flex justify-content-between gap-5 align-items-center bg-primary p-4 text-white fs-5 rounded-2" style={{ marginBottom: '4px', overflowWrap: 'break-word', wordBreak: 'break-all' }}>
+                                    <div className="">{record.ente_name}</div> 
+                                    <div className="">{record.corso_nome}</div> 
+                                    <div className="">{record.data}</div> 
+                                    <div className="">{record.prezzo}</div> 
+                                    <div className="">{record.n_stock}</div> 
+                                    <div className="">{record.tot}</div> 
+                                    <div className="">Inviati</div>
+                                </div>}
+                           </div>
+                      
                     ))}
                 </div>
                 </div>

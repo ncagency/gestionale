@@ -6,6 +6,12 @@ import axios from 'axios';
 
 
 const Iscrizione = () => {
+  const todayDate: Date = new Date();
+  const year: number = todayDate.getFullYear();
+  const month: number = todayDate.getMonth() + 1; // i mesi sono indicizzati da 0 a 11
+  const day: number = todayDate.getDate();
+
+  const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
   const [courses, setCourses] = useState<any[]>([]);
   const [formData, setFormData] = useState({
@@ -13,6 +19,7 @@ const Iscrizione = () => {
     stock:0,
     course_id: '',
     ente: '',
+    data: formattedDate
   });
 
 
