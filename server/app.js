@@ -8,6 +8,7 @@ const path = require('path');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
 const cron = require('node-cron');
+const { Console } = require('console');
 
 
 const app = express()
@@ -294,6 +295,18 @@ app.get('/:type/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
+
+app.get('/contabile', async (req, res) => {
+    try {
+        const result = await db.collection('contabile').findOne({})
+        res.json(result);
+    } catch (error) {
+        console.error('Errore durante la query al database', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 
 app.get('/get/s/cronologia', async (req, res) => {
     try {
@@ -754,9 +767,8 @@ app.post('/iscrizione', async (req,res) => {
     );
     
     let nrate = data.rate.length
-   
-    const cronologia = { utente_id:utente_id, utente_nome: studente.nome, course_id: corso_id, course_nome: corso.nome, costo: data.totale, rate:nrate, data: data.data}
     
+
     const contabile = await collection_contabile.findOne({})
     
     const studente_contabile = contabile.students.find(studente => studente._id === utente_id);
@@ -766,6 +778,10 @@ app.post('/iscrizione', async (req,res) => {
         
 
     const corso_contabile = contabile.courses.find(course => course._id === corso_id)
+
+
+    const cronologia = { utente_id:utente_id, utente_nome: studente.nome, course_id: corso_id, course_nome: corso.nome, costo: parseFloat(data.totale), prezzo_acquisto:corso_contabile.costo, rate:nrate, data: data.data}
+
 
     let stock = corso_contabile.stock - 1
     let vendite = corso_contabile.venduti + 1
@@ -959,21 +975,3 @@ app.put('/update/:type/:id', async (req, res) => {
     }
   });
 
-
-
-  app.get('/contabilita', async (req, res) => {
-    try {
-      // Connessione al database
-      await client.connect();
-      const contabilitaCollection = db.collection('contabile');
-      
-      const contabilitaData = await contabilitaCollection.findOne({});
-      
-      res.json(contabilitaData);
-    } catch (error) {
-      console.error('Errore durante il recupero dei dati dalla collezione contabilita:', error);
-      res.status(500).json({ error: 'Errore durante il recupero dei dati dalla collezione contabilita' });
-    } finally {
-      await client.close();
-    }
-  });

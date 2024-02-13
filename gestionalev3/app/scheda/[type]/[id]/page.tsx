@@ -31,7 +31,7 @@ interface TabDetailsProps {
 }
   }
 
-  const TableRow = ({ label, value }) => (
+export const TableRow = ({ label, value }) => (
    
    <tr className="border-1 p-4">
         <td>{label}</td>
@@ -224,7 +224,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                                  {  contabile.stock === 0 && <div className='bg-danger fs-4 p-3 rounded-3 m-2'>Stock Esaurito</div>} 
                                   <h2>Entrate:{contabile.totale_entrate}</h2>
                                   <h2>Uscite:{contabile.totale_uscite}</h2>
-                                  <h2>Profit{contabile.totale_profit}</h2>
+                                  <h2>Profit:{contabile.totale_profit}</h2>
                                   <hr />
                                   <div className='d-flex gap-4 fs-5'>
                                     <h4>Stock:{contabile.stock}</h4>
