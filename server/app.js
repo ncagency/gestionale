@@ -535,8 +535,8 @@ app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {
         await db.collection('contabile').updateOne(
             {}, 
             { $set: { 
-                "students.$[student].saldati":saldati,
-                "students.$[student].in_sospeso":in_sospeso,               
+                "students.$[student].saldati":saldati.toFixed(2),
+                "students.$[student].in_sospeso":in_sospeso.toFixed(2),               
             }
         },
         {arrayFilters: [
@@ -709,7 +709,7 @@ app.put('/stock/:courseId', async (req, res) => { // Modifica il percorso per in
 
         let uscite = corsoTrovato.totale_uscite + tot
 
-        let cronologia = {ente_id: enteTrovato._id, ente_name: enteTrovato.nome, corso_id: corsoTrovato._id, corso_nome: corsoTrovato.name, n_stock: stock, prezzo: costo, tot: tot,data: data.data, type:"inv" }
+        let cronologia = {ente_id: enteTrovato._id, ente_name: enteTrovato.nome, corso_id: corsoTrovato._id, corso_nome: corsoTrovato.name, n_stock: stock, prezzo: costo, inviati: tot,data: data.data, type:"inv" }
 
         await coll_contabile.updateOne(
             {},

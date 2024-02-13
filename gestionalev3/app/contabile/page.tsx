@@ -34,18 +34,25 @@ const Contabile = () => {
 
    
 
-    const calcolaTotale = () => {
-                const totale = cronologia.reduce((acc, record) => acc + record.costo, 0);
-                return totale;
-    }
-
-    const calcolaUscite = () => {
-        const uscite = cronologia.reduce((acc, record) => acc + record.prezzo_acquisto, 0);
-        return uscite;
-}
-
-    const total = calcolaTotale()
-    const uscite = calcolaUscite()
+    let total = 0
+    let uscite = 0
+    
+    
+    
+    cronologia.forEach(item => {
+          if (item.hasOwnProperty("costo")) {
+            total += item.costo;
+          }
+      });
+    
+    cronologia.forEach(item => {
+        if (item.hasOwnProperty("inviati")) {
+          uscite += item.inviati;
+        }
+    });
+ 
+  
+    
     const profit = total - uscite
 
 
