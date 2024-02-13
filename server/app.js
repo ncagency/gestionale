@@ -206,7 +206,7 @@ app.post('/upload_other', upload.fields([{ name: 'image', maxCount: 1 }]), async
 app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), async (req, res) => {
 
     let id = req.body.id
-    let costo = parseFloat(req.body.costo)
+    let costo = Math.round(parseFloat(req.body.costo) * 100) / 100;
     
     const file = req.files['image'][0]; // Accedi al file caricato
     
@@ -238,8 +238,9 @@ app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), asy
         const ente = contabile.enti.find(ente => ente._id === id);
         
         
-        const inviati = parseFloat(ente.inviati) + costo
-        const da_inviare = parseFloat(ente.da_inviare) - costo
+        const inviati = Math.round(parseFloat(ente.inviati) * 100) / 100 + costo
+        const da_inviare = Math.round(parseFloat(ente.da_inviare) * 100) / 100 - costo
+
 
         await collection.updateOne(
             {},
@@ -511,7 +512,7 @@ app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {
       
         studentToUpdate.rate[debtIndex][rateIndex] = updatedRate //zero deve cambiare in base al numero del debito
         
-        const value = parseFloat(updatedRate.valore)
+        const value =  Math.round(parseFloat(updatedRate.valore) * 100) / 100;
 
         let saldati;
         let in_sospeso;
@@ -700,7 +701,7 @@ app.put('/stock/:courseId', async (req, res) => { // Modifica il percorso per in
        console.log(corsoTrovato)
 
         let stock = corsoTrovato.stock + parseInt(data.stock)
-        let costo = corsoTrovato.costo  + parseFloat(data.costo)
+        let costo = corsoTrovato.costo  +  Math.round(parseFloat(data.costo) * 100) / 100;
         let tot = stock * costo
 
         let totale_ente = enteTrovato.totale + tot
@@ -779,21 +780,21 @@ app.post('/iscrizione', async (req,res) => {
     const contabile = await collection_contabile.findOne({})
     
     const studente_contabile = contabile.students.find(studente => studente._id === utente_id);
-
-    let student_totale = parseInt(studente_contabile.totale) + parseInt(data.totale)
+    let student_totale =  (Math.round(parseFloat(studente_contabile.totale) * 100) / 100) + (Math.round(parseFloat(data.totale) * 100) / 100)
     let student_in_sospeso = student_totale 
         
 
     const corso_contabile = contabile.courses.find(course => course._id === corso_id)
+    let costo = Math.round(parseFloat(data.totale) * 100) / 100;
+        
 
-
-    const cronologia = { utente_id:utente_id, utente_nome: studente.nome, course_id: corso_id, course_nome: corso.nome, costo: parseFloat(data.totale), prezzo_acquisto:corso_contabile.costo, rate:nrate, data: data.data, type:"ricev"}
+    const cronologia = { utente_id:utente_id, utente_nome: studente.nome, course_id: corso_id, course_nome: corso.nome, costo: costo, prezzo_acquisto:corso_contabile.costo, rate:nrate, data: data.data, type:"ricev"}
 
 
     let stock = corso_contabile.stock - 1
     let vendite = corso_contabile.venduti + 1
 
-    let corso_entrate = corso_contabile.totale_entrate + parseInt(data.totale)
+    let corso_entrate = corso_contabile.totale_entrate + Math.round(parseFloat(data.totale) * 100) / 100
     
     let corso_uscite = vendite * corso_contabile.costo
    
