@@ -52,8 +52,8 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     let nrate = rate.length
     const corsi:any = user.corsi
 
-    const redirec = () => {
-      const destinationValue = `/upload/docs/${user._id}`;
+    const redirec = (query) => {
+      const destinationValue = query;
       window.location.href = destinationValue;
   }
   useEffect(() => {
@@ -133,10 +133,10 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                           </div>
                       </div>
                       <div className='d-flex gap-4'>
-                        <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
+                        <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={() => redirec(`/upload/${user._id}`)} >
                                     <p>Carica Documenti Identità</p>
                           </div>
-                          <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
+                          <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={() => redirec(`/upload/docs/${user._id}`)} >
                                     <p>Altri Documenti</p>
                           </div>
                         </div>
