@@ -31,7 +31,25 @@ const Contabile = () => {
     
         fetchFileNames();
       });
-  console.log(enti)
+
+   
+
+    const calcolaTotale = () => {
+                const totale = cronologia.reduce((acc, record) => acc + record.costo, 0);
+                return totale;
+    }
+
+    const calcolaUscite = () => {
+        const uscite = cronologia.reduce((acc, record) => acc + record.prezzo_acquisto, 0);
+        return uscite;
+}
+
+    const total = calcolaTotale()
+    const uscite = calcolaUscite()
+    const profit = total - uscite
+
+
+
 
   return (
     <div className='h-100 d-flex flex-column gap-3'>
@@ -43,19 +61,15 @@ const Contabile = () => {
             <div className='d-flex gap-1 h-25'>
                 <div className='d-flex flex-column justify-content-center bg-primary w-25 h-100 rounded-3 p-3'>
                    <p className='fs-4 text-white'>Totale</p>
-                   <p className='fs-1 text-white'>10.0000</p>
-                </div>
-                <div className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
-                   <p className='fs-4 text-white'>Entrate</p>
-                   <p className='fs-1 text-white'>10.0000</p>
+                   <p className='fs-1 text-white'>{total}</p>
                 </div>
                 <div className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
                    <p className='fs-4 text-white'>Uscite</p>
-                   <p className='fs-1 text-white'>10.0000</p>
+                   <p className='fs-1 text-white'>{uscite}</p>
                 </div>
                 <div className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
                    <p className='fs-4 text-white'>Profit</p>
-                   <p className='fs-1 text-white'>10.0000</p>
+                   <p className='fs-1 text-white'>{profit}</p>
                 </div>
             </div>
 
