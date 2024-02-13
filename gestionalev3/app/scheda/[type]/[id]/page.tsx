@@ -49,7 +49,6 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   
     const id_user = user._id
     const rate: any = contabile.rate
-    let nrate = rate.length
     const corsi:any = user.corsi
 
     const redirec = (query) => {

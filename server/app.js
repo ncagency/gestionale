@@ -26,9 +26,9 @@ connectToDb((err) => {
         db = getDb()
         app.listen(2000, () => {
             console.log('app listen on port 2000')
-            cron.schedule('0 0 * * *', () => {
+          cron.schedule('0 0 * * *', () => {
                 controllaDataEInviaEmail();
-            });
+        });
         })
         
      
@@ -87,7 +87,7 @@ function inviaEmail(destinatario, messaggio) {
                     const value = singola.valore
                     const data = singola.data
                     const stato = singola.pagata
-                    const messaggio = ` ${value} Buonanotte Coglione`
+                    const messaggio = ` ${value} `
 
 
                     if (data === oggi && stato != true) { //metti true
@@ -221,7 +221,7 @@ app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), asy
         fs.mkdirSync(uploadPath, { recursive: true }); // Crea la cartella se non esiste già
     }
 
-    const fileName = `${file.originalname}.jpg`;
+    const fileName = `ft_${file.originalname}.jpg`;
 
     // Sposta il file nella cartella di destinazione
     fs.renameSync(file.path, path.join(uploadPath, fileName));
@@ -518,10 +518,10 @@ app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {
         let in_sospeso;
         if (updatedRate.pagata == true) {
             saldati = studentToUpdate.saldati + value
-             in_sospeso = studentToUpdate.in_sospeso - value
+            in_sospeso = studentToUpdate.totale - saldati
         } else {
             saldati = studentToUpdate.saldati - value
-            in_sospeso = studentToUpdate.in_sospeso + value
+            in_sospeso = studentToUpdate.totale + saldati
         }
        
 
@@ -531,12 +531,14 @@ app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {
             { $set: {
                 "students": contabileDocument.students,
             }});
-
+        
+        let saldati_fixed =  Math.round(parseFloat(saldati) * 100) / 100;        
+        let in_sospeso_fixed  =  Math.round(parseFloat(in_sospeso) * 100) / 100;        
         await db.collection('contabile').updateOne(
             {}, 
             { $set: { 
-                "students.$[student].saldati":saldati.toFixed(2),
-                "students.$[student].in_sospeso":in_sospeso.toFixed(2),               
+                "students.$[student].saldati":saldati_fixed,
+                "students.$[student].in_sospeso":in_sospeso_fixed,               
             }
         },
         {arrayFilters: [
