@@ -44,7 +44,7 @@ const Iscrizione = () => {
         ente: selectedCourse ? selectedCourse.ente : '',
       };
   
-      const response = await axios.put(`http://127.0.0.1:2000/stock/${selectedCourse._id}`, updatedFormData);
+      const response = await axios.put(`http://51.210.108.56:2000/stock/${selectedCourse._id}`, updatedFormData);
       console.log(response);
   
       // Esegui il redirect solo dopo che la richiesta PUT è stata completata con successo
@@ -58,7 +58,7 @@ const Iscrizione = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:2000/courses/`);
+        const response = await axios.get(`http://51.210.108.56:2000/courses/`);
         setCourses(response.data);
       } catch (error) {
         console.error('Errore durante il recupero dei corsi dal database', error);

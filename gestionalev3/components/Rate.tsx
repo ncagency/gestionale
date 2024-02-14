@@ -12,7 +12,7 @@ const Rate = ({ data, id , index_debito}:{ data:any, id:any , index_debito:any})
 
   const handleSave = async (index:any) => {
     try {
-      await axios.post(`http://127.0.0.1:2000/edit/rate/${id}/${index}/${index_debito}`, modifiedData[index]);
+      await axios.post(`http://51.210.108.56:2000/edit/rate/${id}/${index}/${index_debito}`, modifiedData[index]);
       setEditIndex(-1);
     } catch (error) {
       console.error('Errore durante il salvataggio:', error);

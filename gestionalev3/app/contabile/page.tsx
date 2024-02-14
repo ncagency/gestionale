@@ -43,7 +43,7 @@ const Contabile = () => {
     useEffect(() => {
         const fetchFileNames = async () => {
           try {
-            const response = await axios.get(`http://127.0.0.1:2000/contabile`);
+            const response = await axios.get(`http://51.210.108.56:2000/contabile`);
             let contabile = response.data
             
             setStudents(contabile[0].students)

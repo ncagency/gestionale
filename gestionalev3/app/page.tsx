@@ -112,7 +112,7 @@ export default function Home() {
 
    useEffect(() => {
     const fetch = async () => {
-        const response = await axios.get('http://127.0.0.1:2000/get/s/cronologia')
+        const response = await axios.get('http://51.210.108.56:2000/get/s/cronologia')
         setCronologia(response.data)
     }
     fetch()
