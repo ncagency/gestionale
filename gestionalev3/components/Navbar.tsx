@@ -12,10 +12,9 @@ let navlinks = [
 export default function Navbar() {
     const style = {
       background: "linear-gradient(to right, #3b83ff, #2a59ac",
-
     }
      return (
-        <div style={style} className=" col-auto col-md-2 min-vh-100 rounded-end">
+        <div style={style}  className=" col-auto col-md-2 min-vh-100 rounded-end">
          
           <ul className="gap-1 fs-5 flex-column mt-5">
             {navlinks.map((navlink, index) => (
