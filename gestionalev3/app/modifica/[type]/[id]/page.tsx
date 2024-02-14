@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb'
 
 
 
-const EditCourses = ({id}) => {
+const EditCourses = ({id}:{id:any}) => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -16,7 +16,7 @@ const EditCourses = ({id}) => {
   })
 
   
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:any) => {
     const {name , value} = e.target;
     console.log(e.target)
     setFormData({
@@ -25,7 +25,7 @@ const EditCourses = ({id}) => {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.put(`http://127.0.0.1:2000/update/courses/${id}`, formData);
@@ -40,7 +40,6 @@ const EditCourses = ({id}) => {
   const [entiData, setEntiData] = useState([]);
    
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +53,6 @@ const EditCourses = ({id}) => {
         
         setIsLoading(false);
       } catch (error) {
-        setError(error);
         setIsLoading(false);
       }
     };
@@ -110,7 +108,7 @@ const EditCourses = ({id}) => {
   )
 }
 
-const EditEnti = ({id}) => {
+const EditEnti = ({id}:{id:any}) => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -140,7 +138,7 @@ const EditEnti = ({id}) => {
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:any) => {
     const {name , value} = e.target;
     console.log(e.target)
     setFormData({
@@ -149,7 +147,7 @@ const EditEnti = ({id}) => {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.put(`http://127.0.0.1:2000/update/enti/${id}`, formData);
@@ -189,7 +187,7 @@ const EditEnti = ({id}) => {
   )
 }
 
-const EditStudents = ({id}) => {
+const EditStudents = ({id}:{id:any}) => {
   const [formData, setFormData] = useState({
     nome:'',
     secondo_nome:'',
@@ -237,7 +235,7 @@ const EditStudents = ({id}) => {
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:any) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -245,7 +243,7 @@ const EditStudents = ({id}) => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.put(`http://127.0.0.1:2000/update/students/${id}`, formData);
@@ -319,7 +317,7 @@ const EditStudents = ({id}) => {
 
 //addWorkers
 
-const EditForm = ({params}) => {
+const EditForm = ({params}:{params:any}) => {
 
   let type = params.type
   let id = params.id
