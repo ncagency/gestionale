@@ -145,6 +145,11 @@ const storage = multer.diskStorage({
 
 
 //API
+
+app.get('/ciao', (req,res) => {
+    res.send("Wewe");
+})
+
 // Endpoint per l'upload dell'immagine
 app.post('/upload', upload.fields([{ name: 'image_front', maxCount: 1 }, { name: 'image_retro', maxCount: 1 }]), async (req, res) => {
     const id = req.body.id;
