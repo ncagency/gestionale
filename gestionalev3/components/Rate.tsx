@@ -2,15 +2,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Rate = ({ data, id , index_debito}) => {
+const Rate = ({ data, id , index_debito}:{ data:any, id:any , index_debito:any}) => {
   const [editIndex, setEditIndex] = useState(-1);
   const [modifiedData, setModifiedData] = useState([...data]);
 
-  const handleEdit = (index) => {
+  const handleEdit = (index:any) => {
     setEditIndex(index);
   };
 
-  const handleSave = async (index) => {
+  const handleSave = async (index:any) => {
     try {
       await axios.post(`http://127.0.0.1:2000/edit/rate/${id}/${index}/${index_debito}`, modifiedData[index]);
       setEditIndex(-1);
@@ -24,13 +24,13 @@ const Rate = ({ data, id , index_debito}) => {
     // Revertire eventuali modifiche allo stato
   };
 
-  const handleInputChange = (event, field, index) => {
+  const handleInputChange = (event:any, field:any, index:any) => {
     const newData = [...modifiedData];
     newData[index][field] = event.target.value;
     setModifiedData(newData);
   };
 
-  const handleCheckboxChange = (event, index) => {
+  const handleCheckboxChange = (event:any, index:any) => {
     const newData = [...modifiedData];
     newData[index].pagata = event.target.checked;
     setModifiedData(newData);
