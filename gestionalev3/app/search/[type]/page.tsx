@@ -16,11 +16,11 @@ const Visualizer = ({ data, type_s }: { data: any, type_s: string }) => {
   );
 }
 
-const Search = ({ params }) => {
+const Search = ({params}:{ params:any }) => {
   let type: string = params.type;
 
   const [data, setData] = useState<any[]>([]);
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(4);
   const [searchQuery, setSearchQuery] = useState("");
   const [birthYearRange, setBirthYearRange] = useState({ start: "", end: "" });
   const [selectedCourse, setSelectedCourse] = useState("");
@@ -133,7 +133,7 @@ const Search = ({ params }) => {
   const styleTabs = 'bg-primary w-25 p-2 rounded-3 ';
   const activeClass = 'bg-warning';
 
-  const handleTabClick = (index, path) => {
+  const handleTabClick = (index:any, path:any) => {
     setActiveIndex(index);
     window.location.href = path;
   };
