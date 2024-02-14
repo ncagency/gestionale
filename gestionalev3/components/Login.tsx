@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin }:{ onLogin:any }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   // Funzione per gestire il submit del modulo di login
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     
     // Qui dovresti implementare la logica di autenticazione, ad esempio, chiamando un'API con i dati di accesso
