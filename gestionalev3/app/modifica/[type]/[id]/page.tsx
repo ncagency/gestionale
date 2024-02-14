@@ -28,7 +28,7 @@ const EditCourses = ({id}:{id:any}) => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://127.0.0.1:2000/update/courses/${id}`, formData);
+      const response = await axios.put(`http://51.210.108.56:2000/update/courses/${id}`, formData);
       console.log(response.data); 
       redirec()
     } catch (error) {
@@ -44,7 +44,7 @@ const EditCourses = ({id}:{id:any}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:2000/enti/');
+        const response = await axios.get('http://51.210.108.56:2000/enti/');
         let array:any = []
         response.data.map((dato:any) => {
             array.push(dato.nome)
@@ -68,7 +68,7 @@ const EditCourses = ({id}:{id:any}) => {
 
   const fetchData2 = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:2000/courses/${id}`);
+      const response = await axios.get(`http://51.210.108.56:2000/courses/${id}`);
       const courseData = response.data;
       setFormData(courseData);
     } catch (error) {
@@ -130,7 +130,7 @@ const EditEnti = ({id}:{id:any}) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:2000/enti/${id}`);
+      const response = await axios.get(`http://51.210.108.56:2000/enti/${id}`);
       const entiData = response.data;
       setFormData(entiData);
     } catch (error) {
@@ -150,7 +150,7 @@ const EditEnti = ({id}:{id:any}) => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://127.0.0.1:2000/update/enti/${id}`, formData);
+      const response = await axios.put(`http://51.210.108.56:2000/update/enti/${id}`, formData);
       console.log(response.data); 
       redirec()
     } catch (error) {
@@ -227,7 +227,7 @@ const EditStudents = ({id}:{id:any}) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:2000/students/${id}`);
+      const response = await axios.get(`http://51.210.108.56:2000/students/${id}`);
       const studentData = response.data;
       setFormData(studentData);
     } catch (error) {
@@ -246,7 +246,7 @@ const EditStudents = ({id}:{id:any}) => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://127.0.0.1:2000/update/students/${id}`, formData);
+      const response = await axios.put(`http://51.210.108.56:2000/update/students/${id}`, formData);
       console.log(response.data); 
       redirec()
     } catch (error) {

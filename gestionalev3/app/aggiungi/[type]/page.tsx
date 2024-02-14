@@ -31,7 +31,7 @@ const AddCourses = () => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://51.210.108.56:2000/add/corso', formData);
+      const response = await axios.post('https://51.210.108.56:2000/add/corso', formData);
       redirec(response.data.data, 'courses')
 
     } catch (error) {
@@ -46,7 +46,7 @@ const AddCourses = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://51.210.108.56:2000/enti/');
+        const response = await axios.get('https://51.210.108.56:2000/enti/');
         let array:any = []
         response.data.map((dato:any) => {
             array.push(dato.nome)
@@ -121,7 +121,7 @@ const AddEnti = () => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://51.210.108.56:2000/add/ente', formData);
+      const response = await axios.post('https://51.210.108.56:2000/add/ente', formData);
       redirec(response.data.data._id, 'enti')
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
@@ -199,7 +199,7 @@ const AddStudents = () => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://51.210.108.56:2000/add/student', formData);
+      const response = await axios.post('https://51.210.108.56:2000/add/student', formData);
       redirec(response.data.data._id, 'students')
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
