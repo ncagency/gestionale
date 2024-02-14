@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function UploadForm({params}) {
+function UploadForm({params}:{params:any}) {
 
   
   let id = params.id
@@ -25,48 +25,48 @@ function UploadForm({params}) {
 
 
 
-  const handleTypeChange = (event) => {
+  const handleTypeChange = (event:any) => {
     setDocType(event.target.value)
   };
 
-  const handleNumeroChange = (event) => {
+  const handleNumeroChange =  (event:any) => {
     setNdoc(event.target.value)
   };
 
-  const handleLdocChange = (event) => {
+  const handleLdocChange =  (event:any) => {
     setLdoc(event.target.value)
   };
 
-  const handleCityChange = (event) => {
+  const handleCityChange =  (event:any) => {
     setCity(event.target.value)
   }
 
-  const handleStateChange = (event) => {
+  const handleStateChange =  (event:any) => {
     setState(event.target.value)
   }
 
-  const handleEmiChange = (event) => {
+  const handleEmiChange = (event:any) => {
     setEmi(event.target.value)
   }
 
-  const handleScadChange = (event) => {
+  const handleScadChange = (event:any) => {
     setScad(event.target.value)
   }
 
-  const handleImageChange = (event) => {
+  const handleImageChange = (event:any) => {
     setImageFront(event.target.files[0]);
   
   };
 
 
-  const handleImageChange2 = (event) => {
+  const handleImageChange2 = (event:any) => {
     setImageRetro(event.target.files[0]);
   
   };
   
   
   
-  const handleSubmit = async (event) => {
+  const handleSubmit = async  (event:any) => {
     event.preventDefault();
 
     const formData = new FormData();
@@ -78,8 +78,13 @@ function UploadForm({params}) {
     formData.append('state_doc', state_doc);
     formData.append('emi', emi);
     formData.append('scad', scad);
-    formData.append('image_front', image_front);
-    formData.append('image_retro', image_retro);
+    if (image_front) {
+      formData.append('image_front', image_front);
+    }
+    if (image_retro) {
+      formData.append('image_retro', image_retro);
+    }
+    
     try {
       const response = await axios.post('http://51.210.108.56:2000/upload', formData, {
         headers: {

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function UploadForm({params}) {
+function UploadForm({params}:{params:any}) {
 
   let id = params.id
 
@@ -14,15 +14,15 @@ function UploadForm({params}) {
 
 
 
-  const handleCosto = (event) => {
+  const handleCosto = (event:any) => {
     setCosto(event.target.value)
   };
 
-  const handleData = (event) => {
+  const handleData = (event:any) => {
     setData(event.target.value)
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = (event:any) => {
     setImage(event.target.files[0]);
   
   };
@@ -32,15 +32,18 @@ function UploadForm({params}) {
   
   
   
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event:any) => {
     event.preventDefault();
 
     const formData = new FormData();
     formData.append('id', id);
     formData.append('costo', costo);
-    formData.append('image', image, data);
+    if (image) {
+      formData.append('image', image, data) 
+    }
+
     try {
-      const response = await axios.post('http://51.210.108.56:2000/upload_fatture', formData, {
+      const response = await axios.post('http://127.0.0.1:2000/upload_fatture', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
