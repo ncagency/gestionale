@@ -1,4 +1,4 @@
-const TableRow = ({ label, value }) => (
+const TableRow = ({ label, value }:{ label:any, value:any }) => (
    
     <tr className="border-1 p-4">
          <td>{label}</td>
