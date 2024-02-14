@@ -26,7 +26,7 @@ const Iscrizione = () => {
 
 
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:any) => {
     const { name, value } = e.target;
     
     setFormData({
@@ -35,7 +35,7 @@ const Iscrizione = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
       const selectedCourse = courses.find((course) => course._id === formData.course_id);
