@@ -3,12 +3,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-interface Rate {
-  valore: number;
-  data: string;
-  // Altre proprietà se necessario
-}
-
 const Iscrizione = () => {
   const todayDate: Date = new Date();
   const year: number = todayDate.getFullYear();
@@ -22,7 +16,7 @@ const [formData, setFormData] = useState<{
   course_id: string;
   data: string;
   totale: number;
-  rate: Rate[]; 
+  rate: any; 
 }>({
   user_id: '',
   course_id: '',
@@ -49,8 +43,7 @@ const [formData, setFormData] = useState<{
   };
 
 
-  
-  const handleRateChange = (index:any, field:any, value:any) => {
+  const handleRateChange = (index: number, field: any, value: any) => {
     const updatedRates = [...formData.rate];
 
     if (!updatedRates[index]) {
@@ -61,9 +54,9 @@ const [formData, setFormData] = useState<{
       ...formData,
       rate: updatedRates
     });
-  };
+};
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:2000/iscrizione/', formData);
@@ -119,7 +112,7 @@ const [formData, setFormData] = useState<{
     fetch();
   }, []);
 
-  const redirec = (id) => {
+  const redirec = (id:any) => {
     const destinationValue = `/scheda/students/${id}`;
     window.location.href = destinationValue;
 }
@@ -175,7 +168,7 @@ const [formData, setFormData] = useState<{
 
           <button type="button" onClick={handleCalcolaRate}>Calcola Rate</button>
 
-          {formData.rate.length > 0 && formData.rate.map((rate, index) => (
+          {formData.rate.length > 0 && formData.rate.map((rate:any, index:any) => (
             <div key={index}>
               <label>
                 Valore Rata {index + 1}:
