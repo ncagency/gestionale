@@ -3,7 +3,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-
+interface Rate {
+  valore: number;
+  data: string;
+  // Altre proprietà se necessario
+}
 
 const Iscrizione = () => {
   const todayDate: Date = new Date();
@@ -13,19 +17,27 @@ const Iscrizione = () => {
 
 const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
-  const [formData, setFormData] = useState({
-    user_id: '',
-    course_id: '',
-    data:formattedDate,
-    totale: 0,
-    rate: [],
-  });
+const [formData, setFormData] = useState<{
+  user_id: string;
+  course_id: string;
+  data: string;
+  totale: number;
+  rate: Rate[]; 
+}>({
+  user_id: '',
+  course_id: '',
+  data: formattedDate,
+  totale: 0,
+  rate: [],
+});
+
   const [students, setStudents] = useState<any[]>([]);
   const [courses, setCourses] = useState<any[]>([]);
   const [enti, setEnti] = useState<any[]>([]);
   const [totale, setTotale] = useState<number>(0);
   const [numRate, setNumRate] = useState<number>(0);
-  const handleInputChange = (e) => {
+
+  const handleInputChange = (e:any) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -36,12 +48,11 @@ const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${da
     }
   };
 
-  const handleSetTotale = (value) => {
-    setTotale(parseFloat(value));
-  };
+
   
-  const handleRateChange = (index, field, value) => {
+  const handleRateChange = (index:any, field:any, value:any) => {
     const updatedRates = [...formData.rate];
+
     if (!updatedRates[index]) {
       updatedRates[index] = { valore: 0, data: '' };
     }

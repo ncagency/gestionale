@@ -692,20 +692,17 @@ app.put('/stock/:courseId', async (req, res) => { // Modifica il percorso per in
     try {
         const courseId = req.params.courseId; // Ottieni l'ID del corso dai parametri della richiesta
         const data = req.body;
-        const coll_contabile = db.collection('contabile');
+        const coll_contabile = await db.collection('contabile');
      
         
         const contabile = await coll_contabile.findOne({});
+        const enteTrovato =  contabile.enti.find(ente => ente.nome === data.ente);
+        const corsoTrovato =  contabile.courses.find(corso => corso._id === courseId); // Utilizza l'ID del corso estratto dai parametri della richiesta
 
-        const enteTrovato = contabile.enti.find(ente => ente.nome === data.ente);
-        const corsoTrovato = contabile.courses.find(corso => corso._id === courseId); // Utilizza l'ID del corso estratto dai parametri della richiesta
-
-       console.log(corsoTrovato)
 
         let stock = corsoTrovato.stock + parseInt(data.stock)
         let costo = corsoTrovato.costo  +  Math.round(parseFloat(data.costo) * 100) / 100;
         let tot = stock * costo
-
         let totale_ente = enteTrovato.totale + tot
         let da_inviare = enteTrovato.da_inviare + tot
 
@@ -751,7 +748,6 @@ app.post('/iscrizione', async (req,res) => {
     const collection_contabile = db.collection('contabile');
 
 
-
    
 
 
@@ -787,9 +783,9 @@ app.post('/iscrizione', async (req,res) => {
         
 
     const corso_contabile = contabile.courses.find(course => course._id === corso_id)
-    let costo = Math.round(parseFloat(data.totale) * 100) / 100;
+    const costo =  parseFloat(Number(data.totale).toFixed(2))
         
-
+         
     const cronologia = { utente_id:utente_id, utente_nome: studente.nome, course_id: corso_id, course_nome: corso.nome, costo: costo, prezzo_acquisto:corso_contabile.costo, rate:nrate, data: data.data, type:"ricev"}
 
 
@@ -801,6 +797,7 @@ app.post('/iscrizione', async (req,res) => {
     let corso_uscite = vendite * corso_contabile.costo
    
     let profit = corso_entrate - corso_uscite
+
     await collection_contabile.updateOne(
         {},
         { $push: {"cronologia_transazioni": cronologia ,

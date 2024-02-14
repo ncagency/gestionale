@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Row } from '@/app/search/[type]/page';
+import Row from './Row';
 
 const ViewCorsi = ({ corsi_id, user_id }) => {
   const [corsi, setCorsi] = useState([]);

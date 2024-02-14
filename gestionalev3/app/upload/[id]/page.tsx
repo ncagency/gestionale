@@ -81,7 +81,7 @@ function UploadForm({params}) {
     formData.append('image_front', image_front);
     formData.append('image_retro', image_retro);
     try {
-      const response = await axios.post('http://127.0.0.1:2000/upload', formData, {
+      const response = await axios.post('http://51.210.108.56:2000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

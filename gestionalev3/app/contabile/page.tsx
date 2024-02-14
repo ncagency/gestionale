@@ -1,15 +1,42 @@
 'use client'
 import React,{useEffect, useState} from 'react'
-import { TableRow } from '../scheda/[type]/[id]/page'
+import TableRow from '@/components/TableRow';
 import axios from 'axios';
+
+interface CronologiaItem {
+    costo?: number;
+    inviati?: number;
+}
+
+interface Ente {
+    nome: string;
+    totale: number;
+    da_inviare: number;
+    inviati: number;
+}
+
+interface Corso {
+    name: string;
+    costo: number;
+    venduti: number;
+    stock: number;
+    totale_entrate: number;
+    totale_uscite: number;
+    totale_profit: number;
+}
+interface Student {
+    _id: string;
+    totale: number;
+    saldati: number;
+    in_sospeso: number;
+}
 
 
 const Contabile = () => {
-    const [students,setStudents] = useState([])
-    const [courses,setCourses] = useState([])
-    const [enti,setEnti] = useState([])
-    const [cronologia,setCronologia] = useState([])
-
+    const [students,setStudents] = useState<Student[]>([]);
+    const [courses,setCourses] = useState<Corso[]>([]);
+    const [enti, setEnti] = useState<Ente[]>([]);
+    const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
 
 
 
@@ -40,14 +67,14 @@ const Contabile = () => {
     
     
     cronologia.forEach(item => {
-          if (item.hasOwnProperty("costo")) {
+        if (item.hasOwnProperty("costo") && item.costo !== undefined) {
             total += item.costo;
-          }
-      });
+        }
+    });
     
     cronologia.forEach(item => {
-        if (item.hasOwnProperty("inviati")) {
-          uscite += item.inviati;
+        if (item.hasOwnProperty("inviati") && item.inviati !== undefined) {
+            uscite += item.inviati;
         }
     });
  
@@ -157,7 +184,7 @@ const Contabile = () => {
                                         <td>{student.totale}</td>
                                         <td>{student.saldati}</td>
                                         <td>{student.in_sospeso}</td>
-                                        <td>{student.rate.length}</td>
+                                      
                                     </tr>                       
                             ))}
                             

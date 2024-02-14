@@ -7,7 +7,7 @@ import { ObjectId } from 'mongodb'
 
 
 
-export const EditCourses = ({id}) => {
+const EditCourses = ({id}) => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -110,8 +110,7 @@ export const EditCourses = ({id}) => {
   )
 }
 
-
-export const EditEnti = ({id}) => {
+const EditEnti = ({id}) => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -190,7 +189,7 @@ export const EditEnti = ({id}) => {
   )
 }
 
-export const EditStudents = ({id}) => {
+const EditStudents = ({id}) => {
   const [formData, setFormData] = useState({
     nome:'',
     secondo_nome:'',

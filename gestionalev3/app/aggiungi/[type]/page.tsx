@@ -6,12 +6,12 @@ import { ObjectId } from 'mongodb'
 
 
 
-const redirec = (id, type) => {
+const redirec = (id:any, type:any) => {
   const destinationValue = `/scheda/${type}/${id}`;
   window.location.href = destinationValue;
 }
 
-export const AddCourses = () => {
+const AddCourses = () => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -20,7 +20,7 @@ export const AddCourses = () => {
   })
 
   
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:any) => {
     const {name , value} = e.target;
     console.log(e.target)
     setFormData({
@@ -29,7 +29,7 @@ export const AddCourses = () => {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:2000/add/corso', formData);
@@ -43,7 +43,6 @@ export const AddCourses = () => {
   const [entiData, setEntiData] = useState([]);
    
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +56,6 @@ export const AddCourses = () => {
         
         setIsLoading(false);
       } catch (error) {
-        setError(error);
         setIsLoading(false);
       }
     };
@@ -98,8 +96,7 @@ export const AddCourses = () => {
   )
 }
 
-
-export const AddEnti = () => {
+const AddEnti = () => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -113,7 +110,7 @@ export const AddEnti = () => {
     corsi:[]
   })
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:any) => {
     const {name , value} = e.target;
     console.log(e.target)
     setFormData({
@@ -122,7 +119,7 @@ export const AddEnti = () => {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:2000/add/ente', formData);
@@ -158,7 +155,7 @@ export const AddEnti = () => {
   )
 }
 
-export const AddStudents = () => {
+const AddStudents = () => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -191,7 +188,7 @@ export const AddStudents = () => {
     }
   })
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e:any) => {
     const {name , value} = e.target;
     console.log(e.target)
     setFormData({
@@ -200,7 +197,7 @@ export const AddStudents = () => {
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://127.0.0.1:2000/add/student', formData);
@@ -269,7 +266,7 @@ export const AddStudents = () => {
 
 //addWorkers
 
-const AddForm = ({params}) => {
+const AddForm = ({params} : {params:any}) => {
 
   let type = params.type
 

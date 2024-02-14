@@ -6,7 +6,8 @@ import axios from 'axios';
 // Import Navbar (update with the correct path)
 import Link from 'next/link';
 import { Rate,ViewCorsi,Debts } from '@/components';
-import { Row } from '@/app/search/[type]/page';
+import Row from '@/components/Row';
+import TableRow from '@/components/TableRow';
 import { redirect } from 'next/dist/server/api-utils';
 
 interface UserDetailsProps {
@@ -31,13 +32,7 @@ interface TabDetailsProps {
 }
   }
 
-export const TableRow = ({ label, value }) => (
-   
-   <tr className="border-1 p-4">
-        <td>{label}</td>
-        <td>{value}</td>
-    </tr>
-);
+
 
 
 
@@ -357,8 +352,8 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
    
     
-    const apiUrl = `http://localhost:2000/${params.type}/${params.id}`;
-    const apiUrl_contabile = `http://localhost:2000/contabile/${params.type}/${params.id}`;
+    const apiUrl = `http://127.0.0.1:2000/${params.type}/${params.id}`;
+    const apiUrl_contabile = `http://127.0.0.1:2000/contabile/${params.type}/${params.id}`;
 
     const [data,setData] = useState(null);
     const [contabileData, setContabileData] = useState(null)
@@ -394,7 +389,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
           // Se l'utente ha confermato l'eliminazione, procedi
           if (confirmDelete) {
-              const response = await fetch(`http://localhost:2000/elimina/${params.type}/${id}`, {
+              const response = await fetch(`http://127.0.0.1:2000/elimina/${params.type}/${id}`, {
                   method: 'DELETE',
               });
   

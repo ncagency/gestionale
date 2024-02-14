@@ -19,7 +19,8 @@ const Iscrizione = () => {
     stock:0,
     course_id: '',
     ente: '',
-    data: formattedDate
+    data: formattedDate,
+    type:"inv"
   });
 
 

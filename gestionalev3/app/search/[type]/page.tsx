@@ -3,18 +3,8 @@ import React, { useEffect, useState } from 'react'
 import ViewButton from '@/components/ViewButton'
 import { redirect } from 'next/dist/server/api-utils'
 import axios from 'axios'
+import Row from '@/components/Row'
 
-export const Row = ({data, type} : {data:any, type:string}) => {
-
-  let single = data
-  let id = single._id.toString()
-  return (
-        <div className='d-flex justify-content-between align-items-center p-4 bg-primary rounded-3 shadow'>
-          <div className='fs-4 text-white'>{single.nome} {single.secondo_nome} {single.cognome}</div>
-          <ViewButton id={id} type={type} />
-        </div>
-  )
-}
 
 const Visualizer = ({ data, type_s }: { data: any, type_s: string }) => {
   return (
