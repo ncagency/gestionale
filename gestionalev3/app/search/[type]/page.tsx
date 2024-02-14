@@ -89,25 +89,25 @@ const Search = ({params}:{ params:any }) => {
     const fetchUsersData = async () => {
       try {
 
-        const response = await fetch(`http://51.210.108.56:2000/${type}`);
+        const response = await fetch(`http://localhost:2000/${type}`);
         const dbData = await response.json();
         setData(dbData);
 
 
         
         if (type === "students") {
-          const courses = await axios.get("http://51.210.108.56:2000/courses")
-          const enti = await axios.get("http://51.210.108.56:2000/enti")
+          const courses = await axios.get("http://localhost:2000/courses")
+          const enti = await axios.get("http://localhost:2000/enti")
           setCourses(courses.data)
           setEnti(enti.data)
           setActiveIndex(0);
 
         } else if (type === "courses") {
-          const enti = await axios.get("http://51.210.108.56:2000/enti")
+          const enti = await axios.get("http://localhost:2000/enti")
           setEnti(enti.data)
           setActiveIndex(1);
         } else if (type === "enti") {
-          const courses = await axios.get("http://51.210.108.56:2000/courses")
+          const courses = await axios.get("localhost:2000/courses")
           setCourses(courses.data)
 
           setActiveIndex(2);

@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 
 let dbConnection
 
-const uris = "mongodb+srv://gerrydag:Mulignan_1324@cluster0.g7jbh.mongodb.net/ansidonna";
+const uris = "mongodb://51.210.108.56:27017/ansidonna";
 
 module.exports = {
     connectToDb: (cb) => {
