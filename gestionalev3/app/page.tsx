@@ -92,11 +92,23 @@ const ContabileCard: React.FC = () => {
   };
 
 
-
+  
+interface CronologiaRecord {
+    type: string; // o qualsiasi altro tipo appropriato
+    utente_nome: string;
+    course_nome: string;
+    data: string;
+    costo: number;
+    ente_name: string;
+    corso_nome: string;
+    prezzo: number;
+    n_stock: number;
+    tot: number;
+  }
 
 
 export default function Home() {
-   const [cronologia, setCronologia] = useState([])
+    const [cronologia, setCronologia] = useState<CronologiaRecord[]>([]);
 
    useEffect(() => {
     const fetch = async () => {
