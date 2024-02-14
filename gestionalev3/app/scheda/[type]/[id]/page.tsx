@@ -53,7 +53,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   useEffect(() => {
     const fetchFileNames = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:2000/api/files/${id_user}`);
+        const response = await axios.get(`http://51.210.108.56:2000/api/files/${id_user}`);
         setFileNames(response.data.fileNames);
       } catch (error) {
         console.error('Errore durante il recupero dei nomi dei file:', error);
@@ -66,7 +66,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   const handleFileDownload = async (fileName:any) => {
     try {
       // Sostituisci 'example.com' con l'indirizzo del tuo server remoto
-      window.open(`http://127.0.0.1:2000/api/files/${id_user}/${fileName}`, '_blank');
+      window.open(`http://51.210.108.56:2000/api/files/${id_user}/${fileName}`, '_blank');
     } catch (error) {
       console.error('Errore durante il download del file:', error);
     }
@@ -173,7 +173,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
           const fetchUsersData = async () => {
               try {
                   // Esegui la query per ottenere tutti gli utenti dal database
-                  const response = await fetch('http://127.0.0.1:2000/students');
+                  const response = await fetch('http://51.210.108.56:2000/students');
                   const userData = await response.json();
                   setUsersData(userData);
               } catch (error) {
@@ -257,7 +257,7 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
     const fetchUsersData = async () => {
         try {
             // Esegui la query per ottenere tutti gli utenti dal database
-            const response = await fetch('http://127.0.0.1:2000/courses');
+            const response = await fetch('http://51.210.108.56:2000/courses');
             const courseData = await response.json();
             setCourseData(courseData);
         } catch (error) {
@@ -352,8 +352,8 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
    
     
-    const apiUrl = `http://127.0.0.1:2000/${params.type}/${params.id}`;
-    const apiUrl_contabile = `http://127.0.0.1:2000/contabile/${params.type}/${params.id}`;
+    const apiUrl = `http://51.210.108.56:2000/${params.type}/${params.id}`;
+    const apiUrl_contabile = `http://51.210.108.56:2000/contabile/${params.type}/${params.id}`;
 
     const [data,setData] = useState(null);
     const [contabileData, setContabileData] = useState(null)
@@ -389,7 +389,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
           // Se l'utente ha confermato l'eliminazione, procedi
           if (confirmDelete) {
-              const response = await fetch(`http://127.0.0.1:2000/elimina/${params.type}/${id}`, {
+              const response = await fetch(`http://51.210.108.56:2000/elimina/${params.type}/${id}`, {
                   method: 'DELETE',
               });
   
