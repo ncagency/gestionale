@@ -4,7 +4,7 @@ import React from 'react';
 
 
 
-const ViewButton = ({ id, type }) => {
+const ViewButton = ({ id, type }:{ id:any, type:any }) => {
 
     const handleRedirect = () => {
         // Verifica se id è valido prima di chiamare toHexString

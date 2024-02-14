@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Row from './Row';
 
-const ViewCorsi = ({ corsi_id, user_id }) => {
-  const [corsi, setCorsi] = useState([]);
+const ViewCorsi = ({ corsi_id, user_id }:{ corsi_id:any, user_id:any }) => {
+  const [corsi, setCorsi] = useState<any[]>([]);
   const [corsoSelezionato, setCorsoSelezionato] = useState("");
 
   useEffect(() => {
