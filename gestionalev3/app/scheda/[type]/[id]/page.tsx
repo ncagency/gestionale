@@ -46,7 +46,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     const rate: any = contabile.rate
     const corsi:any = user.corsi
 
-    const redirec = (query) => {
+    const redirec = (query:string) => {
       const destinationValue = query;
       window.location.href = destinationValue;
   }
@@ -63,7 +63,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     fetchFileNames();
   }, [id_user]);
 
-  const handleFileDownload = async (fileName) => {
+  const handleFileDownload = async (fileName:any) => {
     try {
       // Sostituisci 'example.com' con l'indirizzo del tuo server remoto
       window.open(`http://127.0.0.1:2000/api/files/${id_user}/${fileName}`, '_blank');
@@ -330,7 +330,7 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
 }
 
 
-const Details = ({ data, type, contabile }) => {
+const Details = ({data,type,contabile}:{ data:any, type:any, contabile:any }) => {
     if (!data || !contabile) {
       return <p>Loading...</p>; // o qualsiasi altra logica per gestire il caricamento
     }
@@ -382,7 +382,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
     
     let link = `/search/${params.type}`
     
-    const handleDelete = async (id) => {
+    const handleDelete = async (id:any) => {
       try {
           // Chiedi all'utente conferma prima di procedere con l'eliminazione
           const confirmDelete = window.confirm("Sei sicuro di voler eliminare questo elemento?");
@@ -408,7 +408,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
           }
   
       } catch (error) {
-          console.error('Errore durante l\'eliminazione:', error.message);
+          console.error('Errore durante l\'eliminazione');
           // Gestisci l'errore in base alle tue esigenze, ad esempio visualizzando un messaggio di errore all'utente.
       }
   };
