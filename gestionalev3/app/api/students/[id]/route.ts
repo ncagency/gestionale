@@ -1,17 +1,15 @@
-import { getDatas } from "@/app/lib/data";
+import { getDatas,getById } from "@/app/lib/data";
 import { NextResponse } from "next/server";
 
 
-export const GET = async () => {
+
+
+export async function GET(response: Response, context:any) {
     try {
-        const students = await getDatas('students')
+        const {params} = context
+        const students = await getById(params.id, 'students')
         return NextResponse.json({message: "Studenti recuperati",students},{status:200})
     } catch (err) {
         return NextResponse.json({message: "Error",err},{status:500})
     }
-}
-
-
-export const POST = async () => {
-    console.log("POST REQUEST RICCHIO");
 }

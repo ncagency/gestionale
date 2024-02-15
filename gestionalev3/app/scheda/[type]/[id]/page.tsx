@@ -32,7 +32,7 @@ interface TabDetailsProps {
 }
   }
 
-const apiURL = "http://127.0.0.1:2000"
+const apiURL = "http://127.0.0.1:3000"
 
 
 
@@ -362,8 +362,9 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(apiUrlx);
-        setData(response.data)
+        const response = await axios.get(`${apiURL}/api/${params.type}/${params.id}`);
+        setData(response.data.students)
+        console.log(response.data.students)
         const response2 = await axios.get(apiUrl_contabile);
         setContabileData(response2.data)
        
