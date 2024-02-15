@@ -6,6 +6,18 @@ import axios from 'axios';
 
 const apiURL = "http://127.0.0.1:2000"
 
+const style = {
+    background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+  }
+
+const styleSuccess = {
+    background: "linear-gradient(to right, #4ec932, #2bb50b)",
+  }
+
+const styleBad = {
+    background: "linear-gradient(to right,#ce0c0c, #9a0000)",
+}
+
 interface CronologiaItem {
     costo?: number;
     inviati?: number;
@@ -91,26 +103,26 @@ const Contabile = () => {
     <div className='h-100 d-flex flex-column gap-3'>
             
             <div className='text-primary fs-4'>
-                <p onClick={() => redirec(`http://localhost:3000/`)}>Indietro</p>
+                <p onClick={() => redirec(`http://localhost:3000/`)} style={{cursor: 'pointer'}}>Indietro</p>
             </div>
             
             <div className='d-flex gap-1 h-25'>
-                <div className='d-flex flex-column justify-content-center bg-primary w-25 h-100 rounded-3 p-3'>
-                   <p className='fs-4 text-white'>Totale</p>
-                   <p className='fs-1 text-white'>{total}</p>
+                <div style={styleSuccess} className='d-flex flex-column justify-content-center bg-primary w-25 h-100 rounded-3 p-3'>
+                   <p className='fs-4 text-white'>Entrate</p>
+                   <p className='fs-1 text-white'>{total} €</p>
                 </div>
-                <div className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
+                <div style={styleBad} className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
                    <p className='fs-4 text-white'>Uscite</p>
-                   <p className='fs-1 text-white'>{uscite}</p>
+                   <p className='fs-1 text-white'>{uscite} €</p>
                 </div>
-                <div className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
+                <div style={style} className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
                    <p className='fs-4 text-white'>Profit</p>
-                   <p className='fs-1 text-white'>{profit}</p>
+                   <p className='fs-1 text-white'>{profit} €</p>
                 </div>
             </div>
 
 
-            <div className='d-flex gap-2 w-100 h-75 bg-primary p-4 rounded-4'  >
+            <div  style={style} className='d-flex gap-2 w-100 h-75 p-4 rounded-4'  >
                     
                     <div className='w-50 d-flex flex-column '> 
                     <h1 className='text-white fs-4'>Enti</h1>
@@ -126,9 +138,9 @@ const Contabile = () => {
                         {enti.map((ente) => (
                                 <tr className="border-1 p-4">
                                     <td>{ente.nome}</td>
-                                    <td>{ente.totale}</td>
-                                    <td>{ente.da_inviare}</td>
-                                    <td>{ente.inviati}</td>
+                                    <td>{ente.totale} €</td>
+                                    <td>{ente.da_inviare} €</td>
+                                    <td>{ente.inviati} €</td>
                                 </tr>                       
                         ))}
                         
@@ -153,12 +165,12 @@ const Contabile = () => {
                             {courses.map((corso) => (
                                     <tr className="border-1 p-4">
                                         <td>{corso.name}</td>
-                                        <td>{corso.costo}</td>
+                                        <td>{corso.costo} €</td>
                                         <td>{corso.venduti}</td>
                                         <td>{corso.stock}</td>
-                                        <td>{corso.totale_entrate}</td>
-                                        <td>{corso.totale_uscite}</td>
-                                        <td>{corso.totale_profit}</td>
+                                        <td>{corso.totale_entrate} €</td>
+                                        <td>{corso.totale_uscite} €</td>
+                                        <td>{corso.totale_profit} €</td>
                                     </tr>                       
                             ))}
                             
@@ -168,7 +180,7 @@ const Contabile = () => {
                                 
             </div>
 
-            <div className='w-100 bg-primary p-4 rounded-4'>
+            <div style={style} className='w-100 p-4 rounded-4'>
             <h1 className='text-white'>Studenti</h1>
             <table className="table table-bordered">
                                 <tbody>
@@ -182,9 +194,9 @@ const Contabile = () => {
                             {students.map((student) => (
                                     <tr className="border-1 p-4">
                                         <td>{student._id}</td>
-                                        <td>{student.totale}</td>
-                                        <td>{student.saldati}</td>
-                                        <td>{student.in_sospeso}</td>
+                                        <td>{student.totale} €</td>
+                                        <td>{student.saldati} €</td>
+                                        <td>{student.in_sospeso} €</td>
                                       
                                     </tr>                       
                             ))}

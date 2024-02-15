@@ -156,9 +156,9 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                 
                     
                 <div style={style} className=' w-75 mt-4 p-3 text-white rounded-4'>
-                      <h1>Totale:{contabile.totale}</h1>
-                      <h1>Saldati:{contabile.saldati}</h1>
-                      <h1>In Sospeso:{contabile.in_sospeso}</h1>
+                      <h1>Totale:{contabile.totale} €</h1>
+                      <h1>Saldati:{contabile.saldati} €</h1>
+                      <h1>In Sospeso:{contabile.in_sospeso} €</h1>
                       <Debts rates={rate} userId={id_user} />
               </div>
                   
@@ -231,13 +231,13 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                           <div style={style} className='bg-primary text-white p-3 rounded-4'>
                                  {  (contabile.stock < 10 && contabile.stock > 0) && <div className='bg-warning fs-4 p-3 rounded-3 m-2'>Stock in Esaurimento</div>} 
                                  {  contabile.stock === 0 && <div className='bg-danger fs-4 p-3 rounded-3 m-2'>Stock Esaurito</div>} 
-                                  <h2>Entrate:{contabile.totale_entrate}</h2>
-                                  <h2>Uscite:{contabile.totale_uscite}</h2>
-                                  <h2>Profit:{contabile.totale_profit}</h2>
+                                  <h2>Entrate {contabile.totale_entrate} €</h2>
+                                  <h2>Uscite {contabile.totale_uscite} €</h2>
+                                  <h2>Profit {contabile.totale_profit} €</h2>
                                   <hr />
                                   <div className='d-flex gap-4 fs-5'>
                                     <h4>Stock:{contabile.stock}</h4>
-                                    <h4>Costo:{contabile.costo}</h4>
+                                    <h4>Costo:{contabile.costo} €</h4>
                                     <h4>Venduti:{contabile.venduti}</h4>
                                   </div>
                                   <div style={{cursor:'pointer'}} onClick={redirec} className='bg-warning p-3 w-25 rounded-5 mt-5'> Stock</div>
@@ -323,15 +323,15 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
                          <div className='w-75 d-flex gap-5 border border-2 ml-5 rounded-4 p-4 h-50 ' style={style}>
                             <div>
                               <label className='w-25 fs-5 text-warning'>Totale</label>
-                              <p className='fs-2 text-white'> {contabile.totale}</p>
+                              <p className='fs-2 text-white'> {contabile.totale} €</p>
                             </div>
                             <div>
                               <label className='w-25 fs-5 text-warning'>Saldati</label>
-                              <p className='fs-2 text-white'>{contabile.inviati}</p>
+                              <p className='fs-2 text-white'>{contabile.inviati} €</p>
                             </div>
                             <div>
                               <label className='w fs-5 text-warning'>Inviare</label>
-                              <p className='fs-2 text-white'>{contabile.da_inviare}</p>
+                              <p className='fs-2 text-white'>{contabile.da_inviare} €</p>
                             </div>
                             <div style={style2} className='d-flex  p-2 bg-primary  text-white rounded-4' onClick={redirec} >
                                   <p>Carica Fattura</p>

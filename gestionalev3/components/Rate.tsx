@@ -58,10 +58,10 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
             <tr key={index}>
               <td>
                 {editIndex === index ? (
-                  <label  onChange={(e) => handleInputChange(e, 'valore', index)}>{item.valore}</label>
+                  <label  onChange={(e) => handleInputChange(e, 'valore', index)}>{item.valore} €</label>
                 ) : (
-                item.valore
-                )}
+                item.valore 
+                )} €
               </td>
               <td>
                 {editIndex === index ? (

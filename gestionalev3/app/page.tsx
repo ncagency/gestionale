@@ -91,10 +91,20 @@ const AddCard = () => {
     );
 };
 
-const ContabileCard: React.FC = () => {
+const ContabileCard: React.FC = (datax:any) => {
+
     return (
       <div style={style} className='d-flex flex-column position-relative p-4 h-100 rounded-4'>
-        <h1 className='mt-5 mb-5 text-white'>Totale $</h1>
+        <div className="row w-100 h-75 p-1 m-2">
+            <div className="col-6">
+                <p className="fs-5 text-white">i</p>
+                <p className="fs-1 text-white">{datax.data.entrate} €</p>
+            </div>   
+            <div className="col-6">
+                <p className="fs-5 text-white">i</p>
+                <p className="fs-1 text-white">{datax.data.uscite} €</p>
+            </div>   
+        </div>
         <GoButton destination="contabile" />{/* INSERISCI DESTINAZIONE CORRETTA IN MODO DA GESTIRE L'EVENTO ONCLICK DEL BOTTONE */}
       </div>
     );
@@ -127,10 +137,31 @@ export default function Home() {
     fetch()
    })
    
+   let total = 0
+   let uscite = 0
+   
+   
+   cronologia.forEach(item => {
+       if (item.hasOwnProperty("costo") && item.costo !== undefined) {
+           total += item.costo;
+       }
+   });
+   
+   cronologia.forEach(item => {
+       if (item.hasOwnProperty("inviati") && item.inviati !== undefined) {
+           uscite += item.inviati;
+       }
+   });
+
+ 
+   
+   const profit = total - uscite
+
+   const datax = {entrate:total, uscite:uscite, profit: profit}
     return (
         <div className='container '>
             <div className='row h-100 mt-4'>
-                <div className='col-5'><ContabileCard /></div>
+                <div className='col-5'><ContabileCard data={datax}/></div>
                 <div className='col-2'><AddCard /></div>
                 <div className='col'><DipendentiCard /></div>
             </div>

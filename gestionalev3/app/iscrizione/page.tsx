@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const apiURL = "http://127.0.0.1:2000"
 
+
 const Iscrizione = () => {
   const todayDate: Date = new Date();
   const year: number = todayDate.getFullYear();
@@ -70,6 +71,8 @@ const [formData, setFormData] = useState<{
   const divStyle = {
     width: '700px',
     padding: '60px',
+    background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+
   };
 
   const handleCalcolaRate = () => {
@@ -120,27 +123,35 @@ const [formData, setFormData] = useState<{
   return (
     <div className='d-flex '>
       <div style={divStyle} className='bg-primary rounded-4'>
-        <form className='d-flex flex-column align-items-center gap-2 ' onSubmit={handleSubmit}>
-          <label>
-            Studente:
-            <select
-              name="user_id"
-              value={formData.user_id}
-              onChange={handleInputChange}
-              className="selector-width-state "
-              required
-            >
-              <option value="" disabled>Seleziona Studente</option>
-              {students.map((student, index) => (
-                <option key={index} value={student._id}>
-                  {student.nome} {student.secondo_nome} {student.cognome}
-                </option>
-              ))}
-            </select>
-          </label>
+        <form className='d-flex flex-column align-items-start gap-2 ' onSubmit={handleSubmit}>
+          
+          <div className='d-flex gap-2'>
+            <div className='d-flex flex-column '>
+            <label>
+              Studente:
+              </label>
+              <select
+                name="user_id"
+                value={formData.user_id}
+                onChange={handleInputChange}
+                className="selector-width-state "
+                required
+              >
+                <option value="" disabled>Seleziona Studente</option>
+                {students.map((student, index) => (
+                  <option key={index} value={student._id}>
+                    {student.nome} {student.secondo_nome} {student.cognome}
+                  </option>
+                ))}
+              </select>
+            </div>
+          
 
-          <label>
+            <div className='d-flex gap-2'>
+            <div className='d-flex flex-column '>
+            <label>
             Corso:
+            </label>
             <select
               name="course_id"
               value={formData.course_id}
@@ -155,7 +166,15 @@ const [formData, setFormData] = useState<{
                 </option>
               ))}
             </select>
-          </label>
+              </div>
+              </div>
+          
+       
+            
+            
+            </div>
+
+          <div className='d-flex gap-2'>
 
           <label>
             Totale:
@@ -167,10 +186,12 @@ const [formData, setFormData] = useState<{
             <input type="number" value={numRate} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
           </label>
 
-          <button type="button" onClick={handleCalcolaRate}>Calcola Rate</button>
+          </div>
+          
+
 
           {formData.rate.length > 0 && formData.rate.map((rate:any, index:any) => (
-            <div key={index}>
+            <div className="d-flex" key={index}>
               <label>
                 Valore Rata {index + 1}:
                 <input
@@ -189,8 +210,11 @@ const [formData, setFormData] = useState<{
               </label>
             </div>
           ))}
-
+          <div className='d-flex gap-5'>
+          <button type="button" onClick={handleCalcolaRate}>Calcola Rate</button>
           <button type="submit" className='mt-2'>Invia</button>
+            </div>
+
         </form>
       </div>
     </div>
