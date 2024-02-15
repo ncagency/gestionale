@@ -283,6 +283,7 @@ app.get('/:type', async (req, res) => {
     }
 });
 
+
 app.get('/:type/:id', async (req, res) => {
     try {
         let type = req.params.type;
