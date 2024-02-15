@@ -6,6 +6,9 @@ import axios from 'axios';
 
 const apiURL = "http://127.0.0.1:2000"
 
+const style = {
+  background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+}
 
 function UploadForm({params}:{params:any}) {
 
@@ -14,7 +17,7 @@ function UploadForm({params}:{params:any}) {
   const [nome, setNome] = useState("");
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState('');
-  
+
 
 
   const handleNome = (event:any) => {
@@ -60,18 +63,18 @@ function UploadForm({params}:{params:any}) {
 }
 
   return (
-    <div className='p-5'>
-      <h2>Carica Altri Documenti</h2>
+    <div className='p-5 w-50 rounded-4' style={style}>
+      <h2 className='text-white mb-4'>Carica Altri Documenti</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="nome">Nome:</label>
+        <div className='mb-4 d-flex flex-column'>
+          <label htmlFor="nome">Nome</label>
           <input type="text" id="nome" value={nome} placeholder="Nome" onChange={handleNome} />
         </div>
 
   
-        <div>
-          <label htmlFor="image">Immagine:</label>
+        <div className='mb-4 d-flex  flex-column'>
+          <label htmlFor="image">Immagine</label>
           <input type="file" id="image" accept="image " onChange={handleImageChange} />
         </div>
      

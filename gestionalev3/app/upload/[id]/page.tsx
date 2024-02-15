@@ -5,6 +5,12 @@ import axios from 'axios';
 
 const apiURL = "http://127.0.0.1:2000"
 
+
+const style = {
+  background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+}
+
+
 function UploadForm({params}:{params:any}) {
 
   
@@ -101,48 +107,68 @@ function UploadForm({params}:{params:any}) {
   };
 
   return (
-    <div className='container p-4'>
-      <h2>Carica un'immagine</h2>
+    <div style={style}  className='container p-4 rounded-3'>
+      <h2 className='text-white mb-4'>Carica un'immagine</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
-      <div>
-          <label htmlFor="doc_type">Numero Documento:</label>
-          <input type="text" id="doc_type" value={doc_type} placeholder="CIE, PATENTE, PASSAPORTO" onChange={handleTypeChange} />
+        
+        <div className='d-flex w-100 gap-4'>
+          
+                <div className='d-flex flex-column'>
+                  <label htmlFor="doc_type">Tipo Documento</label>
+                  <input type="text" id="doc_type" value={doc_type} placeholder="CIE, PATENTE, PASSAPORTO" onChange={handleTypeChange} />
+                </div>
+                <div className='d-flex flex-column'>
+                <label htmlFor="n_doc">Numero Documento</label>
+                <input type="text" id="n_doc" value={n_doc} placeholder="N.Doc" onChange={handleNumeroChange} />
+                </div>
         </div>
-        <div>
-          <label htmlFor="n_doc">Numero Documento:</label>
-          <input type="text" id="n_doc" value={n_doc} placeholder="N.Doc" onChange={handleNumeroChange} />
+        <div className='d-flex w-100 gap-4 mt-2'>
+        
+        <div className='d-flex flex-column'>
+                <label htmlFor="l_doc">Luogo Rilascio</label>
+                 <input type="text" id="l_doc" value={l_doc} placeholder="COMUNE,MOTORIZZAZIONE" onChange={handleLdocChange} />
+                </div>
+                <div className='d-flex flex-column'>
+                <label htmlFor="city_doc">Città Rilascio</label>
+                <input type="text" id="city_doc" value={city_doc} placeholder="Città" onChange={handleCityChange} />
+                </div>
+
+
+                <div className='d-flex flex-column'>
+                <label htmlFor="state_doc">Stato:</label>
+                <input type="text" id="state_doc" value={state_doc} placeholder="Stato" onChange={handleStateChange} />
+                </div>
         </div>
-        <div>
-          <label htmlFor="l_doc">Luogo Rilascio:</label>
-          <input type="text" id="l_doc" value={l_doc} placeholder="COMUNE,MOTORIZZAZIONE" onChange={handleLdocChange} />
-        </div>
-        <div>
-          <label htmlFor="city_doc">Città Rilascio:</label>
-          <input type="text" id="city_doc" value={city_doc} placeholder="Città" onChange={handleCityChange} />
-        </div>
-        <div>
-          <label htmlFor="state_doc">Stato:</label>
-          <input type="text" id="state_doc" value={state_doc} placeholder="Stato" onChange={handleStateChange} />
-        </div>
-        <div>
-          <label htmlFor="emi">Emissione</label>
-          <input type="date" id="emi" value={emi} onChange={handleEmiChange} />
-        </div>
-        <div>
-          <label htmlFor="scad">Scadenza:</label>
-          <input type="date" id="scad" value={scad}  onChange={handleScadChange} />
-        </div>
-       
-       
-        <div>
-          <label htmlFor="image_front">Immagine:</label>
+                
+        <div className='d-flex gap-5 my-4'>
+            <div  className='d-flex flex-column'>
+            <label htmlFor="emi">Emissione</label>
+              <input type="date" id="emi" value={emi} onChange={handleEmiChange} />
+            </div>
+            <div className='d-flex flex-column'>
+              <label htmlFor="scad">Scadenza</label>
+              <input type="date" id="scad" value={scad}  onChange={handleScadChange} />
+            </div>
+
+            <div  className='d-flex flex-column'>
+          <label htmlFor="image_front">Fronte</label>
           <input type="file" id="image_front" accept="image_front/*" onChange={handleImageChange} />
         </div>
-        <div>
-          <label htmlFor="image_retro">Immagine:</label>
+        <div  className='d-flex flex-column'>
+          <label htmlFor="image_retro">Retro</label>
           <input type="file" id="image_retro" accept="image_retro/*" onChange={handleImageChange2} />
         </div>
+
+
+
+        </div>
+       
+      
+       
+       
+        
+      
         
         <button type="submit">Carica</button>
       </form>

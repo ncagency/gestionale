@@ -7,6 +7,10 @@ import axios from 'axios';
 
 const apiURL = "http://127.0.0.1:2000"
 
+const style = {
+  background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+}
+
 function UploadForm({params}:{params:any}) {
 
   let id = params.id
@@ -65,10 +69,12 @@ function UploadForm({params}:{params:any}) {
 }
 
   return (
-    <div className='p-5'>
-      <h2>Carica Fattura</h2>
+    <div style={style} className='p-5 w-50 rounded-4'>
+      <h2 className='text-white'>Carica Fattura</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
+        <div className='d-flex gap-5 my-4'>
+          
         <div>
           <label htmlFor="costo">Quantità:</label>
           <input type="text" id="costo" value={costo} placeholder="Quantità" onChange={handleCosto} />
@@ -78,8 +84,13 @@ function UploadForm({params}:{params:any}) {
           <label htmlFor="data">Data:</label>
           <input type="date" id="data" value={data} placeholder="Data" onChange={handleData} />
         </div>
+          
+          
+        </div>
+        
+     
   
-        <div>
+        <div className='my-4'>
           <label htmlFor="image">Immagine:</label>
           <input type="file" id="image" accept="image " onChange={handleImageChange} />
         </div>

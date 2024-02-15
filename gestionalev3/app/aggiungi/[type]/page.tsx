@@ -6,6 +6,8 @@ import axios from 'axios'
 const apiURL = "http://127.0.0.1:2000"
 
 
+
+
 const redirec = (id:any, type:any) => {
   const destinationValue = `/scheda/${type}/${id}`;
   window.location.href = destinationValue;
@@ -133,25 +135,53 @@ const AddEnti = () => {
   return (
     <>
         <form className='d-flex flex-column align-items-center gap-2 '>
-          <label>Nome</label>
-          <input type='text' name="nome" value={formData.nome} onChange={handleInputChange}/>
-          <label>Indirizzo</label>
-          <input type='text' name="indirizzo" value={formData.indirizzo} onChange={handleInputChange}/>
-          <label>Città</label>
-          <div className='d-flex'>
-            <input type='text' placeholder="Città" name="citta" value={formData.citta} onChange={handleInputChange} style={{width:'180px'}}/>
-            <input type='text' placeholder="(Es. MI)" name="prov" value={formData.prov} onChange={handleInputChange} style={{width:'75px'}}/>
-          </div>
-          <label>P.IVA</label>
+          
+          <div className='d-flex gap-4'>
+              <div className='d-flex flex-column'>
+              <label>Nome</label>
+              <input type='text' name="nome" value={formData.nome} onChange={handleInputChange}/>
+              </div>
+              <div className='d-flex flex-column'>
+              <label>P.IVA</label>
           <input type='text' name="piva" value={formData.piva} onChange={handleInputChange} />
-          <label>Stato</label>
-          <input type='text' name="stato" value={formData.stato} onChange={handleInputChange} />
-          <label>Email</label>
-          <input  type='email' name="email" value={formData.email} onChange={handleInputChange} />
-          <label>Cellulare</label>
-          <input type='text' placeholder="+Prefisso" name="cellulare" value={formData.cellulare} onChange={handleInputChange} />
+              </div>
+          </div>
+    
+          <div className='d-flex gap-4'>
+            <div className='d-flex flex-column'>
+            <label>Indirizzo</label>
+          <input type='text' name="indirizzo" value={formData.indirizzo} onChange={handleInputChange}/>
+          
+        
+         
+              
+                <label>Stato</label>
+                <input type='text' name="stato" value={formData.stato} onChange={handleInputChange} />
+              </div>
+                <div className='d-flex flex-column'>
+                    
+              <label>Città</label>
+                <div className='d-flex'>
+                  <input type='text' placeholder="Città" name="citta" value={formData.citta} onChange={handleInputChange} style={{width:'180px'}}/>
+                  <input type='text' placeholder="(Es. MI)" name="prov" value={formData.prov} onChange={handleInputChange} style={{width:'75px'}}/>
+                </div>
+                </div>
+          </div>
+          <div className='d-flex gap-4'>
+              <div className='d-flex flex-column'>
+                <label>Email</label>
+                <input  type='email' name="email" value={formData.email} onChange={handleInputChange} />
+              </div>
+              <div className='d-flex flex-column'>
+                <label>Cellulare</label>
+                <input type='text' placeholder="+Prefisso" name="cellulare" value={formData.cellulare} onChange={handleInputChange} />
+              </div>
+          </div>
+          <div className='d-flex flex-column gap-2 mt-4'>
           <label>Altri contatti</label>
           <textarea name="altri_contatti" value={formData.altri_contatti} onChange={handleInputChange} className='form-control'></textarea>
+          </div>
+
           <button onClick={handleSubmit} className='mt-2' >Invia</button>
         </form>
     </>
@@ -276,6 +306,8 @@ const AddForm = ({params} : {params:any}) => {
   const divStyle = {
     width: '700px',
     padding: '60px',
+    background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+
   };
 
   
