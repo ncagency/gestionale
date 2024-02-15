@@ -41,7 +41,14 @@ const style = {
   background: "linear-gradient(to right, #3b83ff, #2a59ac)",
 }
 
+const style2 = {
+  background: "linear-gradient(to right,  #a44b8b, #934c8a)",
+  cursor: "pointer",
+  width:'100px',
+  
 
+
+}
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     
     const [fileNames, setFileNames] = useState([]);
@@ -296,30 +303,42 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
             <div className="container">
                 <h1>Dettagli {type.charAt(0).toUpperCase() + type.slice(1)}</h1>
                 <div className="row mt-5">
-                    <div className="d-flex justify-content-center row w-100 "> 
+                    <div className=" d-flex w-100 gap-4 "> 
                         
-                         <div className='col'>
-                              <p className="mb-0">{ente._id}</p>
-                              <h2>{ente.nome}</h2>
-                              <h3>{ente.indirizzo} {ente.citta} ({ente.prov}), {ente.stato}</h3>
-                              <h3>P.IVA:{ente.piva}</h3>
-                              <h3>{ente.email} {ente.cellulare}</h3>
-                              <p>
-                                {ente.note}
-                              </p>    
-                         </div>
-                         <div className='col border border-2 m-2 rounded-4 p-4'>
-                            <p>{contabile.totale}</p>
-                            <p>{contabile.inviati}</p>
-                            <p>{contabile.da_inviare}</p>
-                            
-                                <div className='d-flex  p-2 bg-primary w-25 text-white rounded-4' style={{cursor:"pointer"}} onClick={redirec} >
+                      <table className="table table-bordered">
+                          <tbody>
+                              
+                              <TableRow label="ID" value={ente._id} />
+                              <TableRow label="Nome" value={ente.nome} />
+                              <TableRow label="Indirizzo" value={`${ente.indirizzo}, ${ente.citta} (${ente.prov}), ${ente.stato}`}/>                      
+                              <TableRow label="P.IVA" value={ente.piva} />
+                              <TableRow label="Email" value={ente.email} />
+                              <TableRow label="Cellulare" value={ente.cellulare} />
+                              <TableRow label="Altri Contatti" value={ente.note} />
+
+                          </tbody>
+                    </table>
+
+
+                         <div className='w-75 d-flex gap-5 border border-2 ml-5 rounded-4 p-4 h-50 ' style={style}>
+                            <div>
+                              <label className='w-25 fs-5 text-warning'>Totale</label>
+                              <p className='fs-2 text-white'> {contabile.totale}</p>
+                            </div>
+                            <div>
+                              <label className='w-25 fs-5 text-warning'>Saldati</label>
+                              <p className='fs-2 text-white'>{contabile.inviati}</p>
+                            </div>
+                            <div>
+                              <label className='w fs-5 text-warning'>Inviare</label>
+                              <p className='fs-2 text-white'>{contabile.da_inviare}</p>
+                            </div>
+                            <div style={style2} className='d-flex  p-2 bg-primary  text-white rounded-4' onClick={redirec} >
                                   <p>Carica Fattura</p>
-                                </div>
-                         
                          </div>
-                  
+                         </div>
                       </div>
+                  
                       <div className='w-100 border border-2 m-2 rounded-4 row' style={{height: '255px', overflowY: 'auto', padding: '20px' }}>
                         <div className='d-flex flex-column gap-2 '>
                           {
