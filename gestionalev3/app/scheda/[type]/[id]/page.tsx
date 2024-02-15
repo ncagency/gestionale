@@ -32,7 +32,7 @@ interface TabDetailsProps {
 }
   }
 
-const apiURL = "http://127.0.0.1:3000"
+const apiURL = "https://testxsjsjns-bbec60097ba9.herokuapp.com/"
 
 
 

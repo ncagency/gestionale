@@ -6,7 +6,7 @@ import axios from 'axios'
 import Row from '@/components/Row'
 
 
-const apiURL = "http://localhost:3000"
+const apiURL = "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 
 const Visualizer = ({ data, type_s }: { data: any, type_s: string }) => {
@@ -92,7 +92,7 @@ const Search = ({params}:{ params:any }) => {
     const fetchUsersData = async () => {
       try {
 
-        const response = await axios(`/api/${type}`);
+        const response = await axios(`https://testxsjsjns-bbec60097ba9.herokuapp.com`);
         setData(response.data.students);
         console.log(response.data.students)
 
