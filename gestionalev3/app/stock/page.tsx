@@ -5,6 +5,10 @@ import axios from 'axios';
 
 const apiURL = "http://127.0.0.1:2000"
 
+const style = {
+  background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+  width: '700px', padding: '60px' 
+}
 
 const Iscrizione = () => {
   const todayDate: Date = new Date();
@@ -72,8 +76,9 @@ const Iscrizione = () => {
 
   return (
     <div className='d-flex'>
-      <div className='bg-primary rounded-4' style={{ width: '700px', padding: '60px' }}>
-        <form className='d-flex flex-column align-items-center gap-2' onSubmit={handleSubmit}>
+      <div style={style} className='bg-primary rounded-4' >
+        <form className='d-flex flex-column align-items-end gap-2' onSubmit={handleSubmit}>
+          <div className='d-flex'>
           <label>
             Corso:
             <select
@@ -106,6 +111,10 @@ const Iscrizione = () => {
               required
             />
           </label>
+            
+            
+          </div>
+          <div className='d-flex gap-2'>
           <label>
             Costo:
             <input type="text" value={formData.costo} name="costo" onChange={handleInputChange} required />
@@ -114,6 +123,8 @@ const Iscrizione = () => {
             Stock:
             <input type="text" value={formData.stock} name="stock" onChange={handleInputChange} required />
           </label>
+          </div>
+         
           <button type="submit" className='mt-2'>Invia</button>
         </form>
       </div>
