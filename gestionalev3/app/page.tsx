@@ -98,7 +98,7 @@ const ContabileCard: React.FC = () => {
     return (
       <div style={style} className='d-flex flex-column position-relative p-4 h-100 rounded-4'>
         <h1 className='mt-5 mb-5 text-white'>Totale $</h1>
-        <GoButton destination="Contabile" />{/* INSERISCI DESTINAZIONE CORRETTA IN MODO DA GESTIRE L'EVENTO ONCLICK DEL BOTTONE */}
+        <GoButton destination="contabile" />{/* INSERISCI DESTINAZIONE CORRETTA IN MODO DA GESTIRE L'EVENTO ONCLICK DEL BOTTONE */}
       </div>
     );
   };

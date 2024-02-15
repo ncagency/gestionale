@@ -83,13 +83,15 @@ const Contabile = () => {
   
     
     const profit = total - uscite
-
+    const redirec = (query:string) => {
+        window.location.href = query;
+    }
 
   return (
     <div className='h-100 d-flex flex-column gap-3'>
+            
             <div className='text-primary fs-4'>
-                <p>Indietro</p>
-
+                <p onClick={() => redirec(`http://localhost:3000/`)}>Indietro</p>
             </div>
             
             <div className='d-flex gap-1 h-25'>
