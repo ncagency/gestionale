@@ -92,14 +92,14 @@ const Search = ({params}:{ params:any }) => {
     const fetchUsersData = async () => {
       try {
 
-        const response = await axios(`https://testxsjsjns-bbec60097ba9.herokuapp.com`);
-        setData(response.data.students);
-        console.log(response.data.students)
+        const response = await axios(`https://testxsjsjns-bbec60097ba9.herokuapp.com/x`);
+        setData(response.data);
+        console.log(response.data)
 
         
         if (type === "students") {
           const courses = await axios.get(`${apiURL}/courses`)
-          const enti = await axios.get("${apiURL}/enti")
+          const enti = await axios.get(`${apiURL}/enti`)
           setCourses(courses.data)
           setEnti(enti.data)
           setActiveIndex(0);
