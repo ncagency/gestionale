@@ -6,9 +6,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { GoButton } from "@/components";
+require('dotenv').config();
 
 
-const apiURL = "http://127.0.0.1:2000"
+const apiURL =  "http://127.0.0.1:2000"
+
 
 
 const redirect = (query:string) => {

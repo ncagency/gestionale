@@ -32,7 +32,8 @@ interface TabDetailsProps {
 }
   }
 
-const apiURL = "https://testxsjsjns-bbec60097ba9.herokuapp.com/"
+const apiURL =  "http://127.0.0.1:2000"
+
 
 
 
@@ -362,7 +363,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiURL}/api/${params.type}/${params.id}`);
+        const response = await axios.get(`${apiURL}/${params.type}/${params.id}`);
         setData(response.data.students)
         console.log(response.data.students)
         const response2 = await axios.get(apiUrl_contabile);
