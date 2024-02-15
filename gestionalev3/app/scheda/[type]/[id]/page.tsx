@@ -44,9 +44,9 @@ const style = {
 const style2 = {
   background: "linear-gradient(to right,  #a44b8b, #934c8a)",
   cursor: "pointer",
-  width:'100px',
-  
-
+  width: '40px',
+  height: '40px',
+  padding: '60px',
 
 }
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
@@ -142,7 +142,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                           </div>
                       </div>
                       <div className='d-flex gap-4'>
-                        { docCaricati == false && <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={() => redirec(`/upload/${user._id}`)} >
+                        { docCaricati == false && <div style={styleBox} className='d-flex p-2 w-25  bg-primary  text-white rounded-4' onClick={() => redirec(`/upload/${user._id}`)} >
                                     <p>Carica Documenti Identità</p>
                           </div>}
                           <div style={styleBox} className='d-flex p-2 w-25  bg-primary  text-white rounded-4' onClick={() => redirec(`/upload/docs/${user._id}`)} >
@@ -323,18 +323,18 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
                          <div className='w-75 d-flex gap-5 border border-2 ml-5 rounded-4 p-4 h-50 ' style={style}>
                             <div>
                               <label className='w-25 fs-5 text-warning'>Totale</label>
-                              <p className='fs-2 text-white'> {contabile.totale} €</p>
+                              <p className='fs-4 text-white'> {contabile.totale} €</p>
                             </div>
                             <div>
                               <label className='w-25 fs-5 text-warning'>Saldati</label>
-                              <p className='fs-2 text-white'>{contabile.inviati} €</p>
+                              <p className='fs-4 text-white'>{contabile.inviati} €</p>
                             </div>
                             <div>
-                              <label className='w fs-5 text-warning'>Inviare</label>
-                              <p className='fs-2 text-white'>{contabile.da_inviare} €</p>
+                              <label className='w-25 fs-5 text-warning'>Inviare</label>
+                              <p className='fs-4 text-white'>{contabile.da_inviare} €</p>
                             </div>
-                            <div style={style2} className='d-flex  p-2 bg-primary  text-white rounded-4' onClick={redirec} >
-                                  <p>Carica Fattura</p>
+                            <div style={style2} className=' p-1 text-white rounded-4' onClick={redirec} >
+                                  <p className='fs-5'></p>
                          </div>
                          </div>
                       </div>

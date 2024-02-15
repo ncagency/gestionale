@@ -238,11 +238,11 @@ export default function Home() {
                                    <div className="row">
                                        <div className="col">
                                        <label className="fs-5 text-warning">Prezzo</label>
-                                       <p className="fs-3">{record.prezzo}</p></div>
+                                       <p className="fs-3">{record.prezzo} €</p></div>
                                       
                                        <div className="col">
                                        <label className="fs-5 text-warning">Inviati</label>
-                                       <p className="fs-3">{record.inviati}</p>
+                                       <p className="fs-3">{record.inviati} €</p>
                                        </div>
                                    </div>
                                </div>

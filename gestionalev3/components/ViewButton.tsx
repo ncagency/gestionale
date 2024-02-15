@@ -18,7 +18,9 @@ const ViewButton = ({ id, type }:{ id:any, type:any }) => {
             className='d-flex align-content-center text-white'
             style={{ cursor: 'pointer' }}
         >
-            <div>O</div>
+            <div>
+            ->
+            </div>
         </div>
     );
 };

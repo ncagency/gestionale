@@ -151,14 +151,18 @@ function UploadForm({params}:{params:any}) {
               <input type="date" id="scad" value={scad}  onChange={handleScadChange} />
             </div>
 
-            <div  className='d-flex flex-column'>
+        <div className='d-flex flex-column'>
+        <div  className='d-flex flex-column'>
           <label htmlFor="image_front">Fronte</label>
           <input type="file" id="image_front" accept="image_front/*" onChange={handleImageChange} />
         </div>
-        <div  className='d-flex flex-column'>
+          <div  className='d-flex flex-column'>
           <label htmlFor="image_retro">Retro</label>
           <input type="file" id="image_retro" accept="image_retro/*" onChange={handleImageChange2} />
         </div>
+
+        </div>
+           
 
 
 
