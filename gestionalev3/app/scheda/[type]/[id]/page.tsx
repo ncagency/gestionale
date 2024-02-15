@@ -33,15 +33,20 @@ interface TabDetailsProps {
   }
 
 const apiURL =  "http://127.0.0.1:2000"
-
-
+const styleBox = {
+  background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+  cursor: "pointer"
+}
+const style = {
+  background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+}
 
 
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     
     const [fileNames, setFileNames] = useState([]);
     
-   
+    const [docCaricati, setDoccaricati] = useState(false)
   
     const id_user = user._id
     const rate: any = contabile.rate
@@ -56,6 +61,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
       try {
         const response = await axios.get(`${apiURL}/api/files/${id_user}`);
         setFileNames(response.data.fileNames);
+        setDoccaricati(true)
       } catch (error) {
         console.error('Errore durante il recupero dei nomi dei file:', error);
       }
@@ -129,10 +135,10 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                           </div>
                       </div>
                       <div className='d-flex gap-4'>
-                        <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={() => redirec(`/upload/${user._id}`)} >
+                        { docCaricati == false && <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={() => redirec(`/upload/${user._id}`)} >
                                     <p>Carica Documenti Identità</p>
-                          </div>
-                          <div className='d-flex p-2 w-25  bg-primary  text-white rounded-4' style={{cursor:"pointer"}} onClick={() => redirec(`/upload/docs/${user._id}`)} >
+                          </div>}
+                          <div style={styleBox} className='d-flex p-2 w-25  bg-primary  text-white rounded-4' onClick={() => redirec(`/upload/docs/${user._id}`)} >
                                     <p>Altri Documenti</p>
                           </div>
                         </div>
@@ -142,7 +148,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                 {(type == "students" ) && 
                 
                     
-                <div className='bg-primary w-75 mt-4 p-3 text-white rounded-4'>
+                <div style={style} className=' w-75 mt-4 p-3 text-white rounded-4'>
                       <h1>Totale:{contabile.totale}</h1>
                       <h1>Saldati:{contabile.saldati}</h1>
                       <h1>In Sospeso:{contabile.in_sospeso}</h1>
@@ -215,7 +221,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                           <p>Numero Iscritti: {numero_utenti}</p>
                       </div>
                       <div className='col-5 w-50'>
-                          <div className='bg-primary text-white p-3 rounded-4'>
+                          <div style={style} className='bg-primary text-white p-3 rounded-4'>
                                  {  (contabile.stock < 10 && contabile.stock > 0) && <div className='bg-warning fs-4 p-3 rounded-3 m-2'>Stock in Esaurimento</div>} 
                                  {  contabile.stock === 0 && <div className='bg-danger fs-4 p-3 rounded-3 m-2'>Stock Esaurito</div>} 
                                   <h2>Entrate:{contabile.totale_entrate}</h2>
@@ -364,8 +370,8 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiURL}/${params.type}/${params.id}`);
-        setData(response.data.students)
-        console.log(response.data.students)
+        setData(response.data)
+        console.log(response.data)
         const response2 = await axios.get(apiUrl_contabile);
         setContabileData(response2.data)
        

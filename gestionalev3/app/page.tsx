@@ -18,20 +18,17 @@ const styleBox = {
     background: "linear-gradient(to right, #3b83ff, #2a59ac)",
     cursor: "pointer"
   }
+
+const styleInviati = {
+    background: "linear-gradient(to right, #a44b8b, #934c8a)",
+}
   
 const redirect = (query:string) => {
     const destinationValue = `/${query}`;
     window.location.href = destinationValue;
 }
 
-const Calendar = () => {
-    return (
-        <div className='bg-secondary p-4 fs-1 d-flex flex-column h-100 justify-content-center align-items-center rounded-4'> {/* INSERISCI UNA FUNZIONE CHE AL CLICK REINDIRIZZI NELLA PAGINA DI ADD*/}
 
-
-        </div>
-    )
-}
 
 const CorsiCard = () => {
     let query = "search/courses";
@@ -148,24 +145,80 @@ export default function Home() {
                 <h1>Transazioni</h1>
                 <div className=' border border-2 m-2 rounded-4' style={{ height: '255px', overflowY: 'auto', padding: '20px' }}>
                     {cronologia.map((record, index) => (
-                           <div>
-                               { record.type == "ricev" && <div key={index} style={style}  className="d-flex gap-3 justify-content-between align-items-center p-4 text-white fs-5 rounded-2 my-1" >
-                                    <div className="w-25">{record.utente_nome}</div> 
-                                    <div className="w-25">{record.course_nome}</div> 
-                                    <div className="w-25">{record.data}</div> 
-                                    <div>{record.costo}</div>
-                                    <div>Ricevuti</div> 
-                                </div>}
-                                { record.type == "inv" && <div key={index} style={style} className="d-flex justify-content-between gap-5 align-items-center  p-4 text-white fs-5 rounded-2 my-1" >
-                                    <div className="">{record.ente_name}</div> 
-                                    <div className="">{record.corso_nome}</div> 
-                                    <div className="">{record.data}</div> 
-                                    <div className="">{record.prezzo}</div> 
-                                    <div className="">{record.n_stock}</div> 
-                                    <div className="">{record.inviati}</div> 
-                                    <div className="">Inviati</div>
-                                </div>}
+                       <div className="container">
+                       {record.type === "ricev" && (
+                           <div key={index} style={style} className="row d-flex gap-3 justify-content-between align-items-center p-4 text-white rounded-2 my-2">
+                               <div className="col">
+                                   <div>
+                                       <label className="fs-5 text-warning">Nome</label>
+                                       <p className="fs-3">{record.utente_nome}</p>
+                                   </div>
+                                   <div>
+                                       <label className="fs-5 text-warning">Corso</label>
+                                       <p className="fs-3">{record.course_nome}</p>
+                                   </div>
+                               </div>
+                               <div className="col">
+                                   <div className="row">
+                                       <div className="col">
+                                           <label className="fs-5 text-warning">Data</label>
+                                           <p className="fs-4">{record.data}</p>
+                                       </div>
+                                       <div className="col">
+                                           <label className="fs-5 text-warning">Tot</label>
+                                           <p className="fs-4">{record.costo} €</p>
+                                       </div>
+                                       
+                                   </div>
+                                   <div className="row">
+                                   <div className="col"><br/></div>
+                                   <div className="col">
+                                           <label className="fs-5 text-warning">Tipo</label>
+                                           <p className="fs-4">Ricevuti</p>
+                                       </div>
+                               
+                                    </div>
+                               </div>
                            </div>
+                       )}
+                       {record.type === "inv" && (
+                           <div key={index} style={styleInviati} className="row d-flex gap-3 justify-content-between align-items-center p-4 text-white fs-5 rounded-2 my-2">
+                               <div className="col">
+                                   <div>
+                                       <label className="fs-5 text-warning">Nome</label>
+                                       <p className="fs-3"> {record.ente_name}</p>
+                                   </div>
+                                   <div>
+                                       <label className="fs-5 text-warning">Corso</label>
+                                       <p className="fs-3">{record.corso_nome}</p>
+                                   </div>
+                               </div>
+                               <div className="col">
+                                   <div className="row">
+                                       <div className="col">
+                                       <label className="fs-5 text-warning">Data</label>
+                                       <p className="fs-3"> {record.data}</p>
+                                       </div>
+                                       <div className="col">
+                                       <label className="fs-5 text-warning">Stock</label>
+                                       <p className="fs-3">{record.n_stock}</p>
+                                       </div>
+                                   </div>
+                                   <div className="row">
+                                       <div className="col">
+                                       <label className="fs-5 text-warning">Prezzo</label>
+                                       <p className="fs-3">{record.prezzo}</p></div>
+                                      
+                                       <div className="col">
+                                       <label className="fs-5 text-warning">Inviati</label>
+                                       <p className="fs-3">{record.inviati}</p>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       )}
+                   </div>
+                   
                       
                     ))}
                 </div>

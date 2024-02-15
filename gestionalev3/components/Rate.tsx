@@ -2,7 +2,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const styleBox = {
+  background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+  cursor: "pointer"
+}
 const apiURL = 'http://127.0.0.1:2000'
+
 const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: any }) => {
   const [editIndex, setEditIndex] = useState(-1);
   const [modifiedData, setModifiedData] = useState(JSON.parse(JSON.stringify(data)));
@@ -79,7 +84,7 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
                     <button className="btn btn-danger" onClick={handleCancel}>Annulla</button>
                   </div>
                 ) : (
-                  <button className="btn btn-primary" onClick={() => handleEdit(index)}>Modifica</button>
+                  <button style={styleBox} className="btn text-white" onClick={() => handleEdit(index)}>Modifica</button>
                 )}
               </td>
             </tr>

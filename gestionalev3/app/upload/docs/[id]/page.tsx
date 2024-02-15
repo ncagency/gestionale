@@ -14,7 +14,7 @@ function UploadForm({params}:{params:any}) {
   const [nome, setNome] = useState("");
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState('');
-
+  
 
 
   const handleNome = (event:any) => {

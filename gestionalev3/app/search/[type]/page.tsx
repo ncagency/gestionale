@@ -165,17 +165,48 @@ const Search = ({params}:{ params:any }) => {
             </div>
           </div>
         </div>
-        <div>
-            
-
-        <input
-          type="text"
-          placeholder="Digita Nome..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-
         
+        
+        <div>
+          <div className='d-flex'>
+            <input  className='input_large'
+              type="text"
+              placeholder="Digita Nome..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+                         
+                         <div className='px-3 d-flex flex-column'>
+
+              { type != "courses" && 
+              <>
+               <label>
+                      Corso:
+                      </label> 
+                        <select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
+                          <option value="">Tutti i corsi</option>
+                          {courses.map((corso, index) => (
+                            <option key={index} value={corso._id} >{corso.nome}</option>
+                          ))}
+                          </select>
+              </>
+                     }
+                      { type != "enti" && type != "students"   &&
+                      <>
+                      <label>
+                    Enti:  
+                   </label>
+                    <select value={selectedEnte} onChange={(e) => setSelectedEnte(e.target.value)}>
+                      <option value="">Tutti</option>
+                      {enti.map((ente, index) => (
+                        <option key={index} value={ente.nome} >{ente.nome}</option>
+                      ))}
+                      </select>
+                      </> }
+                     </div>
+            
+            </div>
+       
         { type == "students" && <label>
                   Anno di nascita:
                   <input
@@ -193,25 +224,9 @@ const Search = ({params}:{ params:any }) => {
                 </label>
               }
                 
-        { type != "courses" && <label>
-                  Corso:
-                    <select value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
-                      <option value="">Tutti i corsi</option>
-                      {courses.map((corso, index) => (
-                        <option key={index} value={corso._id} >{corso.nome}</option>
-                      ))}
-                      </select>
-                </label> }
+      
 
-        { type != "enti" && type != "students"   &&     <label>
-                  Enti:
-                    <select value={selectedEnte} onChange={(e) => setSelectedEnte(e.target.value)}>
-                      <option value="">Tutti</option>
-                      {enti.map((ente, index) => (
-                        <option key={index} value={ente.nome} >{ente.nome}</option>
-                      ))}
-                      </select>
-                </label> }
+        
             
 
         </div>

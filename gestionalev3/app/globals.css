@@ -1,8 +1,11 @@
 
 body {
-  color:linear-gradient(to right, #a44b8b, #ffb6f5)
+  color:linear-gradient(to right, #a44b8b, #934c8a)
 }
 
+.input_large {
+ width: 900px;
+}
 
 input {
   padding: 10px;
