@@ -3,6 +3,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
+
+const apiURL = "http://127.0.0.1:2000"
+
 function UploadForm({params}:{params:any}) {
 
   let id = params.id
@@ -43,7 +47,7 @@ function UploadForm({params}:{params:any}) {
     }
 
     try {
-      const response = await axios.post('http://51.210.108.56:2000/upload_fatture', formData, {
+      const response = await axios.post(`${apiURL}/upload_fatture`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

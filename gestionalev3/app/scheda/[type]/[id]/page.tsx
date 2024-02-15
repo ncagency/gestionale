@@ -32,7 +32,7 @@ interface TabDetailsProps {
 }
   }
 
-
+const apiURL = "http://127.0.0.1:2000"
 
 
 
@@ -53,7 +53,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   useEffect(() => {
     const fetchFileNames = async () => {
       try {
-        const response = await axios.get(`http://51.210.108.56:2000/api/files/${id_user}`);
+        const response = await axios.get(`${apiURL}/api/files/${id_user}`);
         setFileNames(response.data.fileNames);
       } catch (error) {
         console.error('Errore durante il recupero dei nomi dei file:', error);
@@ -66,7 +66,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   const handleFileDownload = async (fileName:any) => {
     try {
       // Sostituisci 'example.com' con l'indirizzo del tuo server remoto
-      window.open(`http://51.210.108.56:2000/api/files/${id_user}/${fileName}`, '_blank');
+      window.open(`${apiURL}/api/files/${id_user}/${fileName}`, '_blank');
     } catch (error) {
       console.error('Errore durante il download del file:', error);
     }
@@ -74,7 +74,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     return (
         <>
             <div className="container flex-column align-content-center ">
-                <h1>Dettagli { type == "students" ? "Studente" : "Worker"}</h1>
+                <h1>Dettagli { type == "students" ? "Studente" : "Worker"}</h1> 
                 <div className='container m-4 d-flex '>
                     <table className="table table-bordered">
                         <tbody>
@@ -92,7 +92,8 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                             <TableRow label="Email" value={user.email} />
                         </tbody>
                     </table>
-                 
+                    <p onClick={() => redirec(`/modifica/students/${id_user}`)}  style={{cursor: "pointer"}} className='mx-4 text-primary'>Modifica</p>
+
                 </div>
                 
                 {(type == "students" ) && 
@@ -173,7 +174,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
           const fetchUsersData = async () => {
               try {
                   // Esegui la query per ottenere tutti gli utenti dal database
-                  const response = await fetch('http://51.210.108.56:2000/students');
+                  const response = await fetch(`${apiURL}/students`);
                   const userData = await response.json();
                   setUsersData(userData);
               } catch (error) {
@@ -257,7 +258,7 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
     const fetchUsersData = async () => {
         try {
             // Esegui la query per ottenere tutti gli utenti dal database
-            const response = await fetch('http://51.210.108.56:2000/courses');
+            const response = await fetch(`${apiURL}/courses`);
             const courseData = await response.json();
             setCourseData(courseData);
         } catch (error) {
@@ -294,6 +295,7 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
                               <p className="mb-0">{ente._id}</p>
                               <h2>{ente.nome}</h2>
                               <h3>{ente.indirizzo} {ente.citta} ({ente.prov}), {ente.stato}</h3>
+                              <h3>P.IVA:{ente.piva}</h3>
                               <h3>{ente.email} {ente.cellulare}</h3>
                               <p>
                                 {ente.note}
@@ -352,15 +354,15 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
    
     
-    const apiUrl = `http://51.210.108.56:2000/${params.type}/${params.id}`;
-    const apiUrl_contabile = `http://51.210.108.56:2000/contabile/${params.type}/${params.id}`;
+    const apiUrlx = `${apiURL}/${params.type}/${params.id}`;
+    const apiUrl_contabile = `${apiURL}/contabile/${params.type}/${params.id}`;
 
     const [data,setData] = useState(null);
     const [contabileData, setContabileData] = useState(null)
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(apiUrl);
+        const response = await axios.get(apiUrlx);
         setData(response.data)
         const response2 = await axios.get(apiUrl_contabile);
         setContabileData(response2.data)
@@ -381,7 +383,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   }
     
     let link = `/search/${params.type}`
-    
+
     const handleDelete = async (id:any) => {
       try {
           // Chiedi all'utente conferma prima di procedere con l'eliminazione
@@ -389,7 +391,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
           // Se l'utente ha confermato l'eliminazione, procedi
           if (confirmDelete) {
-              const response = await fetch(`http://51.210.108.56:2000/elimina/${params.type}/${id}`, {
+              const response = await fetch(`${apiURL}/elimina/${params.type}/${id}`, {
                   method: 'DELETE',
               });
   

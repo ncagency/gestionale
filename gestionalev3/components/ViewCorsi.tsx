@@ -4,13 +4,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Row from './Row';
 
+const apiURL = "http://127.0.0.1:2000"
+
+
 const ViewCorsi = ({ corsi_id, user_id }:{ corsi_id:any, user_id:any }) => {
   const [corsi, setCorsi] = useState<any[]>([]);
   const [corsoSelezionato, setCorsoSelezionato] = useState("");
 
   useEffect(() => {
     // Effettua una richiesta HTTP per ottenere i dati dalla collezione courses
-    axios.get('http://51.210.108.56:2000/courses')
+    axios.get(`${apiURL}/courses`)
       .then(response => {
         // Imposta lo stato con tutti i corsi disponibili
         setCorsi(response.data);

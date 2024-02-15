@@ -7,6 +7,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { GoButton } from "@/components";
 
+
+const apiURL = "http://127.0.0.1:2000"
+
+
 const redirect = (query:string) => {
     const destinationValue = `/${query}`;
     window.location.href = destinationValue;
@@ -103,7 +107,7 @@ interface CronologiaRecord {
     corso_nome: string;
     prezzo: number;
     n_stock: number;
-    tot: number;
+    inviati: number;
   }
 
 
@@ -112,7 +116,7 @@ export default function Home() {
 
    useEffect(() => {
     const fetch = async () => {
-        const response = await axios.get('http://51.210.108.56:2000/get/s/cronologia')
+        const response = await axios.get(`${apiURL}/get/s/cronologia`)
         setCronologia(response.data)
     }
     fetch()
@@ -150,7 +154,7 @@ export default function Home() {
                                     <div className="">{record.data}</div> 
                                     <div className="">{record.prezzo}</div> 
                                     <div className="">{record.n_stock}</div> 
-                                    <div className="">{record.tot}</div> 
+                                    <div className="">{record.inviati}</div> 
                                     <div className="">Inviati</div>
                                 </div>}
                            </div>

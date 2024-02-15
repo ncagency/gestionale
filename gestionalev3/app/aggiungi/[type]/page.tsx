@@ -3,7 +3,7 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 
-
+const apiURL = "http://127.0.0.1:2000"
 
 const redirec = (id:any, type:any) => {
   const destinationValue = `/scheda/${type}/${id}`;
@@ -31,7 +31,7 @@ const AddCourses = () => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://51.210.108.56:2000/add/corso', formData);
+      const response = await axios.post(`${apiURL}/add/corso`, formData);
       redirec(response.data.data, 'courses')
 
     } catch (error) {
@@ -46,7 +46,7 @@ const AddCourses = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://51.210.108.56:2000/enti/');
+        const response = await axios.get(`${apiURL}/enti/`);
         let array:any = []
         response.data.map((dato:any) => {
             array.push(dato.nome)
@@ -103,6 +103,7 @@ const AddEnti = () => {
     citta:'',
     prov:'',
     stato:'',
+    piva:'',
     email:'',
     cellulare:'',
     altri_contatti:'',
@@ -121,7 +122,7 @@ const AddEnti = () => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://51.210.108.56:2000/add/ente', formData);
+      const response = await axios.post(`${apiURL}/add/ente`, formData);
       redirec(response.data.data._id, 'enti')
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
@@ -140,6 +141,8 @@ const AddEnti = () => {
             <input type='text' placeholder="Città" name="citta" value={formData.citta} onChange={handleInputChange} style={{width:'180px'}}/>
             <input type='text' placeholder="(Es. MI)" name="prov" value={formData.prov} onChange={handleInputChange} style={{width:'75px'}}/>
           </div>
+          <label>P.IVA</label>
+          <input type='text' name="piva" value={formData.piva} onChange={handleInputChange} />
           <label>Stato</label>
           <input type='text' name="stato" value={formData.stato} onChange={handleInputChange} />
           <label>Email</label>
@@ -199,7 +202,7 @@ const AddStudents = () => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://51.210.108.56:2000/add/student', formData);
+      const response = await axios.post(`${apiURL}/add/student`, formData);
       redirec(response.data.data._id, 'students')
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);

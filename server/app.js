@@ -26,7 +26,7 @@ connectToDb((err) => {
         db = getDb()
         app.listen(2000, () => {
             console.log('app listen on port 2000')
-          cron.schedule('0 0 * * *', () => {
+          cron.schedule('0 7 * * *', () => {
                 controllaDataEInviaEmail();
         });
         })
@@ -52,6 +52,9 @@ const transporter = nodemailer.createTransport({
 // Funzione per inviare l'email
 function inviaEmail(destinatario, messaggio) {
 
+
+
+    
     const mailOptions = {
       from: my_email,
       to: destinatario,
@@ -71,9 +74,8 @@ function inviaEmail(destinatario, messaggio) {
   const controllaDataEInviaEmail = async () => {
     try {
 
+  
         const oggi = new Date().toISOString().slice(0, 10);
-   
-   
         const contabileDocument = await db.collection('contabile').findOne({});
        
         students = contabileDocument.students
@@ -91,7 +93,6 @@ function inviaEmail(destinatario, messaggio) {
 
 
                     if (data === oggi && stato != true) { //metti true
-                        console.log("Inviata")
                         inviaEmail(destinatario, messaggio);
                       } 
 
@@ -495,17 +496,16 @@ app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {
     try {
         const studentId = req.params.studentId;
         const rateIndex = req.params.rateIndex;
-        const debtIndex = req.params.debitoIndex
+        const debtIndex = req.params.debitoIndex;
         const updatedRate = req.body;
 
-       
         // Trova il documento contabile che contiene gli studenti
         const contabileDocument = await db.collection('contabile').findOne({});
 
         if (!contabileDocument) {
             return res.status(404).json({ error: 'Documento contabile non trovato' });
         }
-        console.log(contabileDocument.students)
+
         // Trova lo studente all'interno dell'array 'students' con l'ID specificato
         const studentToUpdate = contabileDocument.students.find(student => student._id === studentId);
 
@@ -513,50 +513,59 @@ app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {
             return res.status(404).json({ error: 'Studente non trovato' });
         }
 
-        // Aggiorna la rate desiderata all'interno dell'array delle rate dello studente
-      
-        studentToUpdate.rate[debtIndex][rateIndex] = updatedRate //zero deve cambiare in base al numero del debito
-        
-        const value =  Math.round(parseFloat(updatedRate.valore) * 100) / 100;
+        // Verifica se la rata è stata effettivamente modificata
+        const originalRate = studentToUpdate.rate[debtIndex][rateIndex];
+        const isRateModified = JSON.stringify(updatedRate) !== JSON.stringify(originalRate);
 
-        let saldati;
-        let in_sospeso;
-        if (updatedRate.pagata == true) {
-            saldati = studentToUpdate.saldati + value
-            in_sospeso = studentToUpdate.totale - saldati
-        } else {
-            saldati = studentToUpdate.saldati - value
-            in_sospeso = studentToUpdate.totale + saldati
+        // Aggiorna la rate desiderata all'interno dell'array delle rate dello studente
+        studentToUpdate.rate[debtIndex][rateIndex] = updatedRate;
+
+        let saldati = studentToUpdate.saldati;
+        let in_sospeso = studentToUpdate.totale - saldati;
+
+        // Aggiorna i valori solo se la rata è stata modificata
+        if (isRateModified) {
+            const value = Math.round(parseFloat(updatedRate.valore) * 100) / 100;
+            if (updatedRate.pagata == true) {
+                saldati += value;
+            } else {
+                saldati -= value;
+            }
+            in_sospeso = studentToUpdate.totale - saldati;
         }
-       
 
         // Aggiorna il documento contabile nel database
         await db.collection('contabile').updateOne(
-            {}, 
-            { $set: {
-                "students": contabileDocument.students,
-            }});
-        
-        let saldati_fixed =  Math.round(parseFloat(saldati) * 100) / 100;        
-        let in_sospeso_fixed  =  Math.round(parseFloat(in_sospeso) * 100) / 100;        
-        await db.collection('contabile').updateOne(
-            {}, 
-            { $set: { 
-                "students.$[student].saldati":saldati_fixed,
-                "students.$[student].in_sospeso":in_sospeso_fixed,               
-            }
-        },
-        {arrayFilters: [
-            { "student._id": studentId },
-        ]} );
+            {},
+            {
+                $set: {
+                    "students": contabileDocument.students,
+                }
+            });
 
-    
+        // Aggiorna i valori saldati e in_sospeso nel documento contabile
+        await db.collection('contabile').updateOne(
+            {},
+            {
+                $set: {
+                    "students.$[student].saldati": saldati,
+                    "students.$[student].in_sospeso": in_sospeso,
+                }
+            },
+            {
+                arrayFilters: [
+                    { "student._id": studentId },
+                ]
+            });
+
         res.json({ message: 'Rate aggiornate con successo' });
     } catch (error) {
         console.error('Errore durante l\'aggiornamento delle rate:', error);
         res.status(500).json({ error: 'Si è verificato un errore durante l\'aggiornamento delle rate' });
     }
 });
+
+
 
 
 
@@ -961,13 +970,12 @@ app.delete('/elimina/courses/:id', async (req, res) => {
 
 
 //update
-app.put('/update/:type/:id', async (req, res) => {
+app.post('x/update/:type/:id', async (req, res) => {
     const { type, id } = req.params;
     const updateData = req.body;
     delete updateData._id;
 
     try {
-   
       // Effettua l'aggiornamento del record nella collezione corrispondente
       const result = await db.collection(type).updateOne(
         { _id: new ObjectId(id) }, // Converti l'ID in un ObjectId

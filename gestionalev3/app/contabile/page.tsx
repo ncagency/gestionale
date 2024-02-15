@@ -3,6 +3,9 @@ import React,{useEffect, useState} from 'react'
 import TableRow from '@/components/TableRow';
 import axios from 'axios';
 
+
+const apiURL = "http://127.0.0.1:2000"
+
 interface CronologiaItem {
     costo?: number;
     inviati?: number;
@@ -43,7 +46,7 @@ const Contabile = () => {
     useEffect(() => {
         const fetchFileNames = async () => {
           try {
-            const response = await axios.get(`http://51.210.108.56:2000/contabile`);
+            const response = await axios.get(`${apiURL}/contabile`);
             let contabile = response.data
             
             setStudents(contabile[0].students)
@@ -65,7 +68,6 @@ const Contabile = () => {
     let uscite = 0
     
     
-    
     cronologia.forEach(item => {
         if (item.hasOwnProperty("costo") && item.costo !== undefined) {
             total += item.costo;
@@ -81,8 +83,6 @@ const Contabile = () => {
   
     
     const profit = total - uscite
-
-
 
 
   return (
@@ -175,7 +175,6 @@ const Contabile = () => {
                                         <td>Totale</td>
                                         <td>Saldati</td>
                                         <td>In Sospeso</td>
-                                        <td>Iscrizioni</td>
                                     </tr>
 
                             {students.map((student) => (

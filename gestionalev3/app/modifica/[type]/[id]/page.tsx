@@ -5,6 +5,7 @@ import axios from 'axios'
 import { ObjectId } from 'mongodb'
 
 
+const apiURL = "http://127.0.0.1:2000"
 
 
 const EditCourses = ({id}:{id:any}) => {
@@ -28,7 +29,7 @@ const EditCourses = ({id}:{id:any}) => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://51.210.108.56:2000/update/courses/${id}`, formData);
+      const response = await axios.post(`${apiURL}/x/update/courses/${id}`, formData);
       console.log(response.data); 
       redirec()
     } catch (error) {
@@ -44,7 +45,7 @@ const EditCourses = ({id}:{id:any}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://51.210.108.56:2000/enti/');
+        const response = await axios.get(`${apiURL}/enti/`);
         let array:any = []
         response.data.map((dato:any) => {
             array.push(dato.nome)
@@ -68,7 +69,7 @@ const EditCourses = ({id}:{id:any}) => {
 
   const fetchData2 = async () => {
     try {
-      const response = await axios.get(`http://51.210.108.56:2000/courses/${id}`);
+      const response = await axios.get(`${apiURL}/courses/${id}`);
       const courseData = response.data;
       setFormData(courseData);
     } catch (error) {
@@ -85,7 +86,7 @@ const EditCourses = ({id}:{id:any}) => {
 }
   return (
     <>
-        <form className='d-flex flex-column align-items-center gap-2 '>
+        <form className='d-flex flex-column align-items-center gap-2' onSubmit={handleSubmit}>
           <label>Nome</label>
           <input type='text' name="nome" value={formData.nome} onChange={handleInputChange}/>
           <label>Ente</label>
@@ -102,7 +103,7 @@ const EditCourses = ({id}:{id:any}) => {
                         ))}
                       </select>
           
-          <button onClick={handleSubmit} className='mt-2' >Invia</button>
+          <button type="submit" className='mt-2' >Invia</button>
         </form>
     </>
   )
@@ -130,7 +131,7 @@ const EditEnti = ({id}:{id:any}) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://51.210.108.56:2000/enti/${id}`);
+      const response = await axios.get(`${apiURL}/enti/${id}`);
       const entiData = response.data;
       setFormData(entiData);
     } catch (error) {
@@ -150,7 +151,8 @@ const EditEnti = ({id}:{id:any}) => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://51.210.108.56:2000/update/enti/${id}`, formData);
+      
+      const response = await axios.post(`${apiURL}/x/update/enti/${id}`, formData);
       console.log(response.data); 
       redirec()
     } catch (error) {
@@ -227,7 +229,7 @@ const EditStudents = ({id}:{id:any}) => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://51.210.108.56:2000/students/${id}`);
+      const response = await axios.get(`${apiURL}/students/${id}`);
       const studentData = response.data;
       setFormData(studentData);
     } catch (error) {
@@ -246,8 +248,8 @@ const EditStudents = ({id}:{id:any}) => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://51.210.108.56:2000/update/students/${id}`, formData);
-      console.log(response.data); 
+      const response = await axios.post(`${apiURL}/x/update/students/${id}`, formData);
+
       redirec()
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
@@ -260,7 +262,7 @@ const EditStudents = ({id}:{id:any}) => {
 
   return (
     <>
-        <form className='d-flex flex-column align-items-center gap-2 '>
+        <form className='d-flex flex-column align-items-center gap-2 ' onSubmit={handleSubmit}>
           <div className='d-flex gap-2'>
             <input type='text' placeholder="Nome" name="nome" value={formData.nome} onChange={handleInputChange} style={{width:'150px'}}/>
             <input type='text' placeholder="Secondo Nome" name="secondo_nome" value={formData.secondo_nome} onChange={handleInputChange} style={{width:'150px'}}/>
@@ -308,7 +310,7 @@ const EditStudents = ({id}:{id:any}) => {
           <input type='email' name="email" value={formData.email} onChange={handleInputChange}/>
           <label>Cellulare</label>
           <input type='text' name="cellulare" value={formData.cellulare} onChange={handleInputChange}/>
-          <button onClick={handleSubmit} className='mt-2' >Invia</button>
+          <button type='submit' className='mt-2' >Invia</button>
 
         </form>
     </>

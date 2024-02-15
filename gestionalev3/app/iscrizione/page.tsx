@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const apiURL = "http://127.0.0.1:2000"
 
 const Iscrizione = () => {
   const todayDate: Date = new Date();
@@ -59,7 +60,7 @@ const [formData, setFormData] = useState<{
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://51.210.108.56:2000/iscrizione/', formData);
+      const response = await axios.post(`${apiURL}/iscrizione/`, formData);
       redirec(response.data.studente._id)
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
@@ -98,11 +99,11 @@ const [formData, setFormData] = useState<{
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get(`http://51.210.108.56:2000/students/`);
+        const response = await axios.get(`${apiURL}/students/`);
         const studenti = response.data;
         setStudents(studenti);
 
-        const response2 = await axios.get(`http://51.210.108.56:2000/courses/`);
+        const response2 = await axios.get(`${apiURL}/courses/`);
         const corsi = response2.data;
         setCourses(corsi);
       } catch (error) {

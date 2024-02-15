@@ -2,17 +2,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Rate = ({ data, id , index_debito}:{ data:any, id:any , index_debito:any}) => {
+const apiURL = 'http://127.0.0.1:2000'
+const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: any }) => {
   const [editIndex, setEditIndex] = useState(-1);
-  const [modifiedData, setModifiedData] = useState([...data]);
+  const [modifiedData, setModifiedData] = useState(JSON.parse(JSON.stringify(data)));
 
-  const handleEdit = (index:any) => {
+  const handleEdit = (index: any) => {
     setEditIndex(index);
   };
 
-  const handleSave = async (index:any) => {
+  const handleSave = async (index: any) => {
     try {
-      await axios.post(`http://51.210.108.56:2000/edit/rate/${id}/${index}/${index_debito}`, modifiedData[index]);
+      await axios.post(`${apiURL}/edit/rate/${id}/${index}/${index_debito}`, modifiedData[index]);
       setEditIndex(-1);
     } catch (error) {
       console.error('Errore durante il salvataggio:', error);
@@ -24,14 +25,14 @@ const Rate = ({ data, id , index_debito}:{ data:any, id:any , index_debito:any})
     // Revertire eventuali modifiche allo stato
   };
 
-  const handleInputChange = (event:any, field:any, index:any) => {
-    const newData = [...modifiedData];
+  const handleInputChange = (event: any, field: any, index: any) => {
+    const newData = JSON.parse(JSON.stringify(modifiedData)); // Copia profonda
     newData[index][field] = event.target.value;
     setModifiedData(newData);
   };
 
-  const handleCheckboxChange = (event:any, index:any) => {
-    const newData = [...modifiedData];
+  const handleCheckboxChange = (event: any, index: any) => {
+    const newData = JSON.parse(JSON.stringify(modifiedData)); // Copia profonda
     newData[index].pagata = event.target.checked;
     setModifiedData(newData);
   };
@@ -48,13 +49,13 @@ const Rate = ({ data, id , index_debito}:{ data:any, id:any , index_debito:any})
           </tr>
         </thead>
         <tbody>
-          {modifiedData.map((item, index) => (
+          {modifiedData.map((item: any, index: any) => (
             <tr key={index}>
               <td>
                 {editIndex === index ? (
-                  <input type="text" value={item.valore} onChange={(e) => handleInputChange(e, 'valore', index)} />
+                  <label  onChange={(e) => handleInputChange(e, 'valore', index)}>{item.valore}</label>
                 ) : (
-                  item.valore
+                item.valore
                 )}
               </td>
               <td>
