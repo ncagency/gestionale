@@ -6,6 +6,9 @@ import axios from 'axios'
 import Row from '@/components/Row'
 
 
+const apiURL = "http://localhost:3000"
+
+
 const Visualizer = ({ data, type_s }: { data: any, type_s: string }) => {
   return (
     <div className='d-flex flex-column gap-2 p-3 border border-3 border-primary h-100 rounded-3' style={{ maxHeight: '500px', overflowY: 'auto' }}>
@@ -89,25 +92,24 @@ const Search = ({params}:{ params:any }) => {
     const fetchUsersData = async () => {
       try {
 
-        const response = await fetch(`http://localhost:2000/${type}`);
-        const dbData = await response.json();
-        setData(dbData);
-
+        const response = await axios(`/api/${type}`);
+        setData(response.data.students);
+        console.log(response.data.students)
 
         
         if (type === "students") {
-          const courses = await axios.get("http://localhost:2000/courses")
-          const enti = await axios.get("http://localhost:2000/enti")
+          const courses = await axios.get(`${apiURL}/courses`)
+          const enti = await axios.get("${apiURL}/enti")
           setCourses(courses.data)
           setEnti(enti.data)
           setActiveIndex(0);
 
         } else if (type === "courses") {
-          const enti = await axios.get("http://localhost:2000/enti")
+          const enti = await axios.get(`${apiURL}/enti`)
           setEnti(enti.data)
           setActiveIndex(1);
         } else if (type === "enti") {
-          const courses = await axios.get("localhost:2000/courses")
+          const courses = await axios.get(`${apiURL}/courses`)
           setCourses(courses.data)
 
           setActiveIndex(2);
