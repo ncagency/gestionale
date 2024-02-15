@@ -19,7 +19,7 @@ const ViewButton = ({ id, type }:{ id:any, type:any }) => {
             style={{ cursor: 'pointer' }}
         >
             <div>
-            ->
+            -{'>'}
             </div>
         </div>
     );

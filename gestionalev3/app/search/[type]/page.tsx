@@ -202,7 +202,7 @@ const Search = ({params}:{ params:any }) => {
                         <option key={index} value={ente.nome} >{ente.nome}</option>
                       ))}
                       </select>
-                      </> }
+                      </>    }
                      </div>
             
             </div>
