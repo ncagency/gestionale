@@ -91,21 +91,47 @@ const AddCard = () => {
     );
 };
 
-const ContabileCard = (datax:any) => {
+const ContabileCard = () => {
+ 
+    const [cronologia, setCronologia] = useState<CronologiaRecord[]>([]);
+
+    useEffect(() => {
+     const fetch = async () => {
+         const response = await axios.get(`${apiURL}/get/s/cronologia`)
+         setCronologia(response.data)
+     }
+     fetch()
+    })
+    
+    let total = 0
+    let uscite = 0
+   
+       
+   cronologia.forEach(item => {
+    if (item.hasOwnProperty("costo") && item.costo !== undefined) {
+        total += item.costo;
+    }
+});
+
+cronologia.forEach(item => {
+    if (item.hasOwnProperty("inviati") && item.inviati !== undefined) {
+        uscite += item.inviati;
+    }
+});
 
     return (
       <div style={style} className='d-flex flex-column position-relative p-4 h-100 rounded-4'>
         <div className="row w-100 h-75 p-1 m-2">
             <div className="col-6">
                 <p className="fs-5 text-white">i</p>
-                <p className="fs-1 text-white">{datax.data.entrate} €</p>
+                <p className="fs-1 text-white">{total} €</p>
             </div>   
             <div className="col-6">
                 <p className="fs-5 text-white">i</p>
-                <p className="fs-1 text-white">{datax.data.uscite} €</p>
+                <p className="fs-1 text-white">{uscite} €</p>
             </div>   
         </div>
-        <GoButton destination="contabile" />{/* INSERISCI DESTINAZIONE CORRETTA IN MODO DA GESTIRE L'EVENTO ONCLICK DEL BOTTONE */}
+        <GoButton destination="contabile" />
       </div>
     );
   };
@@ -137,31 +163,16 @@ export default function Home() {
     fetch()
    })
    
-   let total = 0
-   let uscite = 0
+
    
-   
-   cronologia.forEach(item => {
-       if (item.hasOwnProperty("costo") && item.costo !== undefined) {
-           total += item.costo;
-       }
-   });
-   
-   cronologia.forEach(item => {
-       if (item.hasOwnProperty("inviati") && item.inviati !== undefined) {
-           uscite += item.inviati;
-       }
-   });
 
  
    
-   const profit = total - uscite
-
-   const datax = {entrate:total, uscite:uscite, profit: profit}
-    return (
+ 
+   return (
         <div className='container '>
             <div className='row h-100 mt-4'>
-                <div className='col-5'><ContabileCard datax={datax}/></div>
+                <div className='col-5'><ContabileCard /></div>
                 <div className='col-2'><AddCard /></div>
                 <div className='col'><DipendentiCard /></div>
             </div>
