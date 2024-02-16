@@ -91,7 +91,7 @@ const AddCard = () => {
     );
 };
 
-const ContabileCard: React.FC = (datax:any) => {
+const ContabileCard = (datax:any) => {
 
     return (
       <div style={style} className='d-flex flex-column position-relative p-4 h-100 rounded-4'>
@@ -161,7 +161,7 @@ export default function Home() {
     return (
         <div className='container '>
             <div className='row h-100 mt-4'>
-                <div className='col-5'><ContabileCard data={datax}/></div>
+                <div className='col-5'><ContabileCard datax={datax}/></div>
                 <div className='col-2'><AddCard /></div>
                 <div className='col'><DipendentiCard /></div>
             </div>
