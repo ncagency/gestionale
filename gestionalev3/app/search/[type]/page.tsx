@@ -6,7 +6,7 @@ import axios from 'axios'
 import Row from '@/components/Row'
 
 
-const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com/"
+const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 
 
