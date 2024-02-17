@@ -18,7 +18,10 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
     // Funzione per gestire il clic sul bottone Flag
     const handleFlagButtonClick = async (index: number) => {
         try {
-            console.log("aaa")
+
+            let response = await axios.post(`${apiURL}/check/${userId}/${index}`)
+            console.log(response.data)
+
         } catch (error) {
             console.error('Errore durante l\'aggiornamento del valore nel database:', error);
         }
