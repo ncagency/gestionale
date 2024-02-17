@@ -256,7 +256,7 @@ const EditStudents = ({id}:{id:any}) => {
     }
   };
   const redirec = () => {
-    const destinationValue = `/scheda/courses/${id}`;
+    const destinationValue = `/scheda/students/${id}`;
     window.location.href = destinationValue;
 }
 
