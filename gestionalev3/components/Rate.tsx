@@ -53,7 +53,7 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
     } 
 
   }
-
+  let rate_s = data.rate
   getRate()
   return (
     <div className="container">
@@ -78,9 +78,9 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
               </td>
               <td>
                 {editIndex === index ? (
-                  <input type="text" value={item.data} onChange={(e) => handleInputChange(e, 'data', index)} />
+                  <input type="text" value={item.rate_s} onChange={(e) => handleInputChange(e, 'data', index)} />
                 ) : (
-                  item.data
+                  item.rate_s
                 )}
               </td>
               <td>
