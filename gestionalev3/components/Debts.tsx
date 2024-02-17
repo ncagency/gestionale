@@ -38,7 +38,9 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
                     <div className={`d-flex p-2 rounded-3 w-50 ${rateGroup.flag ? 'bg-danger' : 'bg-warning'}`}>
                         <h2 className='fs-5'> {rateGroup.nome}</h2>
                         
-                        <div className='bg-success' style={{cursor:'pointer'}} onClick={() => handleFlagButtonClick(index)}></div>
+                        <div className='bg-success p-3 rounded-4' style={{cursor:'pointer'}} onClick={() => handleFlagButtonClick(index)}>
+                            Check
+                        </div>
                     </div>
                    <Rate data={rateGroup} id={userId} index_debito={index} />
                 </div>
