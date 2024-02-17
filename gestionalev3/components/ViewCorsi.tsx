@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Row from './Row';
 
-const apiURL = "http://127.0.0.1:2000"
+const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 
 const ViewCorsi = ({ corsi_id, user_id }:{ corsi_id:any, user_id:any }) => {

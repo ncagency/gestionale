@@ -6,7 +6,7 @@ const styleBox = {
   background: "linear-gradient(to right, #3b83ff, #2a59ac)",
   cursor: "pointer"
 }
-const apiURL = 'http://127.0.0.1:2000'
+const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: any }) => {
   const [editIndex, setEditIndex] = useState(-1);
