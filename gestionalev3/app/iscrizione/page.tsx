@@ -16,12 +16,16 @@ const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${da
 const [formData, setFormData] = useState<{
   user_id: string;
   course_id: string;
+  course_name:string;
   data: string;
+  flag: boolean;
   totale: number;
   rate: any; 
 }>({
   user_id: '',
   course_id: '',
+  course_name: '',
+  flag:false,
   data: formattedDate,
   totale: 0,
   rate: [],
@@ -61,7 +65,6 @@ const [formData, setFormData] = useState<{
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      console.log(formData)
       const response = await axios.post(`${apiURL}/iscrizione/`, formData);
       redirec(response.data.studente._id)
     } catch (error) {
