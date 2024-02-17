@@ -15,17 +15,10 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
         setOpenIndex((prevOpenIndex) => (prevOpenIndex === index ? null : index));
     };
 
-    const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-        const newValue = e.target.checked;
-
+    // Funzione per gestire il clic sul bottone Flag
+    const handleFlagButtonClick = async (index: number) => {
         try {
-            // Effettua una richiesta al tuo backend per aggiornare il valore nel database
-            const response = await axios.post(`${apiURL}/checkflag/`, {
-                index, // Passa eventuali altri dati per identificare l'elemento nel database
-                newValue,
-            });
-
-            console.log(response.data); // Se desideri gestire la risposta dal server
+            console.log("aaa")
         } catch (error) {
             console.error('Errore durante l\'aggiornamento del valore nel database:', error);
         }
@@ -37,12 +30,10 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
                 <div key={index} className='flex-column m-2 text-white' onClick={() => handleDivClick(index)}>
                     <div className='bg-warning p-2 rounded-3 w-50'>
                         <h2 className='fs-5'> {rateGroup.nome}</h2>
-
-                        <input 
-                            type="checkbox" 
-                            checked={rateGroup.flag} 
-                            onChange={(e) => handleCheckboxChange(e, index)} 
-                        />                 </div>
+                        
+                    
+                        <button onClick={() => handleFlagButtonClick(index)}>Flag</button>
+                        </div>
                    <Rate data={rateGroup} id={userId} index_debito={index} />
                 </div>
             ))}
