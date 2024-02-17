@@ -29,7 +29,7 @@ const EditCourses = ({id}:{id:any}) => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiURL}/x/update/courses/${id}`, formData);
+      const response = await axios.post(`${apiURL}/modifica/courses/${id}`, formData);
       console.log(response.data); 
       redirec()
     } catch (error) {
@@ -152,7 +152,7 @@ const EditEnti = ({id}:{id:any}) => {
     e.preventDefault();
     try {
       
-      const response = await axios.post(`${apiURL}/x/update/enti/${id}`, formData);
+      const response = await axios.post(`${apiURL}/modifica/enti/${id}`, formData);
       console.log(response.data); 
       redirec()
     } catch (error) {
@@ -248,7 +248,7 @@ const EditStudents = ({id}:{id:any}) => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiURL}/x/update/students/${id}`, formData);
+      const response = await axios.post(`${apiURL}/modifica/students/${id}`, formData);
 
       redirec()
     } catch (error) {
