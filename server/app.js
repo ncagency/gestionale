@@ -71,7 +71,7 @@ function inviaEmail(destinatario, messaggio) {
     });
   }
   
-  const controllaDataEInviaEmail = async () => {
+const controllaDataEInviaEmail = async () => {
     try {
 
   
@@ -113,15 +113,6 @@ function inviaEmail(destinatario, messaggio) {
 
 
 
-
-
-
-
-
-
-
-
-
 // Middleware per gestire l'upload dei file
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -142,7 +133,7 @@ const storage = multer.diskStorage({
   }
 });
 
-  const upload = multer({ storage });
+const upload = multer({ storage });
 
 
 //API
