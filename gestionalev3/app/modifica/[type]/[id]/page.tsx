@@ -5,7 +5,7 @@ import axios from 'axios'
 import { ObjectId } from 'mongodb'
 
 
-const apiURL = "http://127.0.0.1:2000"
+const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 
 const EditCourses = ({id}:{id:any}) => {

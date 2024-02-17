@@ -260,6 +260,10 @@ app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), asy
 
 });
 
+
+
+
+
 //GET CALL 
 
 app.get('/:type', async (req, res) => {
@@ -482,6 +486,11 @@ app.post('/aggiungicorsoutente/:utente_id/:corso_id', async (req, res) => {
         return res.status(500).json({ message: "Errore durante l'aggiunta dell'ID corso" });
     }
 });
+
+
+
+
+
 
 //aggiorna rata
 app.post('/edit/rate/:studentId/:rateIndex/:debitoIndex', async (req, res) => {

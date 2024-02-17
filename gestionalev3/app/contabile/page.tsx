@@ -4,7 +4,7 @@ import TableRow from '@/components/TableRow';
 import axios from 'axios';
 
 
-const apiURL = "http://127.0.0.1:2000"
+const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 const style = {
     background: "linear-gradient(to right, #3b83ff, #2a59ac)",
