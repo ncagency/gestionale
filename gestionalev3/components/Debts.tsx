@@ -39,7 +39,7 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
                         <h2 className='fs-5'> {rateGroup.nome}</h2>
                         
                         <div className='bg-success p-2 rounded-4' style={{cursor:'pointer'}} onClick={() => handleFlagButtonClick(index)}>
-                            Check
+                            Flag
                         </div>
                     </div>
                    <Rate data={rateGroup} id={userId} index_debito={index} />
