@@ -59,7 +59,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
     const id_user = user._id
     const rate: any = contabile.rate
     const corsi:any = user.corsi
-
+    console.log(rate)
     const redirec = (query:string) => {
       const destinationValue = query;
       window.location.href = destinationValue;

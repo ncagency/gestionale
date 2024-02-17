@@ -9,7 +9,6 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
     const handleDivClick = (index:any) => {
         setOpenIndex((prevOpenIndex) => (prevOpenIndex === index ? null : index));
     };
-    console.log(rates)
 
     return (
         <div className="container py-4">
