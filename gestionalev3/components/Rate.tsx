@@ -55,7 +55,7 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
   }
 
   getRate()
-
+  console.log(modifiedData)
   return (
     <div className="container">
       <table className="table table-bordered table-striped">
