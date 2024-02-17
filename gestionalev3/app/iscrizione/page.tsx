@@ -61,6 +61,7 @@ const [formData, setFormData] = useState<{
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
+      console.log(formData)
       const response = await axios.post(`${apiURL}/iscrizione/`, formData);
       redirec(response.data.studente._id)
     } catch (error) {
@@ -165,6 +166,7 @@ const [formData, setFormData] = useState<{
                   {corso.nome}
                 </option>
               ))}
+
             </select>
               </div>
               </div>
