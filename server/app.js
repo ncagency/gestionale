@@ -262,8 +262,6 @@ app.post('/upload_fatture', upload.fields([{ name: 'image', maxCount: 1 }]), asy
 
 
 
-
-
 //GET CALL 
 
 app.get('/:type', async (req, res) => {
