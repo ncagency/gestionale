@@ -9,8 +9,11 @@ const styleBox = {
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: any }) => {
+
+  let rate_s = data.rate
+
   const [editIndex, setEditIndex] = useState(-1);
-  const [modifiedData, setModifiedData] = useState(JSON.parse(JSON.stringify(data)));
+  const [modifiedData, setModifiedData] = useState(JSON.parse(JSON.stringify(rate_s)));
   const [rate, setRate] = useState<any>()
   console.log(data)
   const handleEdit = (index: any) => {
@@ -53,7 +56,6 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
     } 
 
   }
-  let rate_s = data.rate
   getRate()
   return (
     <div className="container">
