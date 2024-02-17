@@ -391,7 +391,6 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
       try {
         const response = await axios.get(`${apiURL}/${params.type}/${params.id}`);
         setData(response.data)
-        console.log(response.data)
         const response2 = await axios.get(apiUrl_contabile);
         setContabileData(response2.data)
        
