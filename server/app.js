@@ -762,7 +762,7 @@ app.post('/iscrizione', async (req,res) => {
 
 
    
-
+    console.log(data.rate)
 
     const studente = await collection.findOne({ _id: new ObjectId(utente_id) });
     if (!studente) {
