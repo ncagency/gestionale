@@ -53,9 +53,8 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
     } 
 
   }
-  useEffect(()  => {
-    getRate()
-  });
+
+  getRate()
 
   return (
     <div className="container">
