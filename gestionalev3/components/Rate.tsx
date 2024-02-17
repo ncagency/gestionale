@@ -12,7 +12,7 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
   const [editIndex, setEditIndex] = useState(-1);
   const [modifiedData, setModifiedData] = useState(JSON.parse(JSON.stringify(data)));
   const [rate, setRate] = useState<any>()
-
+  console.log(data)
   const handleEdit = (index: any) => {
     setEditIndex(index);
   };
