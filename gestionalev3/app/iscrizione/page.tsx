@@ -89,7 +89,7 @@ const [formData, setFormData] = useState<{
       return {
         valore: importoRata.toFixed(2),
         data: dataScadenza.toISOString().slice(0, 10),
-        pagata:false
+        pagata:false,
       };
     });
 

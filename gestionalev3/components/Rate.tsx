@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const styleBox = {
@@ -11,11 +11,12 @@ const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: any }) => {
   const [editIndex, setEditIndex] = useState(-1);
   const [modifiedData, setModifiedData] = useState(JSON.parse(JSON.stringify(data)));
+  const [rate, setRate] = useState<any>()
 
   const handleEdit = (index: any) => {
     setEditIndex(index);
   };
-
+  
   const handleSave = async (index: any) => {
     try {
       await axios.post(`${apiURL}/edit/rate/${id}/${index}/${index_debito}`, modifiedData[index]);
@@ -42,6 +43,21 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
     setModifiedData(newData);
   };
 
+  const getRate = async () => {
+
+    try {
+      let contabile = await axios.get(`${apiURL}/contabile`);
+      setRate(contabile);
+    } catch (error) {
+      console.error('Errore durante il salvataggio:', error);
+    } 
+
+  }
+  useEffect(()  => {
+    getRate()
+  });
+
+  console.log(rate)
   return (
     <div className="container">
       <table className="table table-bordered table-striped">
@@ -74,7 +90,7 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
                 {editIndex === index ? (
                   <input type="checkbox" checked={item.pagata} onChange={(e) => handleCheckboxChange(e, index)} />
                 ) : (
-                  item.pagata ? 'Pagata' : 'Non Pagata'
+                  item.pagata ? `Pagata il ` : 'Non Pagata'
                 )}
               </td>
               <td>

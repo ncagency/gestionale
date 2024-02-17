@@ -89,7 +89,7 @@ const controllaDataEInviaEmail = async () => {
                     const value = singola.valore
                     const data = singola.data
                     const stato = singola.pagata
-                    const messaggio = ` ${value} `
+                    const messaggio = `Devi paga ${value} OOOOo `
 
 
                     if (data === oggi && stato != true) { //metti true
