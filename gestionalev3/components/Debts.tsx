@@ -36,7 +36,7 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
         <div className="container py-4">
             {rates.map((rateGroup:any, index:any) => (
                 <div key={index} className='flex-column m-2 text-white' onClick={() => handleDivClick(index)}>
-                    <div className={`p-2 rounded-3 w-50 ${rateGroup.flag ? 'bg-warning' : 'bg-secondary'}`}>
+                    <div className={`d-flex justify-content-between p-2 rounded-3 w-50 ${rateGroup.flag ? 'bg-danger' : 'bg-warning'}`}>
                         <h2 className='fs-5'> {rateGroup.nome}</h2>
                         
                         <div className='' style={style} onClick={() => handleFlagButtonClick(index)}></div>
