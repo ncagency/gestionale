@@ -21,6 +21,7 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
 
             let response = await axios.post(`${apiURL}/check/${userId}/${index}`)
             console.log(response.data)
+            window.location.reload();
 
         } catch (error) {
             console.error('Errore durante l\'aggiornamento del valore nel database:', error);
@@ -31,10 +32,9 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
         <div className="container py-4">
             {rates.map((rateGroup:any, index:any) => (
                 <div key={index} className='flex-column m-2 text-white' onClick={() => handleDivClick(index)}>
-                    <div className='bg-warning p-2 rounded-3 w-50'>
+                    <div className={`p-2 rounded-3 w-50 ${rateGroup.flag ? 'bg-warning' : 'bg-secondary'}`}>
                         <h2 className='fs-5'> {rateGroup.nome}</h2>
                         
-                    
                         <button onClick={() => handleFlagButtonClick(index)}>Flag</button>
                         </div>
                    <Rate data={rateGroup} id={userId} index_debito={index} />
