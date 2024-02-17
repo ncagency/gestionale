@@ -90,7 +90,7 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
                 {editIndex === index ? (
                   <input type="checkbox" checked={item.pagata} onChange={(e) => handleCheckboxChange(e, index)} />
                 ) : (
-                  item.pagata ? `Pagata il ` : 'Non Pagata'
+                  item.pagata ? `Pagata il ${item.pagatoIl} ` : 'Non Pagata'
                 )}
               </td>
               <td>
