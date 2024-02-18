@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function Login({ onLogin }:{ onLogin:any }) {
   const [username, setUsername] = useState('');
@@ -7,16 +8,28 @@ export default function Login({ onLogin }:{ onLogin:any }) {
   const [error, setError] = useState('');
 
   // Funzione per gestire il submit del modulo di login
-  const handleSubmit = (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    
-    if (!username || !password) {
-      setError('Please enter both username and password.');
-      return;
-    }
 
-    onLogin();
+    try {
+      // Effettua una richiesta al backend per verificare le credenziali dell'utente
+      const response = await axios.post('/login', {
+        username,
+        password
+      });
+
+      // Se la risposta è positiva, chiama la funzione di callback onLogin per eseguire l'accesso
+      if (response.data.success) {
+        onLogin();
+      } else {
+        setError('Username or password is incorrect.');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError('An error occurred during login.');
+    }
   };
+
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
