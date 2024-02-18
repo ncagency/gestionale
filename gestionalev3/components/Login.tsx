@@ -4,6 +4,17 @@ import axios from 'axios';
 
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
+export function useWorkerId() {
+  const [workerId, setWorkerId] = useState(null);
+
+  useEffect(() => {
+    const workerIdFromCookie:any = getWorkerIdFromCookie(); // Funzione per ottenere l'ID del worker dai cookie
+    setWorkerId(workerIdFromCookie);
+  }, []);
+
+  return workerId;
+}
+
 function setWorkerIdToCookie(workerId:any) {
   document.cookie = `workerId=${workerId}; path=/; max-age=3600`; // Imposta il cookie con il nome "workerId" e una durata di 3600 secondi (1 ora)
 }
