@@ -16,7 +16,6 @@ interface UserDetailsProps {
     user: any;
     type: string;
     contabile:any
-    permessi:any
   }
   
 interface WorkerDetailsProps {
@@ -59,7 +58,7 @@ const style2 = {
   padding: '60px',
 
 }
-const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile, permessi }) => {
+const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   
 
     const [fileNames, setFileNames] = useState([]);
@@ -432,7 +431,7 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
 }
 
 
-const Details = ({data,type,contabile,permessi}:{ data:any, type:any, contabile:any ,permessi:any}) => {
+const Details = ({data,type,contabile}:{ data:any, type:any, contabile:any }) => {
     
   if (type == "workers") {
     if (!data ) {
@@ -448,7 +447,7 @@ const Details = ({data,type,contabile,permessi}:{ data:any, type:any, contabile:
   
     return (
       <>
-        { type == "students"  && (<UserDetails user={data} type={type} contabile={contabile} permessi={permessi}/>)}
+        { type == "students"  && (<UserDetails user={data} type={type} contabile={contabile}/>)}
         { type == "workers" && (<WorkerDetail user={data} type={type}  />)}
         { type == "courses" && (<CourseDetails course={data} type={type} contabile={contabile}/>)}
         { type == "enti" && (<EntiDetails ente={data} type={type} contabile={contabile}/>)}
@@ -463,10 +462,7 @@ const Details = ({data,type,contabile,permessi}:{ data:any, type:any, contabile:
 
 const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
-   
-    
-    const [permessi,setPermessi] = useState<any>()
-    let worker_id = getWorkerId()
+
     const apiUrlx = `${apiURL}/${params.type}/${params.id}`;
     const apiUrl_contabile = `${apiURL}/contabile/${params.type}/${params.id}`;
 
@@ -492,20 +488,11 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
       }
     };
     
-    const fetchWorker = async () => {
-      try {
-        const response = await axios.get(`${apiURL}/workers/${worker_id}`);
-        setPermessi(response.data.permessi)
-    
-    } catch (error) {
-        console.error('Errore durante il recupero dei nomi dei file:', error);
-      }
-    };
+  
 
     // Esegui la richiesta GET quando il componente si monta
     useEffect(() => {
       fetchData();
-      fetchWorker()
     }, []); // Assicurati di passare un array vuoto come secondo argomento per eseguire l'effetto solo al mount del componente
 
     const redirec = () => {
@@ -547,9 +534,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   };
   
 
-    if (!permessi) {
-      return "..."
-    }
+  
  
 
     return (
@@ -558,7 +543,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
             <Link  href={link}><p>Indietro</p></Link>
             { params.type != "courses" && params.type != "enti" && <p onClick={() => handleDelete(params.id)}>Elimina</p>}
             </div>
-            <Details data={data} type={params.type} contabile={contabileData} permessi={permessi}/>
+            <Details data={data} type={params.type} contabile={contabileData} />
 
 
             
