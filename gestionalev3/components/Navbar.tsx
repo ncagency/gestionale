@@ -34,7 +34,7 @@ export default function Navbar() {
   
       fetchWorker();
     });
-    
+    console.log(permessi)
     if (!permessi) {
       return "..."
     }
@@ -44,35 +44,30 @@ export default function Navbar() {
           <ul className="gap-1 fs-5 flex-column mt-5">
 
 
-              //dashboard
               <Link style={{ textDecoration: "none" }} href={navlinks[0].url}  className=" p-2">
               <div  className="d-flex gap-3 text-white ">
                   <i className={`bi ${navlinks[0].icon}`}></i> <p>{navlinks[0].text}</p>
                 </div>
               </Link>
 
-              //cerca
               <Link style={{ textDecoration: "none" }} href={navlinks[1].url}  className=" p-2">
               <div  className="d-flex gap-3 text-white ">
                   <i className={`bi ${navlinks[1].icon}`}></i> <p>{navlinks[1].text}</p>
                 </div>
               </Link>
 
-              //Iscrizioni
               <Link style={{ textDecoration: "none" }} href={navlinks[2].url}  className=" p-2">
               <div  className="d-flex gap-3 text-white ">
                   <i className={`bi ${navlinks[2].icon}`}></i> <p>{navlinks[2].text}</p>
                 </div>
               </Link>
               
-              //contabile
-              { permessi.seeContabile == "true" &&(<Link style={{ textDecoration: "none" }} href={navlinks[3].url}  className=" p-2">
+              { permessi.seeContabile === "true" && (<Link style={{ textDecoration: "none" }} href={navlinks[3].url}  className=" p-2">
               <div  className="d-flex gap-3 text-white ">
                   <i className={`bi ${navlinks[3].icon}`}></i> <p>{navlinks[3].text}</p>
                 </div>
               </Link>)}
               
-              //aggiungi
               <Link style={{ textDecoration: "none" }} href={navlinks[4].url}  className=" p-2">
               <div  className="d-flex gap-3 text-white ">
                   <i className={`bi ${navlinks[4].icon}`}></i> <p>{navlinks[4].text}</p>
