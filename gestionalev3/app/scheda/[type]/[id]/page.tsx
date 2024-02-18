@@ -10,6 +10,7 @@ import Row from '@/components/Row';
 import TableRow from '@/components/TableRow';
 import TableRowPermessi from '@/components/TableRowPermessi';
 import { redirect } from 'next/dist/server/api-utils';
+import { getWorkerId } from "@/components/Login";
 
 interface UserDetailsProps {
     user: any;
@@ -58,7 +59,9 @@ const style2 = {
 
 }
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
-    
+  const [permessi,setPermessi] = useState<any>()
+  const worker_id = getWorkerId()
+
     const [fileNames, setFileNames] = useState([]);
     
     const [docCaricati, setDoccaricati] = useState(false)
@@ -76,6 +79,8 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
         const response = await axios.get(`${apiURL}/api/files/${id_user}`);
         setFileNames(response.data.fileNames);
         setDoccaricati(true)
+        const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
+        setPermessi(response2.data.permessi)
       } catch (error) {
         console.error('Errore durante il recupero dei nomi dei file:', error);
       }
@@ -93,6 +98,11 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
       console.error('Errore durante il download del file:', error);
     }
   };
+  if (!permessi) {
+    return "..."
+  }
+
+ 
     return (
         <>
             <div className="container flex-column align-content-center ">
@@ -164,9 +174,12 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                 
                     
                 <div style={style} className=' w-75 mt-4 p-3 text-white rounded-4'>
+                     { permessi.seeContabile == true && (
+                      <>
                       <h1>Totale:{contabile.totale} €</h1>
                       <h1>Saldati:{contabile.saldati} €</h1>
                       <h1>In Sospeso:{contabile.in_sospeso} €</h1>
+                      </>)}
                       <Debts rates={rate} userId={id_user} />
               </div>
                   
