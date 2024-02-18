@@ -358,8 +358,8 @@ const AddWorkers = () => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiURL}/add/student`, formData);
-      redirec(response.data.data._id, 'students')
+      const response = await axios.post(`${apiURL}/add/worker`, formData);
+      redirec(response.data.data._id, 'workers')
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
