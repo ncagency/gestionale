@@ -34,7 +34,7 @@ export default function Navbar() {
   
       fetchWorker();
     });
-    console.log(permessi)
+    console.log(permessi.seeContabile)
     if (!permessi) {
       return "..."
     }
@@ -62,7 +62,7 @@ export default function Navbar() {
                 </div>
               </Link>
               
-              { permessi.seeContabile === "true" && (<Link style={{ textDecoration: "none" }} href={navlinks[3].url}  className=" p-2">
+              { permessi.seeContabile == "true" && (<Link style={{ textDecoration: "none" }} href={navlinks[3].url}  className=" p-2">
               <div  className="d-flex gap-3 text-white ">
                   <i className={`bi ${navlinks[3].icon}`}></i> <p>{navlinks[3].text}</p>
                 </div>
