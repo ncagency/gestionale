@@ -59,7 +59,6 @@ const style2 = {
 
 }
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
-  const [permessi,setPermessi] = useState<any>()
   
 
     const [fileNames, setFileNames] = useState([]);
@@ -79,9 +78,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
         const response = await axios.get(`${apiURL}/api/files/${id_user}`);
         setFileNames(response.data.fileNames);
         setDoccaricati(true)
-        const worker_id = getWorkerId()
-        const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
-        setPermessi(response2.data.permessi)
+       
       } catch (error) {
         console.error('Errore durante il recupero dei nomi dei file:', error);
       }
@@ -99,9 +96,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
       console.error('Errore durante il download del file:', error);
     }
   };
-  if (!permessi) {
-    return "..."
-  }
+
 
  
     return (
@@ -468,7 +463,9 @@ const Details = ({data,type,contabile}:{ data:any, type:any, contabile:any }) =>
 const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
    
-    
+    const worker_id = getWorkerId()
+    const [permessi,setPermessi] = useState<any>()
+
     const apiUrlx = `${apiURL}/${params.type}/${params.id}`;
     const apiUrl_contabile = `${apiURL}/contabile/${params.type}/${params.id}`;
 
@@ -479,6 +476,9 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
       try {
         const response = await axios.get(`${apiURL}/${params.type}/${params.id}`);
         setData(response.data)
+        const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
+        setPermessi(response2.data.permessi)
+
         if (params.type != "workers") {
           const response2 = await axios.get(apiUrl_contabile);
           setContabileData(response2.data)
@@ -535,6 +535,10 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
           // Gestisci l'errore in base alle tue esigenze, ad esempio visualizzando un messaggio di errore all'utente.
       }
   };
+    if (!permessi) {
+      return "..."
+    }
+
     return (
         <div className="col-md-10 p-4">
             <div>
