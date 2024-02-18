@@ -37,7 +37,7 @@ export default function Navbar() {
     if (!permessi) {
       return "..."
     }
-    console.log(permessi.seeContabile)
+   
     return (
         <div style={style}  className=" col-auto col-md-2 min-vh-100 rounded-end">
          
