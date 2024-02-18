@@ -1,32 +1,20 @@
 import { useState } from 'react';
-import axios from 'axios'; // Importa axios per effettuare richieste HTTP
 
-export default function Login({ onLogin }: { onLogin: any }) {
+export default function Login({ onLogin }:{ onLogin:any }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   // Funzione per gestire il submit del modulo di login
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
-
-    try {
-      // Effettua una richiesta al backend per verificare le credenziali dell'utente
-      const response = await axios.post('/api/login', {
-        username,
-        password
-      });
-
-      // Se la risposta è positiva, chiama la funzione di callback onLogin per eseguire l'accesso
-      if (response.data.success) {
-        onLogin();
-      } else {
-        setError('Username or password is incorrect.');
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-      setError('An error occurred during login.');
+    
+    if (!username || !password) {
+      setError('Please enter both username and password.');
+      return;
     }
+
+    onLogin();
   };
 
   return (
@@ -40,11 +28,12 @@ export default function Login({ onLogin }: { onLogin: any }) {
         <div>
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <div className='m-5'>
+        <div className='m-4'>
           <button type="submit">Login</button>
         </div>
       </form>
     </div>
   );
 }
+
 
