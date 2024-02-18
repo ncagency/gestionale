@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getWorkerId } from "./Login";
-import { useEffect,useState } from "react";
-import { getPermessi } from "@/utils/getPermessi";
+
 
 
 let navlinks = [
@@ -18,22 +17,6 @@ export default function Navbar() {
       background: "linear-gradient(to right, #3b83ff, #2a59ac",
     }
     
-    const [permessi, setPermessi] = useState<any>();
-
-    useEffect(() => {
-      const fetchPermessi = async () => {
-        const workerId = getWorkerId();
-        console.log(workerId)
-        const permessi = await getPermessi(workerId);
-        setPermessi(permessi);
-      };
-
-      fetchPermessi();
-    }, []);
-    
-    console.log(permessi)
-
-
 
     return (
         <div style={style}  className=" col-auto col-md-2 min-vh-100 rounded-end">
