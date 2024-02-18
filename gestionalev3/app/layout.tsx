@@ -37,11 +37,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <title>My App</title>
       </head>
-      <body className={inter.className} style={style}>
-        <Navbar /> 
-        <div style={{ marginLeft: "30px", width: "calc(100% - 200px)", padding:'20px' }}>
-          {children}
-        </div>
+      <body  >
+        { (isLoggedIn) && (
+          <div className={inter.className} style={style}>
+              <Navbar /> 
+             <div style={{ marginLeft: "30px", width: "calc(100% - 200px)", padding:'20px' }}>
+               {children}
+             </div>
+
+          </div>
+           
+        )
+        }
+     
       </body>
     </html>
   );
