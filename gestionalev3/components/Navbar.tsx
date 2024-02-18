@@ -17,6 +17,7 @@ const getPermessi = async () => {
     try {
       const workerId = getWorkerId()
       const [permessi, setPermessi] = useState<any>()
+      console.log(workerId)
       useEffect(() => {
         const fetchPermessi = async () => {
           try {
