@@ -360,7 +360,8 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
 
 
 const Details = ({data,type,contabile}:{ data:any, type:any, contabile:any }) => {
-    if (!data || !contabile) {
+    
+    if (!data || (type === "workers" && !contabile)) {
       return <p>Loading...</p>; // o qualsiasi altra logica per gestire il caricamento
     }
     return (
