@@ -15,11 +15,11 @@ let navlinks = [
 
 const getPermessi = async () => {
     try {
-      const workerId = getWorkerId()
       const [permessi, setPermessi] = useState<any>()
       useEffect(() => {
         const fetchPermessi = async () => {
           try {
+            const workerId = getWorkerId()
             console.log(workerId)
             const response = await axios.get(`${apiURL}/workers/${workerId}`);
             setPermessi(response.data.permessi);
