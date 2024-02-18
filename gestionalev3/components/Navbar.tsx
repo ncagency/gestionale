@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useWorkerId } from "./Login";
+import { getPermessi } from "./Login";
 
 let navlinks = [
     { text: "Dashboard", icon: "bi bi-grid-1x2-fill", url: "/" },
@@ -14,9 +14,12 @@ export default function Navbar() {
     const style = {
       background: "linear-gradient(to right, #3b83ff, #2a59ac",
     }
-    const workerId = useWorkerId()
-    console.log(workerId)
-     return (
+    const permessi = getPermessi()
+    console.log(permessi)
+
+
+
+    return (
         <div style={style}  className=" col-auto col-md-2 min-vh-100 rounded-end">
          
           <ul className="gap-1 fs-5 flex-column mt-5">
