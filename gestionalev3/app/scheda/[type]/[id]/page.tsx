@@ -73,8 +73,9 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
         console.error('Errore durante il recupero dei nomi dei file:', error);
       }
     };
-
-    fetchFileNames();
+    if (type == "students") {
+      fetchFileNames();
+    }
   }, [id_user]);
 
   const handleFileDownload = async (fileName:any) => {
@@ -390,8 +391,14 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
       try {
         const response = await axios.get(`${apiURL}/${params.type}/${params.id}`);
         setData(response.data)
-        const response2 = await axios.get(apiUrl_contabile);
-        setContabileData(response2.data)
+        if (params.type != "workers") {
+          const response2 = await axios.get(apiUrl_contabile);
+          setContabileData(response2.data)
+        } else {
+          let cont = null
+          setContabileData(cont)
+        }
+    
        
       } catch (error) {
         console.error('Errore durante la richiesta GET:', error);
