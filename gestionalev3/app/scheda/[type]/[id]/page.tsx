@@ -16,6 +16,7 @@ interface UserDetailsProps {
     user: any;
     type: string;
     contabile:any
+    permessi:any
   }
   
 interface WorkerDetailsProps {
@@ -58,7 +59,7 @@ const style2 = {
   padding: '60px',
 
 }
-const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
+const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile, permessi }) => {
   
 
     const [fileNames, setFileNames] = useState([]);
@@ -170,7 +171,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
                 
                     
                 <div style={style} className=' w-75 mt-4 p-3 text-white rounded-4'>
-                     { permessi.seeContabile == true && (
+                     {  (
                       <>
                       <h1>Totale:{contabile.totale} €</h1>
                       <h1>Saldati:{contabile.saldati} €</h1>
@@ -431,7 +432,7 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
 }
 
 
-const Details = ({data,type,contabile}:{ data:any, type:any, contabile:any }) => {
+const Details = ({data,type,contabile,permessi}:{ data:any, type:any, contabile:any ,permessi:any}) => {
     
   if (type == "workers") {
     if (!data ) {
@@ -447,7 +448,7 @@ const Details = ({data,type,contabile}:{ data:any, type:any, contabile:any }) =>
   
     return (
       <>
-        { type == "students"  && (<UserDetails user={data} type={type} contabile={contabile}/>)}
+        { type == "students"  && (<UserDetails user={data} type={type} contabile={contabile} permessi={permessi}i/>)}
         { type == "workers" && (<WorkerDetail user={data} type={type}  />)}
         { type == "courses" && (<CourseDetails course={data} type={type} contabile={contabile}/>)}
         { type == "enti" && (<EntiDetails ente={data} type={type} contabile={contabile}/>)}
@@ -545,7 +546,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
             <Link  href={link}><p>Indietro</p></Link>
             { params.type != "courses" && params.type != "enti" && <p onClick={() => handleDelete(params.id)}>Elimina</p>}
             </div>
-            <Details data={data} type={params.type} contabile={contabileData}/>
+            <Details data={data} type={params.type} contabile={contabileData} permessi={permessi}/>
 
 
             
