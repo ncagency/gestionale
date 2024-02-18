@@ -2,6 +2,7 @@
 import React,{useEffect, useState} from 'react'
 import TableRow from '@/components/TableRow';
 import axios from 'axios';
+import { getWorkerId } from "@/components/Login";
 
 
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
@@ -52,7 +53,8 @@ const Contabile = () => {
     const [courses,setCourses] = useState<Corso[]>([]);
     const [enti, setEnti] = useState<Ente[]>([]);
     const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
-
+    const [permessi,setPermessi] = useState<any>()
+    const worker_id = getWorkerId()
 
 
     useEffect(() => {
@@ -60,7 +62,8 @@ const Contabile = () => {
           try {
             const response = await axios.get(`${apiURL}/contabile`);
             let contabile = response.data
-            
+            const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
+            setPermessi(response2.data.permessi)
             setStudents(contabile[0].students)
             setCourses(contabile[0].courses)
             setEnti(contabile[0].enti)
@@ -99,11 +102,14 @@ const Contabile = () => {
         window.location.href = query;
     }
 
+    if ( permessi.seeContabile != true)  {
+        return "..."
+    }
   return (
     <div className='h-100 d-flex flex-column gap-3'>
             
             <div className='text-primary fs-4'>
-                <p onClick={() => redirec(`http://localhost:3000/`)} style={{cursor: 'pointer'}}>Indietro</p>
+                <p onClick={() => redirec(`/`)} style={{cursor: 'pointer'}}>Indietro</p>
             </div>
             
             <div className='d-flex gap-1 h-25'>

@@ -60,7 +60,7 @@ const style2 = {
 }
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   
-
+    
     const [fileNames, setFileNames] = useState([]);
     
     const [docCaricati, setDoccaricati] = useState(false)
