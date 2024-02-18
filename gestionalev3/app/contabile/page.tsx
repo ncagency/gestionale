@@ -60,6 +60,7 @@ const Contabile = () => {
     useEffect(() => {
         const fetchFileNames = async () => {
           try {
+            console.log(worker_id)
             const response = await axios.get(`${apiURL}/contabile`);
             let contabile = response.data
             const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
