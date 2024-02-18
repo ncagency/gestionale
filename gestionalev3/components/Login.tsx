@@ -4,17 +4,16 @@ import axios from 'axios';
 
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
-// Funzione per impostare il token nei cookie
-function setAuthTokenToCookie(token:any) {
-  document.cookie = `authToken=${token}; path=/; max-age=3600`; // Imposta il cookie con il nome "authToken" e una durata di 3600 secondi (1 ora)
+function setWorkerIdToCookie(workerId:any) {
+  document.cookie = `workerId=${workerId}; path=/; max-age=3600`; // Imposta il cookie con il nome "workerId" e una durata di 3600 secondi (1 ora)
 }
 
-// Funzione per ottenere il token dai cookie
-function getAuthTokenFromCookie() {
+// Funzione per ottenere l'ID del worker dai cookie
+function getWorkerIdFromCookie() {
   const cookies = document.cookie.split(';');
   for (let cookie of cookies) {
     const [name, value] = cookie.trim().split('=');
-    if (name === 'authToken') {
+    if (name === 'workerId') {
       return value;
     }
   }
@@ -29,7 +28,7 @@ export default function Login({ onLogin }:{ onLogin:any }) {
 
   useEffect(() => {
     // Verifica se l'utente è già autenticato al caricamento della pagina
-    const token = getAuthTokenFromCookie(); // Funzione per ottenere il token dai cookie
+    const token = getWorkerIdFromCookie(); // Funzione per ottenere il token dai cookie
     if (token) {
       // Se l'utente è già autenticato, esegui il login automatico
       onLogin();
@@ -49,8 +48,7 @@ export default function Login({ onLogin }:{ onLogin:any }) {
 
       // Se la risposta è positiva, chiama la funzione di callback onLogin per eseguire l'accesso
       if (response.data.success) {
-        // Memorizza il token di accesso nei cookie
-        setAuthTokenToCookie(response.data.token); // Funzione per impostare il token nei cookie
+        setWorkerIdToCookie(response.data.workerId);
         onLogin();
       } else {
         setError('Username or password is incorrect.');
