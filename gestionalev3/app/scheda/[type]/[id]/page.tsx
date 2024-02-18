@@ -477,9 +477,9 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
       try {
         const response = await axios.get(`${apiURL}/${params.type}/${params.id}`);
         setData(response.data)
-        const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
-        setPermessi(response2.data.permessi)
-
+        console.log(worker_id)
+        const response3 = await axios.get(`${apiURL}/workers/${worker_id}`);
+        setPermessi(response3.data.permessi)
         if (params.type != "workers") {
           const response2 = await axios.get(apiUrl_contabile);
           setContabileData(response2.data)
@@ -536,9 +536,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
           // Gestisci l'errore in base alle tue esigenze, ad esempio visualizzando un messaggio di errore all'utente.
       }
   };
-    if (!permessi) {
-      return "..."
-    }
+  
 
     return (
         <div className="col-md-10 p-4">
