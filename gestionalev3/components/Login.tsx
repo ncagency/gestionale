@@ -1,13 +1,40 @@
 'use client'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import axios from 'axios';
 
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
+
+// Funzione per impostare il token nei cookie
+function setAuthTokenToCookie(token:any) {
+  document.cookie = `authToken=${token}; path=/; max-age=3600`; // Imposta il cookie con il nome "authToken" e una durata di 3600 secondi (1 ora)
+}
+
+// Funzione per ottenere il token dai cookie
+function getAuthTokenFromCookie() {
+  const cookies = document.cookie.split(';');
+  for (let cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === 'authToken') {
+      return value;
+    }
+  }
+  return null;
+}
+
 
 export default function Login({ onLogin }:{ onLogin:any }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    // Verifica se l'utente è già autenticato al caricamento della pagina
+    const token = getAuthTokenFromCookie(); // Funzione per ottenere il token dai cookie
+    if (token) {
+      // Se l'utente è già autenticato, esegui il login automatico
+      onLogin();
+    }
+  }, []); // L'effetto viene eseguito solo al caricamento iniziale
 
   // Funzione per gestire il submit del modulo di login
   const handleSubmit = async (e: any) => {
@@ -22,6 +49,8 @@ export default function Login({ onLogin }:{ onLogin:any }) {
 
       // Se la risposta è positiva, chiama la funzione di callback onLogin per eseguire l'accesso
       if (response.data.success) {
+        // Memorizza il token di accesso nei cookie
+        setAuthTokenToCookie(response.data.token); // Funzione per impostare il token nei cookie
         onLogin();
       } else {
         setError('Username or password is incorrect.');
