@@ -23,6 +23,7 @@ export default function Navbar() {
     useEffect(() => {
       const fetchPermessi = async () => {
         const workerId = getWorkerId();
+        console.log(workerId)
         const permessi = await getPermessi(workerId);
         setPermessi(permessi);
       };

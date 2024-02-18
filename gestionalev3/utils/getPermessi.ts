@@ -5,6 +5,7 @@ const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 export const getPermessi = async (workerId: string) => {
   try {
+    console.log(workerId)
     const response = await axios.get(`${apiURL}/workers/${workerId}`);
     return response.data.permessi;
   } catch (error) {
