@@ -27,10 +27,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     setIsLoggedIn(true);
   };
 
-  // Se l'utente non è autenticato, mostra la pagina di login
-  if (!isLoggedIn) {
-    return <Login onLogin={handleLogin} />;
-  }
 
   return (
     <html lang="en">
@@ -48,7 +44,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </div>
            
         )
-        }
+        } else (
+          <div>
+          <Login onLogin={handleLogin} />
+          </div>
+        )
      
       </body>
     </html>
