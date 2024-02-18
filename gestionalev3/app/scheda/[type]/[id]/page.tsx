@@ -15,6 +15,12 @@ interface UserDetailsProps {
     type: string;
     contabile:any
   }
+  
+interface WorkerDetailsProps {
+    user: any;
+    type: string;
+  }
+
 interface CourseDetailsProps {
     course: any;
     type: string;
@@ -181,7 +187,55 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
         </>
     )
 }
- 
+
+const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
+
+  const id_user = user._id
+
+  const redirec = (query:string) => {
+    const destinationValue = query;
+    window.location.href = destinationValue;
+}
+
+
+  return (
+      <>
+          <div className="container flex-column align-content-center ">
+              <h1>Dettagli Worker</h1> 
+              <div className='container m-4 d-flex '>
+                  <table className="table table-bordered">
+                      <tbody>
+                          
+                          <TableRow label="ID" value={user._id} />
+                          <TableRow label="Nome" value={`${user.nome}${user.secondo_nome ? ` ${user.secondo_nome}` : ''}`}/>                      
+                          <TableRow label="Cognome" value={user.cognome} />
+                          <TableRow label="Sesso" value={user.sesso} />
+                          <TableRow label="Data di Nascita" value={user.dob} />
+                          <TableRow label="Luogo di Nascita" value={`${user.lob} (${user.prov_b}), ${user.state_b}`} />
+                          <TableRow label="Codice Fiscale" value={user.cf} />
+                          <TableRow label="Residenza" value={`${user.indirizzo_res}, ${user.citta_res} (${user.prov_res}), ${user.stato_res}`} />
+                          <TableRow label="Domicilio" value={`${user.indirizzo_dom}, ${user.citta_dom} (${user.prov_dom}), ${user.stato_dom}`} />
+                          <TableRow label="Cellulare" value={user.cellulare} />
+                          <TableRow label="Email" value={user.email} />
+                      </tbody>
+                  </table>
+                  <p onClick={() => redirec(`/modifica/workers/${id_user}`)}  style={{cursor: "pointer"}} className='mx-4 text-primary'>Modifica</p>
+
+              </div>
+              {(type == "workers" ) && 
+                  <div className="row bg-primary mt-0">
+                      <ul>
+                          <li>
+                              Permesso 1 | o Si o No // implementa permessi
+                          </li>
+                      </ul>
+                  </div>}
+          </div>
+
+      </>
+  )
+}
+
 const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
 
         const [usersData, setUsersData] = useState<any[]>([]);
@@ -375,7 +429,8 @@ const Details = ({data,type,contabile}:{ data:any, type:any, contabile:any }) =>
   
     return (
       <>
-        { (type == "students" || type == "workers") && (<UserDetails user={data} type={type} contabile={contabile}/>)}
+        { type == "students"  && (<UserDetails user={data} type={type} contabile={contabile}/>)}
+        { type == "workers" && (<WorkerDetail user={data} type={type}  />)}
         { type == "courses" && (<CourseDetails course={data} type={type} contabile={contabile}/>)}
         { type == "enti" && (<EntiDetails ente={data} type={type} contabile={contabile}/>)}
       </>
