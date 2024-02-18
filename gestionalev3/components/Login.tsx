@@ -31,7 +31,7 @@ export default function Login({ onLogin }:{ onLogin:any }) {
         <div>
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <div>
+        <div className='m-5'>
           <button type="submit">Login</button>
         </div>
       </form>
