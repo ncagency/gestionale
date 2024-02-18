@@ -19,12 +19,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     background: "linear-gradient(to right, #ffffff, #f2f2f2)",
   };
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Funzione per gestire il login dell'utente
   const handleLogin = () => {
-    // Qui dovresti implementare la logica di autenticazione, ad esempio, chiamando un'API, controllando i dati nel localStorage, ecc.
-    // Se l'utente è autenticato con successo, imposta isLoggedIn su true.
+    console.log("Logged")
     setIsLoggedIn(true);
   };
 
