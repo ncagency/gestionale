@@ -197,6 +197,7 @@ const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
     window.location.href = destinationValue;
 }
 
+  let permessi = user.permessi
 
   return (
       <>
@@ -207,6 +208,8 @@ const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
                       <tbody>
                           
                           <TableRow label="ID" value={user._id} />
+                          <TableRow label="Username" value={user.username} />
+                          <TableRow label="Password" value={user.password} />
                           <TableRow label="Nome" value={`${user.nome}${user.secondo_nome ? ` ${user.secondo_nome}` : ''}`}/>                      
                           <TableRow label="Cognome" value={user.cognome} />
                           <TableRow label="Sesso" value={user.sesso} />
@@ -222,14 +225,18 @@ const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
                   <p onClick={() => redirec(`/modifica/workers/${id_user}`)}  style={{cursor: "pointer"}} className='mx-4 text-primary'>Modifica</p>
 
               </div>
-              {(type == "workers" ) && 
-                  <div className="row bg-primary mt-0">
-                      <ul>
-                          <li>
-                              Permesso 1 | o Si o No // implementa permessi
-                          </li>
-                      </ul>
-                  </div>}
+              <table className="table table-bordered">
+                      <tbody> 
+                          <TableRow label="Contabile" value={user.permessi.seeContabile} />
+                          <TableRow label="Cronologia" value={user.permessi.seeCronologia} />
+                          <TableRow label="Rate" value={user.permessi.pagaRate} />
+                          <TableRow label="Fatture" value={user.permessi.pagaFatture} />
+                          <TableRow label="Aggiungi Stock" value={user.permessi.addStock} />
+                          <TableRow label="Aggiungi Studenti" value={user.permessi.addStudents} />
+                          <TableRow label="Aggiungi Corsi" value={user.permessi.addCourses} />
+                          <TableRow label="Aggiungi Enti" value={user.permessi.addEnti} />
+                      </tbody>
+                  </table>
           </div>
 
       </>
