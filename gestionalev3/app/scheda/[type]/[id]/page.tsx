@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Rate,ViewCorsi,Debts } from '@/components';
 import Row from '@/components/Row';
 import TableRow from '@/components/TableRow';
+import TableRowPermessi from '@/components/TableRowPermessi';
 import { redirect } from 'next/dist/server/api-utils';
 
 interface UserDetailsProps {
@@ -227,14 +228,14 @@ const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
               </div>
               <table className="table table-bordered">
                       <tbody> 
-                          <TableRow label="Contabile" value={user.permessi.seeContabile} />
-                          <TableRow label="Cronologia" value={user.permessi.seeCronologia} />
-                          <TableRow label="Rate" value={user.permessi.pagaRate} />
-                          <TableRow label="Fatture" value={user.permessi.pagaFatture} />
-                          <TableRow label="Aggiungi Stock" value={user.permessi.addStock} />
-                          <TableRow label="Aggiungi Studenti" value={user.permessi.addStudents} />
-                          <TableRow label="Aggiungi Corsi" value={user.permessi.addCourses} />
-                          <TableRow label="Aggiungi Enti" value={user.permessi.addEnti} />
+                          <TableRowPermessi label="Contabile" value={user.permessi.seeContabile} />
+                          <TableRowPermessi label="Cronologia" value={user.permessi.seeCronologia} />
+                          <TableRowPermessi label="Rate" value={user.permessi.pagaRate} />
+                          <TableRowPermessi label="Fatture" value={user.permessi.pagaFatture} />
+                          <TableRowPermessi label="Aggiungi Stock" value={user.permessi.addStock} />
+                          <TableRowPermessi label="Aggiungi Studenti" value={user.permessi.addStudents} />
+                          <TableRowPermessi label="Aggiungi Corsi" value={user.permessi.addCourses} />
+                          <TableRowPermessi label="Aggiungi Enti" value={user.permessi.addEnti} />
                       </tbody>
                   </table>
           </div>
