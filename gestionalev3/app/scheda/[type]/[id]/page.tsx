@@ -466,7 +466,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
    
     
     const [permessi,setPermessi] = useState<any>()
-
+    let worker_id = getWorkerId()
     const apiUrlx = `${apiURL}/${params.type}/${params.id}`;
     const apiUrl_contabile = `${apiURL}/contabile/${params.type}/${params.id}`;
 
@@ -478,10 +478,6 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
         const response = await axios.get(`${apiURL}/${params.type}/${params.id}`);
         setData(response.data)
 
-        const worker_id = getWorkerId()
-        console.log(worker_id)
-        const response3 = await axios.get(`${apiURL}/workers/${worker_id}`);
-        setPermessi(response3.data.permessi)
         if (params.type != "workers") {
           const response2 = await axios.get(apiUrl_contabile);
           setContabileData(response2.data)
@@ -495,10 +491,21 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
         console.error('Errore durante la richiesta GET:', error);
       }
     };
-  
+    
+    const fetchWorker = async () => {
+      try {
+        const response = await axios.get(`${apiURL}/workers/${worker_id}`);
+        setPermessi(response.data.permessi)
+    
+    } catch (error) {
+        console.error('Errore durante il recupero dei nomi dei file:', error);
+      }
+    };
+
     // Esegui la richiesta GET quando il componente si monta
     useEffect(() => {
       fetchData();
+      fetchWorker()
     }, []); // Assicurati di passare un array vuoto come secondo argomento per eseguire l'effetto solo al mount del componente
 
     const redirec = () => {
@@ -539,6 +546,11 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
       }
   };
   
+
+    if (!permessi) {
+      return "..."
+    }
+ 
 
     return (
         <div className="col-md-10 p-4">

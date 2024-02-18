@@ -13,7 +13,7 @@ export function getWorkerId() {
     const workerIdFromCookie:any = getWorkerIdFromCookie(); // Funzione per ottenere l'ID del worker dai cookie
     setWorkerId(workerIdFromCookie);
   }, []);
-  console.log(workerId)
+
 
   return workerId;
 }

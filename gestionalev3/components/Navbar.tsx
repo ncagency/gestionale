@@ -18,26 +18,7 @@ export default function Navbar() {
     const style = {
       background: "linear-gradient(to right, #3b83ff, #2a59ac",
     }
-    
-    const [permessi,setPermessi] = useState<any>()
-    const worker_id = getWorkerId()
-    useEffect(() => {
-      const fetchWorker = async () => {
-        try {
-          const response = await axios.get(`${apiURL}/workers/${worker_id}`);
-          setPermessi(response.data.permessi)
-      
-      } catch (error) {
-          console.error('Errore durante il recupero dei nomi dei file:', error);
-        }
-      };
   
-      fetchWorker();
-    });
-    if (!permessi) {
-      return "..."
-    }
-   
     return (
         <div style={style}  className=" col-auto col-md-2 min-vh-100 rounded-end">
          
@@ -62,11 +43,11 @@ export default function Navbar() {
                 </div>
               </Link>
               
-              { permessi.seeContabile == true && (<Link style={{ textDecoration: "none" }} href={navlinks[3].url}  className=" p-2">
+              <Link style={{ textDecoration: "none" }} href={navlinks[3].url}  className=" p-2">
               <div  className="d-flex gap-3 text-white ">
                   <i className={`bi ${navlinks[3].icon}`}></i> <p>{navlinks[3].text}</p>
                 </div>
-              </Link>)}
+              </Link>
               
               <Link style={{ textDecoration: "none" }} href={navlinks[4].url}  className=" p-2">
               <div  className="d-flex gap-3 text-white ">
