@@ -54,12 +54,12 @@ const Contabile = () => {
     const [enti, setEnti] = useState<Ente[]>([]);
     const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
     const [permessi,setPermessi] = useState<any>()
-    const worker_id = getWorkerId()
 
 
     useEffect(() => {
         const fetchFileNames = async () => {
           try {
+            const worker_id = await getWorkerId()
             console.log(worker_id)
             const response = await axios.get(`${apiURL}/contabile`);
             let contabile = response.data
