@@ -9,11 +9,11 @@ const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 export function getWorkerId() {
   const [workerId, setWorkerId] = useState<any>(null);
-  
   useEffect(() => {
     const workerIdFromCookie:any = getWorkerIdFromCookie(); // Funzione per ottenere l'ID del worker dai cookie
     setWorkerId(workerIdFromCookie);
   }, []);
+  console.log(workerId)
 
   return workerId;
 }
