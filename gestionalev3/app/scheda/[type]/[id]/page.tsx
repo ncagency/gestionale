@@ -60,7 +60,7 @@ const style2 = {
 }
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   const [permessi,setPermessi] = useState<any>()
-  const worker_id = getWorkerId()
+  
 
     const [fileNames, setFileNames] = useState([]);
     
@@ -79,6 +79,7 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
         const response = await axios.get(`${apiURL}/api/files/${id_user}`);
         setFileNames(response.data.fileNames);
         setDoccaricati(true)
+        const worker_id = getWorkerId()
         const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
         setPermessi(response2.data.permessi)
       } catch (error) {
