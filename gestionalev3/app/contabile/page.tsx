@@ -76,7 +76,7 @@ const Contabile = () => {
         };
     
         fetchFileNames();
-      }, [worker_id]);
+      });
 
    
 
