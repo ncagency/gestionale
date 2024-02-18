@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { getWorkerId } from "./Login";
+import { useEffect } from "react";
+import axios from "axios";
 
-
+const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 let navlinks = [
     { text: "Dashboard", icon: "bi bi-grid-1x2-fill", url: "/" },
@@ -17,6 +19,22 @@ export default function Navbar() {
       background: "linear-gradient(to right, #3b83ff, #2a59ac",
     }
     
+    
+    const worker_id = getWorkerId()
+    useEffect(() => {
+      const fetchWorker = async () => {
+        try {
+          const response = await axios.get(`${apiURL}/workers/${worker_id}`);
+          console.log(response.data)
+      
+      } catch (error) {
+          console.error('Errore durante il recupero dei nomi dei file:', error);
+        }
+      };
+  
+      fetchWorker();
+    });
+
 
     return (
         <div style={style}  className=" col-auto col-md-2 min-vh-100 rounded-end">
