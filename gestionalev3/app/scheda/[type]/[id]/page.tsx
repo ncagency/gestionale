@@ -464,7 +464,7 @@ const Details = ({data,type,contabile,permessi}:{ data:any, type:any, contabile:
 const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
    
-    const worker_id = getWorkerId()
+    
     const [permessi,setPermessi] = useState<any>()
 
     const apiUrlx = `${apiURL}/${params.type}/${params.id}`;
@@ -477,6 +477,8 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
       try {
         const response = await axios.get(`${apiURL}/${params.type}/${params.id}`);
         setData(response.data)
+
+        const worker_id = getWorkerId()
         console.log(worker_id)
         const response3 = await axios.get(`${apiURL}/workers/${worker_id}`);
         setPermessi(response3.data.permessi)
