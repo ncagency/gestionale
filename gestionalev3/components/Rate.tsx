@@ -81,7 +81,7 @@ const Rate = ({ data, id, index_debito }: { data: any; id: any; index_debito: an
                 {editIndex === index ? (
                   <input type="text" value={item.rate_s} onChange={(e) => handleInputChange(e, 'data', index)} />
                 ) : (
-                  item.rate_s
+                  item.data
                 )}
               </td>
               <td>
