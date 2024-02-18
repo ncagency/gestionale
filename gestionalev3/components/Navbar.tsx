@@ -34,8 +34,10 @@ export default function Navbar() {
   
       fetchWorker();
     });
-    console.log(permessi)
-
+    
+    if (!permessi) {
+      return "..."
+    }
     return (
         <div style={style}  className=" col-auto col-md-2 min-vh-100 rounded-end">
          
