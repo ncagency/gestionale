@@ -75,7 +75,7 @@ const Contabile = () => {
         };
     
         fetchFileNames();
-      });
+      }, [worker_id]);
 
    
 
@@ -102,9 +102,10 @@ const Contabile = () => {
         window.location.href = query;
     }
 
-    if ( permessi.seeContabile != true)  {
-        return "..."
-    }
+    if (!permessi || !permessi.seeContabile) {
+        return "Caricamento...";
+      }
+
   return (
     <div className='h-100 d-flex flex-column gap-3'>
             
