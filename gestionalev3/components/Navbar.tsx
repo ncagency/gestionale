@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { getWorkerId } from "./Login";
 import { useEffect,useState } from "react";
-import axios from "axios";
+import { getPermessi } from "@/utils/getPermessi";
 
-const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 let navlinks = [
     { text: "Dashboard", icon: "bi bi-grid-1x2-fill", url: "/" },
@@ -13,30 +12,25 @@ let navlinks = [
     { text: "Aggiungi", icon: "bi bi-sliders", url: "/aggiungi" },
   ];
 
-const getPermessi = async () => {
-    const [permessi, setPermessi] = useState<any>()
-
-      try {
-            const workerId = getWorkerId()
-
-            console.log(workerId)
-            const response = await axios.get(`${apiURL}/workers/${workerId}`);
-            setPermessi(response.data.permessi);
-          } catch (error) {
-            console.error('Errore durante il recupero dei corsi dal database', error);
-          }
-      
-    return permessi
-    } 
 
 export default function Navbar() {
     const style = {
       background: "linear-gradient(to right, #3b83ff, #2a59ac",
     }
     
-    let permessi = getPermessi()
+    const [permessi, setPermessi] = useState<any>();
+
+    useEffect(() => {
+      const fetchPermessi = async () => {
+        const workerId = getWorkerId();
+        const permessi = await getPermessi(workerId);
+        setPermessi(permessi);
+      };
+
+      fetchPermessi();
+    }, []);
+    
     console.log(permessi)
-  
 
 
 
