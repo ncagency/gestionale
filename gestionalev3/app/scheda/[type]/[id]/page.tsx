@@ -448,7 +448,7 @@ const Details = ({data,type,contabile,permessi}:{ data:any, type:any, contabile:
   
     return (
       <>
-        { type == "students"  && (<UserDetails user={data} type={type} contabile={contabile} permessi={permessi}i/>)}
+        { type == "students"  && (<UserDetails user={data} type={type} contabile={contabile} permessi={permessi}/>)}
         { type == "workers" && (<WorkerDetail user={data} type={type}  />)}
         { type == "courses" && (<CourseDetails course={data} type={type} contabile={contabile}/>)}
         { type == "enti" && (<EntiDetails ente={data} type={type} contabile={contabile}/>)}
