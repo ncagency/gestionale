@@ -14,7 +14,6 @@ export function getWorkerId() {
     setWorkerId(workerIdFromCookie);
   }, []);
 
-  console.log(workerId)
   return workerId;
 }
 
