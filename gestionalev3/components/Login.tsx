@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
+
 export default function Login({ onLogin }:{ onLogin:any }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +15,7 @@ export default function Login({ onLogin }:{ onLogin:any }) {
 
     try {
       // Effettua una richiesta al backend per verificare le credenziali dell'utente
-      const response = await axios.post('/login', {
+      const response = await axios.post(`${apiURL}/login`, {
         username,
         password
       });
