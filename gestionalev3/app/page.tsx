@@ -178,7 +178,7 @@ export default function Home() {
    return (
         <div className='container '>
             <div className='row h-100 mt-4'>
-                <div className='col-5'><ContabileCard /></div>
+                { permessi.seeContabile == true && (<div className='col-5'><ContabileCard /></div>)}
                 <div className='col-2'><AddCard /></div>
                 <div className='col'><DipendentiCard /></div>
             </div>
