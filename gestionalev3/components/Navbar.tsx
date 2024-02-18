@@ -21,13 +21,14 @@ const getPermessi = async () => {
       const fetchPermessi = async () => {
         try {
           const response = await axios.get(`${apiURL}/workers/${workerId}`);
-          setPermessi(response.data);
+          setPermessi(response.data.permessi);
         } catch (error) {
           console.error('Errore durante il recupero dei corsi dal database', error);
         }
       };
       fetchPermessi();
     }, []);
+    return permessi
 }
 export default function Navbar() {
     const style = {
