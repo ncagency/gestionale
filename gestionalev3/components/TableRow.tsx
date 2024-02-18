@@ -3,8 +3,10 @@ const TableRow = ({ label, value }:{ label:any, value:any }) => {
 
     if (value == true) {
         text = "Si"
-    } else {
+    } else if (value == false) {
         text = "No"
+    } else {
+        text = value
     }
 
     return ( 
