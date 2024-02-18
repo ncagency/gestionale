@@ -226,6 +226,7 @@ const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
                   <p onClick={() => redirec(`/modifica/workers/${id_user}`)}  style={{cursor: "pointer"}} className='mx-4 text-primary'>Modifica</p>
 
               </div>
+              <h1>Permessi</h1>
               <table className="table table-bordered">
                       <tbody> 
                           <TableRowPermessi label="Contabile" value={user.permessi.seeContabile} />
