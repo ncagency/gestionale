@@ -34,7 +34,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <title>My App</title>
       </head>
       <body  >
-        { (isLoggedIn) && (
+        { (isLoggedIn) ? (
           <div className={inter.className} style={style}>
               <Navbar /> 
              <div style={{ marginLeft: "30px", width: "calc(100% - 200px)", padding:'20px' }}>
@@ -43,12 +43,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
           </div>
            
-        )
-        } else (
+        ) :
+         (
           <div>
           <Login onLogin={handleLogin} />
           </div>
-        )
+        )}
      
       </body>
     </html>
