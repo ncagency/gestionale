@@ -14,21 +14,25 @@ let navlinks = [
   ];
 
 const getPermessi = async () => {
-  
-    const workerId = getWorkerId()
-    const [permessi, setPermessi] = useState<any>()
-    useEffect(() => {
-      const fetchPermessi = async () => {
-        try {
-          const response = await axios.get(`${apiURL}/workers/${workerId}`);
-          setPermessi(response.data.permessi);
-        } catch (error) {
-          console.error('Errore durante il recupero dei corsi dal database', error);
-        }
-      };
-      fetchPermessi();
-    }, []);
-    return permessi
+    try {
+      const workerId = getWorkerId()
+      const [permessi, setPermessi] = useState<any>()
+      useEffect(() => {
+        const fetchPermessi = async () => {
+          try {
+            const response = await axios.get(`${apiURL}/workers/${workerId}`);
+            setPermessi(response.data.permessi);
+          } catch (error) {
+            console.error('Errore durante il recupero dei corsi dal database', error);
+          }
+        };
+        fetchPermessi();
+      }, []);
+      return permessi
+    } catch (err) {
+      console.log(err)
+    }
+   
 }
 export default function Navbar() {
     const style = {
