@@ -5,21 +5,14 @@ import axios from 'axios';
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 
-const getCall = async (workerId:string) => {
-  try {
-    await axios.get(`${apiURL}/workers/${workerId}`)
-  } catch (err) {
-    console.log(err)
-  }
-}
-export function getPermessi() {
+
+
+export function getWorkerId() {
   const [workerId, setWorkerId] = useState<any>(null);
   
   useEffect(() => {
     const workerIdFromCookie:any = getWorkerIdFromCookie(); // Funzione per ottenere l'ID del worker dai cookie
-   
-    let permessi = getCall(workerIdFromCookie)
-    setWorkerId(permessi);
+    setWorkerId(workerIdFromCookie);
   }, []);
 
   return workerId;
