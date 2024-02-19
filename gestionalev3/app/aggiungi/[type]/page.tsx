@@ -14,7 +14,7 @@ const redirec = (id:any, type:any) => {
   window.location.href = destinationValue;
 }
 
-const AddCourses = () => {
+const AddCourses = (permessi:any) => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -73,6 +73,12 @@ const AddCourses = () => {
 
   if (isLoading) {
     return <div>Loading...</div>;
+  } else if (permessi.addEnti != true) {
+    return (<div className='h-100 d-flex justify-content-center align-items-center'>
+
+    <h1 className='text-white'>Non hai i pemessi necessari per accedere a questa pagina</h1>
+
+</div>)
   }
   return (
     <>
@@ -99,7 +105,7 @@ const AddCourses = () => {
   )
 }
 
-const AddEnti = () => {
+const AddEnti = (permessi:any)  => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -132,6 +138,14 @@ const AddEnti = () => {
       console.error('Errore durante l\'invio dei dati:', error);
     }
   };
+
+  if (permessi.addEnti != true) {
+    return (<div className='h-100 d-flex justify-content-center align-items-center'>
+
+    <h1 className='text-white'>Non hai i pemessi necessari per accedere a questa pagina</h1>
+
+</div>)
+  }
 
   return (
     <>
@@ -244,7 +258,7 @@ const AddStudents = (permessi:any) => {
   if (permessi.addStudents != true) {
     return (<div className='h-100 d-flex justify-content-center align-items-center'>
 
-    <h1>Non hai i pemessi necessari per accedere a questa pagina</h1>
+    <h1 className='text-white'>Non hai i pemessi necessari per accedere a questa pagina</h1>
 
 </div>)
   }
@@ -305,7 +319,7 @@ const AddStudents = (permessi:any) => {
   )
 }
 
-const AddWorkers = () => {
+const AddWorkers = (permessi:any) => {
   
   const [formData,setFormData] = useState({
     username:'',
@@ -521,9 +535,9 @@ function AddForm({params} : {params:any}){
     <div className='d-flex '>
         <div  style={divStyle}  className='bg-primary rounded-4'> 
               { type == "students" && <AddStudents permessi={permessi}/>}
-              { type == "courses" && <AddCourses />}
-              { type == "enti" && <AddEnti />}
-              { type == "workers" && <AddWorkers />}
+              { type == "courses" && <AddCourses permessi={permessi}/>}
+              { type == "enti" && <AddEnti permessi={permessi}/>}
+              { type == "workers" && <AddWorkers permessi={permessi}/>}
           </div>
     </div>
   )};
