@@ -310,7 +310,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile, permes
                                     <h4>Costo:{contabile.costo} €</h4></div>)}
                                     <h4>Venduti:{contabile.venduti}</h4>
                                   </div>
-                                  { permessi.addStock == true && (<div style={{cursor:'pointer'}} onClick={redirec} className='bg-warning p-3 w-25 rounded-5 mt-5'> Stock</div>)}
+                                  { course.tipo != "Uni" && permessi.addStock == true && (<div style={{cursor:'pointer'}} onClick={redirec} className='bg-warning p-3 w-25 rounded-5 mt-5'> Stock</div>)}
                           </div>)}
                       
                       </div>
