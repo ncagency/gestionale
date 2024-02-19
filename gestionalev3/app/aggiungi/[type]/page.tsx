@@ -105,8 +105,8 @@ const AddCourses = (permessi:any) => {
                       value={formData.tipo}
                       onChange={handleInputChange} 
                       className="selector-width-state ">
-                        <option value="" disabled>Standard</option>
-                        <option value="Uni"disabled>Uni</option>
+                        <option value="" >Standard</option>
+                        <option value="Uni">Uni</option>
                       </select>
           <button onClick={handleSubmit} className='mt-2' >Invia</button>
         </form>
