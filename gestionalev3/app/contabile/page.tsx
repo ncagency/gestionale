@@ -124,7 +124,7 @@ function Contabile() {
             
             <div className='d-flex gap-1 h-25'>
                 <div style={styleSuccess} className='d-flex flex-column justify-content-center bg-primary w-25 h-100 rounded-3 p-3'>
-                   <p className='fs-4 text-white'>Entrate</p>
+                   <div className='d-flex gap-2'><i className="bi bi-caret-down-fill"></i><p className='fs-4 text-white'>Entrate</p></div>
                    <p className='fs-1 text-white'>{total} €</p>
                 </div>
                 <div style={styleBad} className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
