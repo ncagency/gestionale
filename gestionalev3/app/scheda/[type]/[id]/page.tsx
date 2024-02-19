@@ -402,7 +402,12 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile, permessi }) 
                             <div>
                               <label className='w-25 fs-5 text-warning'>Inviare</label>
                               <p className='fs-4 text-white'>{contabile.da_inviare} €</p>
-                            </div></>)}
+                            </div>
+                            <div>
+                              <label className='w-25 fs-5 text-warning'>Ricevere</label>
+                              <p className='fs-4 text-white'>{contabile.da_ricevere} €</p>
+                            </div>
+                            </>)}
                            { permessi.pagaFatture == true && (<div style={style2} className=' p-1 text-white rounded-4' onClick={redirec} >
                                   <p className='fs-5'></p>
                          </div>)}
