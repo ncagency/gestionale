@@ -41,6 +41,9 @@ interface Corso {
 }
 interface Student {
     _id: string;
+    nome:string;
+    secondo_nome:string;
+    cognome:string;
     totale: number;
     saldati: number;
     in_sospeso: number;
@@ -206,7 +209,7 @@ function Contabile() {
 
                             {students.map((student) => (
                                     <tr className="border-1 p-4">
-                                        <td>{student._id}</td>
+                                        <td>{student.nome} {student.secondo_nome} {student.cognome}</td>
                                         <td>{student.totale} €</td>
                                         <td>{student.saldati} €</td>
                                         <td>{student.in_sospeso} €</td>
