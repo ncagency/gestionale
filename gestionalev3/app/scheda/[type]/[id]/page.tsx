@@ -10,6 +10,7 @@ import Row from '@/components/Row';
 import TableRow from '@/components/TableRow';
 import TableRowPermessi from '@/components/TableRowPermessi';
 import { redirect } from 'next/dist/server/api-utils';
+import { getWorkerIdFromCookie } from '@/components/Login';
 
 interface UserDetailsProps {
     user: any;
@@ -32,12 +33,8 @@ interface EntiDetailsProps {
     type: string;
     contabile: any;
   }
-interface TabDetailsProps {
-  params:{
-    type: string;
-    id: string;
-}
-  }
+
+  
 
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
@@ -59,7 +56,7 @@ const style2 = {
 }
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   
-
+    
     const [fileNames, setFileNames] = useState([]);
     
     const [docCaricati, setDoccaricati] = useState(false)
@@ -459,7 +456,7 @@ const Details = ({data,type,contabile}:{ data:any, type:any, contabile:any }) =>
 
 
 
-const tabDetails: FC<TabDetailsProps> = ({ params }) => {
+function tabDetails({ params }:{params:any}){
   
 
     const apiUrlx = `${apiURL}/${params.type}/${params.id}`;
@@ -467,12 +464,14 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
 
     const [data,setData] = useState(null);
     const [contabileData, setContabileData] = useState(null)
+    const [permessi,setPermessi] = useState<any>()
+
 
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiURL}/${params.type}/${params.id}`);
         setData(response.data)
-
+        
         if (params.type != "workers") {
           const response2 = await axios.get(apiUrl_contabile);
           setContabileData(response2.data)
@@ -480,8 +479,9 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
           let cont = null
           setContabileData(cont)
         }
-    
-       
+        let worker_id = getWorkerIdFromCookie()
+        const response3 = await axios.get(`${apiURL}/workers/${worker_id}`);
+        setPermessi(response3.data.permessi)
       } catch (error) {
         console.error('Errore durante la richiesta GET:', error);
       }
@@ -491,6 +491,7 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
 
     // Esegui la richiesta GET quando il componente si monta
     useEffect(() => {
+
       fetchData();
     }, []); // Assicurati di passare un array vuoto come secondo argomento per eseguire l'effetto solo al mount del componente
 
@@ -534,8 +535,10 @@ const tabDetails: FC<TabDetailsProps> = ({ params }) => {
   
 
   
+    if (!permessi) {
+      return "Loading..."
+    }
  
-
     return (
         <div className="col-md-10 p-4">
             <div>
