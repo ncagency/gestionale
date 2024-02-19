@@ -31,7 +31,7 @@ const [formData, setFormData] = useState<{
   data: formattedDate,
   totale: 0,
   percentuale:0,
-  accademico:"";
+  accademico:"",
   rate: [],
 });
 
