@@ -186,7 +186,7 @@ const [formData, setFormData] = useState<{
             <input type="number" value={totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
           </label>
 
-          <label>
+          <label className='w-75'>
             Numero di Rate:
             <input type="number" value={numRate} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
           </label>
