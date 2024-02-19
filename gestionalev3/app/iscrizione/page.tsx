@@ -194,7 +194,7 @@ const [formData, setFormData] = useState<{
                   <label className='fs-5'> Percentuale </label>
                   <div className='d-flex gap-2'>
                   <input className="input_small" placeholder="Utilizza solo con Corsi universitari" type="number" value={formData.percentuale} name="percentuale"  onChange={(e) => handleInputChange(e)}  required />
-                  <p className='subtitle'>(Utilizza solo con Corsi universitari, senza simbolo %)</p>
+                  <p className='subtitle'>(Solo con Corsi universitari, senza simbolo %)</p>
 
                   </div>
 
