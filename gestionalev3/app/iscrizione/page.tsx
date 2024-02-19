@@ -20,6 +20,7 @@ const [formData, setFormData] = useState<{
   data: string;
   flag: boolean;
   totale: number;
+  percentuale:number;
   rate: any; 
 }>({
   user_id: '',
@@ -28,6 +29,7 @@ const [formData, setFormData] = useState<{
   flag:false,
   data: formattedDate,
   totale: 0,
+  percentuale:0,
   rate: [],
 });
 
@@ -180,13 +182,19 @@ const [formData, setFormData] = useState<{
             </div>
 
           <div className='d-flex gap-2'>
-
+          <div className='d-flex gap-2'>
           <label>
             Totale:
             <input type="number" value={totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
           </label>
 
-          <label className='w-75'>
+         <label>
+            Percentuale Guadagno:
+            <input placeholder="Utilizza solo con Corsi universitari" type="number" value={formData.percentuale} name="percentuale"  onChange={(e) => handleInputChange(e)}  required />
+          </label>
+          </div>
+         
+          <label className=''>
             Numero di Rate:
             <input type="number" value={numRate} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
           </label>

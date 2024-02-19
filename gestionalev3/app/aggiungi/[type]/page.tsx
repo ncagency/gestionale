@@ -19,6 +19,7 @@ const AddCourses = (permessi:any) => {
   const [formData,setFormData] = useState({
     nome:'',
     ente:'',
+    tipo:'',
     utenti:[]
   })
 
@@ -98,7 +99,15 @@ const AddCourses = (permessi:any) => {
                           </option>
                         ))}
                       </select>
-          
+          <label>Tipo (corso standard o corso universitario)</label>
+          <select 
+                      name="tipo"
+                      value={formData.tipo}
+                      onChange={handleInputChange} 
+                      className="selector-width-state ">
+                        <option value="" disabled>Standard</option>
+                        <option value="Uni"disabled>Uni</option>
+                      </select>
           <button onClick={handleSubmit} className='mt-2' >Invia</button>
         </form>
     </>
