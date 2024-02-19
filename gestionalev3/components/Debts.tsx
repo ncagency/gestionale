@@ -36,7 +36,7 @@ const Debts = ({ rates, userId }:{ rates:any, userId:any }) => {
             {rates.map((rateGroup:any, index:any) => (
                 <div key={index} className='flex-column m-2 text-white' onClick={() => handleDivClick(index)}>
                     <div className={`d-flex justify-content-between p-2 rounded-3 w-50 ${rateGroup.flag ? 'bg-danger' : 'bg-warning'}`}>
-                        <h2 className='fs-5'> {rateGroup.nome}</h2>
+                        <h2 className='fs-5'> {rateGroup.nome} {rateGroup.anno_accademico}</h2>
                         
                         <div className='bg-success p-2 rounded-4' style={{cursor:'pointer'}} onClick={() => handleFlagButtonClick(index)}>
                             Flag
