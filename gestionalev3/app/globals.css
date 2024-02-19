@@ -4,7 +4,8 @@ body {
 }
 
 .subtitle {
-  font-size: 30px;
+  font-size: 8px;
+  color: white;
 }
 .input_large {
  width: 900px;
