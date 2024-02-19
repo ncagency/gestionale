@@ -52,7 +52,7 @@ function Contabile() {
     const [courses,setCourses] = useState<Corso[]>([]);
     const [enti, setEnti] = useState<Ente[]>([]);
     const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
-
+    const [permessi, setPermessi] = useState<any>()
 
     useEffect(() => {
         const fetchFileNames = async () => {
@@ -61,7 +61,7 @@ function Contabile() {
             let contabile = response.data
             let worker_id = getWorkerIdFromCookie()
             const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
-            console.log(response2.data.permessi)
+            setPermessi(response2.data.permessi)
 
             setStudents(contabile[0].students)
             setCourses(contabile[0].courses)
@@ -102,9 +102,18 @@ function Contabile() {
     }
 
 
+    if (!permessi) {
+        return "Loading..."
+    } else if ( permessi.seeContabile != true) {
+        return (<div className='h-100 d-flex justify-content-center align-items-center'>
 
-  return (
-    <div className='h-100 d-flex flex-column gap-3'>
+                    <h1>Non hai i pemessi necessari per accedere a questa pagina</h1>
+        
+                </div>)
+    }
+
+    return (
+         <div className='h-100 d-flex flex-column gap-3'>
             
             <div className='text-primary fs-4'>
                 <p onClick={() => redirec(`/`)} style={{cursor: 'pointer'}}>Indietro</p>
