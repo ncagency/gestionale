@@ -167,13 +167,13 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile, permessi }) 
                 
                     
                 <div style={style} className=' w-75 mt-4 p-3 text-white rounded-4'>
-                     {  (
+                     { permessi.seeContabile == true && (
                       <>
                       <h1>Totale:{contabile.totale} €</h1>
                       <h1>Saldati:{contabile.saldati} €</h1>
                       <h1>In Sospeso:{contabile.in_sospeso} €</h1>
                       </>)}
-                      <Debts rates={rate} userId={id_user} />
+                      { permessi.pagaRate == true && <Debts rates={rate} userId={id_user} />}
               </div>
                   
             
