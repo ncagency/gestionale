@@ -534,7 +534,7 @@ function tabDetails({ params }:{params:any}){
   };
   
 
-  
+    console.log(permessi)
     if (!permessi) {
       return "Loading..."
     }
