@@ -306,8 +306,8 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile, permes
                                   <h2>Profit {contabile.totale_profit} €</h2>
                                   <hr />
                                   <div className='d-flex gap-4 fs-5'>
-                                    <h4>Stock:{contabile.stock}</h4>
-                                    <h4>Costo:{contabile.costo} €</h4>
+                          {  course.tipo != "Uni"  &&(<div className="d-flex gap-4"> <h4>Stock:{contabile.stock}</h4>
+                                    <h4>Costo:{contabile.costo} €</h4></div>)}
                                     <h4>Venduti:{contabile.venduti}</h4>
                                   </div>
                                   { permessi.addStock == true && (<div style={{cursor:'pointer'}} onClick={redirec} className='bg-warning p-3 w-25 rounded-5 mt-5'> Stock</div>)}

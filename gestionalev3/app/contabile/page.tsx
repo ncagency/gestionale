@@ -28,6 +28,7 @@ interface Ente {
     totale: number;
     da_inviare: number;
     inviati: number;
+    da_ricevere:number;
 }
 
 interface Corso {
@@ -169,10 +170,7 @@ function Contabile() {
                 </div>
             </div>
 
-
-            <div  style={style} className='d-flex gap-2 w-100 h-75 p-4 rounded-4'  >
-                    
-                    <div className='w-50 d-flex flex-column '> 
+            <div style={style} className='w-50 d-flex flex-column '> 
                     <h1 className='text-white fs-4'>Enti</h1>
                     <table className="table table-bordered ">
                             <tbody>
@@ -189,6 +187,7 @@ function Contabile() {
                                     <td>{ente.totale} €</td>
                                     <td>{ente.da_inviare} €</td>
                                     <td>{ente.inviati} €</td>
+                                    <td>{ente.da_ricevere} €</td>
                                 </tr>                       
                         ))}
                         
@@ -196,7 +195,7 @@ function Contabile() {
                     </table>
 
                     </div>
-                    <div className='w-50 d-flex flex-column'> 
+            <div style={style} className='w-100 d-flex flex-column'> 
                     <h1 className='text-white fs-4'>Corsi</h1>
                         <table className="table table-bordered">
                                 <tbody>
@@ -225,9 +224,6 @@ function Contabile() {
                         </tbody>
                         </table>
                     </div>
-                                
-            </div>
-
             <div style={style} className='w-100 p-4 rounded-4'>
             <h1 className='text-white'>Studenti</h1>
             <table className="table table-bordered">
