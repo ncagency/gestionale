@@ -2,7 +2,7 @@
 import React,{useEffect, useState} from 'react'
 import TableRow from '@/components/TableRow';
 import axios from 'axios';
-
+import { getWorkerIdFromCookie } from '@/components/Login';
 
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
@@ -47,12 +47,11 @@ interface Student {
 }
 
 
-const Contabile = () => {
+function Contabile() {
     const [students,setStudents] = useState<Student[]>([]);
     const [courses,setCourses] = useState<Corso[]>([]);
     const [enti, setEnti] = useState<Ente[]>([]);
     const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
-
 
 
     useEffect(() => {
@@ -60,7 +59,8 @@ const Contabile = () => {
           try {
             const response = await axios.get(`${apiURL}/contabile`);
             let contabile = response.data
-          
+            console.log(getWorkerIdFromCookie())
+
             setStudents(contabile[0].students)
             setCourses(contabile[0].courses)
             setEnti(contabile[0].enti)
