@@ -10,7 +10,6 @@ import Row from '@/components/Row';
 import TableRow from '@/components/TableRow';
 import TableRowPermessi from '@/components/TableRowPermessi';
 import { redirect } from 'next/dist/server/api-utils';
-import { getWorkerId } from "@/components/Login";
 
 interface UserDetailsProps {
     user: any;
@@ -60,7 +59,7 @@ const style2 = {
 }
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile }) => {
   
-    
+
     const [fileNames, setFileNames] = useState([]);
     
     const [docCaricati, setDoccaricati] = useState(false)
