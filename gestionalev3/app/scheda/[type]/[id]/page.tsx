@@ -28,11 +28,13 @@ interface CourseDetailsProps {
     course: any;
     type: string;
     contabile:any;
+    permessi:any;
   }
 interface EntiDetailsProps {
     ente: any;
     type: string;
     contabile: any;
+    permessi:any;
   }
 
   
@@ -56,7 +58,6 @@ const style2 = {
 
 }
 const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile, permessi }) => {
-    console.log(permessi)
     
     const [fileNames, setFileNames] = useState([]);
     
@@ -204,7 +205,6 @@ const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
     window.location.href = destinationValue;
 }
 
-  let permessi = user.permessi
 
   return (
       <>
@@ -251,7 +251,7 @@ const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
   )
 }
 
-const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
+const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile, permessi}) => {
 
         const [usersData, setUsersData] = useState<any[]>([]);
         useEffect(() => {
@@ -298,7 +298,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                           <p>Numero Iscritti: {numero_utenti}</p>
                       </div>
                       <div className='col-5 w-50'>
-                          <div style={style} className='bg-primary text-white p-3 rounded-4'>
+                          { permessi.seeContabile == true && (<div style={style} className='bg-primary text-white p-3 rounded-4'>
                                  {  (contabile.stock < 10 && contabile.stock > 0) && <div className='bg-warning fs-4 p-3 rounded-3 m-2'>Stock in Esaurimento</div>} 
                                  {  contabile.stock === 0 && <div className='bg-danger fs-4 p-3 rounded-3 m-2'>Stock Esaurito</div>} 
                                   <h2>Entrate {contabile.totale_entrate} €</h2>
@@ -310,8 +310,8 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
                                     <h4>Costo:{contabile.costo} €</h4>
                                     <h4>Venduti:{contabile.venduti}</h4>
                                   </div>
-                                  <div style={{cursor:'pointer'}} onClick={redirec} className='bg-warning p-3 w-25 rounded-5 mt-5'> Stock</div>
-                          </div>
+                                  { permessi.addStock == true && (<div style={{cursor:'pointer'}} onClick={redirec} className='bg-warning p-3 w-25 rounded-5 mt-5'> Stock</div>)}
+                          </div>)}
                       
                       </div>
                      
@@ -335,7 +335,7 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile}) => {
     )
 }
 
-const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
+const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile, permessi }) => {
 
   const [courseData, setCourseData] = useState<any[]>([]);
   useEffect(() => {
@@ -391,7 +391,7 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
 
 
                          <div className='w-75 d-flex gap-5 border border-2 ml-5 rounded-4 p-4 h-50 ' style={style}>
-                            <div>
+                          { permessi.seeContabile == true && (<><div>
                               <label className='w-25 fs-5 text-warning'>Totale</label>
                               <p className='fs-4 text-white'> {contabile.totale} €</p>
                             </div>
@@ -402,10 +402,10 @@ const EntiDetails: FC<EntiDetailsProps> = ({ ente, type, contabile }) => {
                             <div>
                               <label className='w-25 fs-5 text-warning'>Inviare</label>
                               <p className='fs-4 text-white'>{contabile.da_inviare} €</p>
-                            </div>
-                            <div style={style2} className=' p-1 text-white rounded-4' onClick={redirec} >
+                            </div></>)}
+                           { permessi.pagaFatture == true && (<div style={style2} className=' p-1 text-white rounded-4' onClick={redirec} >
                                   <p className='fs-5'></p>
-                         </div>
+                         </div>)}
                          </div>
                       </div>
                   
@@ -446,8 +446,8 @@ const Details = ({data,type,contabile,permessi}:{ data:any, type:any, contabile:
       <>
         { type == "students"  && (<UserDetails user={data} type={type} contabile={contabile} permessi={permessi}/>)}
         { type == "workers" && (<WorkerDetail user={data} type={type}  />)}
-        { type == "courses" && (<CourseDetails course={data} type={type} contabile={contabile}/>)}
-        { type == "enti" && (<EntiDetails ente={data} type={type} contabile={contabile}/>)}
+        { type == "courses" && (<CourseDetails course={data} type={type} contabile={contabile} permessi={permessi}/>)}
+        { type == "enti" && (<EntiDetails ente={data} type={type} contabile={contabile}  permessi={permessi}/>)}
       </>
     );
   };

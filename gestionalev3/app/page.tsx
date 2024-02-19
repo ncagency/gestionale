@@ -190,7 +190,7 @@ export default function Home() {
                 </div>
                 <div className="col">
                 <h1>Transazioni</h1>
-                <div className=' border border-2 m-2 rounded-4' style={{ height: '255px', overflowY: 'auto', padding: '20px' }}>
+               { permessi.seeCronologia == true &&( <div className=' border border-2 m-2 rounded-4' style={{ height: '255px', overflowY: 'auto', padding: '20px' }}>
                     {cronologia.map((record, index) => (
                        <div className="container">
                        {record.type === "ricev" && (
@@ -268,7 +268,7 @@ export default function Home() {
                    
                       
                     ))}
-                </div>
+                </div>)}
                 </div>
                 
             </div>
