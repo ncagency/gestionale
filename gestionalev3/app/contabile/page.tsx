@@ -59,7 +59,9 @@ function Contabile() {
           try {
             const response = await axios.get(`${apiURL}/contabile`);
             let contabile = response.data
-            console.log(getWorkerIdFromCookie())
+            let worker_id = getWorkerIdFromCookie()
+            const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
+            console.log(response2)
 
             setStudents(contabile[0].students)
             setCourses(contabile[0].courses)
