@@ -545,7 +545,7 @@ function tabDetails({ params }:{params:any}){
             <Link  href={link}><p>Indietro</p></Link>
             { params.type != "courses" && params.type != "enti" && <p onClick={() => handleDelete(params.id)}>Elimina</p>}
             </div>
-            <Details data={data} type={params.type} contabile={contabileData}  />
+            <Details data={data} type={params.type} contabile={contabileData} permessi={permessi} />
 
 
             
