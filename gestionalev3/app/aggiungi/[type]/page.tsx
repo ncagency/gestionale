@@ -73,7 +73,7 @@ const AddCourses = (permessi:any) => {
 
   if (isLoading) {
     return <div>Loading...</div>;
-  } else if (permessi.addCourses != true) {
+  } else if (permessi.addCourses == false) {
     return (<div className='h-100 d-flex justify-content-center align-items-center'>
 
     <h1 className='text-white'>Non hai i pemessi necessari per accedere a questa pagina</h1>
@@ -139,7 +139,7 @@ const AddEnti = (permessi:any)  => {
     }
   };
 
-  if (permessi.addEnti != true) {
+  if (permessi.addEnti == false) {
     return (<div className='h-100 d-flex justify-content-center align-items-center'>
 
     <h1 className='text-white'>Non hai i pemessi necessari per accedere a questa pagina</h1>
