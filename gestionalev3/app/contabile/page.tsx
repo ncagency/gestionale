@@ -61,7 +61,7 @@ function Contabile() {
             let contabile = response.data
             let worker_id = getWorkerIdFromCookie()
             const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
-            console.log(response2)
+            console.log(response2.data.permessi)
 
             setStudents(contabile[0].students)
             setCourses(contabile[0].courses)
