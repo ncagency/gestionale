@@ -205,6 +205,7 @@ const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
     window.location.href = destinationValue;
 }
 
+//                  <p onClick={() => redirec(`/modifica/workers/${id_user}`)}  style={{cursor: "pointer"}} className='mx-4 text-primary'>Modifica</p>
 
   return (
       <>
@@ -229,7 +230,6 @@ const WorkerDetail: FC<WorkerDetailsProps> = ({ user, type }) => {
                           <TableRow label="Email" value={user.email} />
                       </tbody>
                   </table>
-                  <p onClick={() => redirec(`/modifica/workers/${id_user}`)}  style={{cursor: "pointer"}} className='mx-4 text-primary'>Modifica</p>
 
               </div>
               <h1>Permessi</h1>
