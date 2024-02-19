@@ -79,7 +79,7 @@ const AddCourses = (permessi:any) => {
     <h1 className='text-white'>Non hai i pemessi necessari per accedere a questa pagina</h1>
 
 </div>)
-  }
+  } else {
   return (
     <>
         <form className='d-flex flex-column align-items-center gap-2 '>
@@ -103,7 +103,7 @@ const AddCourses = (permessi:any) => {
         </form>
     </>
   )
-}
+}}
 
 const AddEnti = (permessi:any)  => {
   
@@ -145,9 +145,7 @@ const AddEnti = (permessi:any)  => {
     <h1 className='text-white'>Non hai i pemessi necessari per accedere a questa pagina</h1>
 
 </div>)
-  }
-
-  return (
+  } else {return (
     <>
         <form className='d-flex flex-column align-items-center gap-2 '>
           
@@ -201,7 +199,7 @@ const AddEnti = (permessi:any)  => {
         </form>
     </>
   )
-}
+}}
 
 const AddStudents = (permessi:any) => {
   
