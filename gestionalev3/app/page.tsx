@@ -65,10 +65,10 @@ const EntiCard = () => {
 
 const DipendentiCard: React.FC = () => {
     
-    let query = "search/workers"
+    let query = "search"
     return (
         <div style={style} className='d-flex flex-column h-100 position-relative p-4  rounded-4'>
-            <h1 className='mt-5 mb-5  text-white'>Dipendenti</h1>
+            <h1 className='mt-5 mb-5  text-white'>Cerca</h1>
             <GoButton destination={query} /> {/* INSERISCI DESTINAZIONE CORRETTA IN MODO DA GESTIRE L'EVENTO ONCLICK DEL BOTTONE PAGINA SEARCH per cercare dipendenti*/}
         </div>
     )
