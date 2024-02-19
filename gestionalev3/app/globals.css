@@ -3,6 +3,9 @@ body {
   color:linear-gradient(to right, rgb(27, 101, 212), #934c8a)
 }
 
+.subtitle {
+  font-size: 30px;
+}
 .input_large {
  width: 900px;
 }
