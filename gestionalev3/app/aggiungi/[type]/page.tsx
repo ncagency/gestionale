@@ -2,6 +2,7 @@
 
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
+import { getWorkerIdFromCookie } from '@/components/Login'
 
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
@@ -481,10 +482,23 @@ const AddWorkers = () => {
 }
 //addWorkers
 
-const AddForm = ({params} : {params:any}) => {
+function AddForm({params} : {params:any}){
 
+  const [permessi,setPermessi] = useState<any>()
   let type = params.type
+  let worker_id = getWorkerIdFromCookie()
 
+  useEffect(() => {
+    const fetch = async () => {
+    
+        const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
+        setPermessi(response2.data.permessi)
+
+    }
+    fetch()
+   })
+
+  
   const divStyle = {
     width: '700px',
     padding: '60px',
@@ -502,8 +516,6 @@ const AddForm = ({params} : {params:any}) => {
               { type == "workers" && <AddWorkers />}
           </div>
     </div>
-  
-  )
-}
+  )};
 
 export default AddForm
