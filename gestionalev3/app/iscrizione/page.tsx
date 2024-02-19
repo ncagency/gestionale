@@ -21,7 +21,7 @@ const [formData, setFormData] = useState<{
   flag: boolean;
   totale: number;
   percentuale:number;
-  accademico:string;
+  accademico:any;
   rate: any; 
 }>({
   user_id: '',
