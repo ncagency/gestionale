@@ -201,7 +201,7 @@ const [formData, setFormData] = useState<{
                 </div>
             
             </div>
-            <div className='d-flex gap-5'>
+            <div className='d-flex gap-3'>
               <div className='d-flex flex-column'><label className=''>   Numero Rate:   </label>
               <input className="input_small" type="number" value={numRate} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
               </div>
