@@ -197,12 +197,12 @@ const [formData, setFormData] = useState<{
             
             </div>
             <div className='d-flex gap-2'>
-              <div className='d-flex flex-column'><label className=''>   Numero di Rate:   </label>
+              <div className='d-flex flex-column'><label className=''>   Numero Rate:   </label>
               <input className="input_small" type="number" value={numRate} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
               </div>
               <div className='d-flex flex-column'>
               <label className=''>Anno Accademico:  </label>
-              <input placeholder="Utilizza solo con Corsi universitari"  className="input_small" type="text" value={formData.accademico} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
+              <input placeholder="Utilizza solo con Corsi universitari"  className="" type="text" value={formData.accademico} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
               </div>
             </div>
          
