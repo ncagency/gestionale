@@ -185,7 +185,7 @@ const [formData, setFormData] = useState<{
 
           <div className='d-flex flex-column gap-2'>
             <div className='d-flex gap-2'>
-                <div>
+                <div className='d-flex flex-column'>
                 <label> Totale:</label>
                   <input className="input_small" type="number" value={totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
         
