@@ -189,7 +189,7 @@ const AddEnti = () => {
   )
 }
 
-const AddStudents = () => {
+const AddStudents = (permessi:any) => {
   
   const [formData,setFormData] = useState({
     nome:'',
@@ -241,6 +241,13 @@ const AddStudents = () => {
     }
   };
 
+  if (permessi.addStudents != true) {
+    return (<div className='h-100 d-flex justify-content-center align-items-center'>
+
+    <h1>Non hai i pemessi necessari per accedere a questa pagina</h1>
+
+</div>)
+  }
   return (
     <>
         <form className='d-flex flex-column align-items-center gap-2 '>
@@ -506,11 +513,14 @@ function AddForm({params} : {params:any}){
 
   };
 
-  
+  if (!permessi) {
+    return "Loading..."
+  }
+
   return (
     <div className='d-flex '>
         <div  style={divStyle}  className='bg-primary rounded-4'> 
-              { type == "students" && <AddStudents />}
+              { type == "students" && <AddStudents permessi={permessi}/>}
               { type == "courses" && <AddCourses />}
               { type == "enti" && <AddEnti />}
               { type == "workers" && <AddWorkers />}
