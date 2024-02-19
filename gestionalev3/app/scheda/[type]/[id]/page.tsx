@@ -299,8 +299,8 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile, permes
                       </div>
                       <div className='col-5 w-50'>
                           { permessi.seeContabile == true && (<div style={style} className='bg-primary text-white p-3 rounded-4'>
-                                 {  (contabile.stock < 10 && contabile.stock > 0) && <div className='bg-warning fs-4 p-3 rounded-3 m-2'>Stock in Esaurimento</div>} 
-                                 {  contabile.stock === 0 && <div className='bg-danger fs-4 p-3 rounded-3 m-2'>Stock Esaurito</div>} 
+                               { course.tipo != "Uni" && (contabile.stock < 10 && contabile.stock > 0) && <div className='bg-warning fs-4 p-3 rounded-3 m-2'>Stock in Esaurimento</div>} 
+                                 { course.tipo != "Uni" &&  contabile.stock === 0 && <div className='bg-danger fs-4 p-3 rounded-3 m-2'>Stock Esaurito</div>} 
                                   <h2>Entrate {contabile.totale_entrate} €</h2>
                                   <h2>Uscite {contabile.totale_uscite} €</h2>
                                   <h2>Profit {contabile.totale_profit} €</h2>
