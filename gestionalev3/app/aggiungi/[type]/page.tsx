@@ -73,7 +73,7 @@ const AddCourses = (permessi:any) => {
 
   if (isLoading) {
     return <div>Loading...</div>;
-  } else if (permessi.addEnti != true) {
+  } else if (permessi.addCourses != true) {
     return (<div className='h-100 d-flex justify-content-center align-items-center'>
 
     <h1 className='text-white'>Non hai i pemessi necessari per accedere a questa pagina</h1>
@@ -255,68 +255,70 @@ const AddStudents = (permessi:any) => {
     }
   };
 
-  if (permessi.addStudents != true) {
+  if (permessi.addStudents == false) {
     return (<div className='h-100 d-flex justify-content-center align-items-center'>
 
     <h1 className='text-white'>Non hai i pemessi necessari per accedere a questa pagina</h1>
 
 </div>)
+  } else {
+    return (
+      <>
+          <form className='d-flex flex-column align-items-center gap-2 '>
+            <div className='d-flex gap-2'>
+              <input type='text' placeholder="Nome" name="nome" value={formData.nome} onChange={handleInputChange} style={{width:'150px'}}/>
+              <input type='text' placeholder="Secondo Nome" name="secondo_nome" value={formData.secondo_nome} onChange={handleInputChange} style={{width:'150px'}}/>
+              <input type='text' placeholder="Cognome" name="cognome" value={formData.cognome} onChange={handleInputChange} style={{width:'150px'}}/>
+              <input type='text' placeholder="Sesso:(M o F)" name="sesso" value={formData.sesso} onChange={handleInputChange} style={{width:'150px'}}/>
+            </div>
+            <div className='d-flex gap-2'>
+                <div className='flex-column d-flex gap-1'>
+                    <label>Data di Nascita</label>
+                    <input type='date' placeholder="Data di Nascita" name="dob" value={formData.dob} onChange={handleInputChange} style={{width:'150px'}}/>
+                </div>
+                <div className='flex-column d-flex gap-1'>
+                    <label><br/></label>
+                    <input type='text' placeholder="Città di Nascita" name="lob" value={formData.lob} onChange={handleInputChange} style={{width:'150px'}}/>
+                </div>
+                <div className='flex-column d-flex gap-1 mr-2'>
+                    <label>Prov.</label>
+                    <input type='text' placeholder="(Es.MI)" name="prov_b" value={formData.prov_b} onChange={handleInputChange} style={{width:'80px'}}/>
+                </div>
+                <div className='flex-column d-flex gap-1'>
+                    <label>Stato</label>
+                    <input type='text' placeholder="(Es.Italia)" name="state_b" value={formData.state_b} onChange={handleInputChange} style={{width:'110px'}}/>
+                </div>
+            </div>
+            <label>Codice Fiscale</label>
+            <input type='text' placeholder="Es. DNTCRL65S67M126L" name="cf" value={formData.cf} onChange={handleInputChange}/>
+            
+            <label>Indirizzo Residenza</label>
+            <div className='d-flex gap-2'>
+              <input type='text' placeholder="Indirizzo di Residenza" name="indirizzo_res" value={formData.indirizzo_res} onChange={handleInputChange} style={{width:'200px'}}/>
+              <input type='text' placeholder="Città Residenza" name="citta_res" value={formData.citta_res} onChange={handleInputChange} style={{width:'150px'}}/>
+              <input type='text' placeholder="(Es.MI)" name="prov_res" value={formData.prov_res} onChange={handleInputChange} style={{width:'80px'}}/>
+              <input type='text' placeholder="(Es.Italia)" name="stato_res" value={formData.stato_res} onChange={handleInputChange} style={{width:'110px'}}/>
+            </div>
+  
+            <label>Indirizzo Domicilio</label>
+            <div className='d-flex gap-2'>
+              <input type='text' placeholder="Indirizzo di Domicilio" name="indirizzo_dom" value={formData.indirizzo_dom} onChange={handleInputChange} style={{width:'200px'}}/>
+              <input type='text' placeholder="Città Domicilio" name="citta_dom" value={formData.citta_dom} onChange={handleInputChange} style={{width:'150px'}}/>
+              <input type='text' placeholder="(Es.MI)" name="prov_dom" value={formData.prov_dom} onChange={handleInputChange} style={{width:'80px'}}/>
+              <input type='text' placeholder="(Es.Italia)" name="stato_dom" value={formData.stato_dom} onChange={handleInputChange} style={{width:'110px'}}/>
+            </div>
+  
+            <label>Email</label>
+            <input type='email' name="email" value={formData.email} onChange={handleInputChange}/>
+            <label>Cellulare</label>
+            <input type='text' name="cellulare" value={formData.cellulare} onChange={handleInputChange}/>
+            <button onClick={handleSubmit} className='mt-2' >Invia</button>
+  
+          </form>
+      </>
+    )
   }
-  return (
-    <>
-        <form className='d-flex flex-column align-items-center gap-2 '>
-          <div className='d-flex gap-2'>
-            <input type='text' placeholder="Nome" name="nome" value={formData.nome} onChange={handleInputChange} style={{width:'150px'}}/>
-            <input type='text' placeholder="Secondo Nome" name="secondo_nome" value={formData.secondo_nome} onChange={handleInputChange} style={{width:'150px'}}/>
-            <input type='text' placeholder="Cognome" name="cognome" value={formData.cognome} onChange={handleInputChange} style={{width:'150px'}}/>
-            <input type='text' placeholder="Sesso:(M o F)" name="sesso" value={formData.sesso} onChange={handleInputChange} style={{width:'150px'}}/>
-          </div>
-          <div className='d-flex gap-2'>
-              <div className='flex-column d-flex gap-1'>
-                  <label>Data di Nascita</label>
-                  <input type='date' placeholder="Data di Nascita" name="dob" value={formData.dob} onChange={handleInputChange} style={{width:'150px'}}/>
-              </div>
-              <div className='flex-column d-flex gap-1'>
-                  <label><br/></label>
-                  <input type='text' placeholder="Città di Nascita" name="lob" value={formData.lob} onChange={handleInputChange} style={{width:'150px'}}/>
-              </div>
-              <div className='flex-column d-flex gap-1 mr-2'>
-                  <label>Prov.</label>
-                  <input type='text' placeholder="(Es.MI)" name="prov_b" value={formData.prov_b} onChange={handleInputChange} style={{width:'80px'}}/>
-              </div>
-              <div className='flex-column d-flex gap-1'>
-                  <label>Stato</label>
-                  <input type='text' placeholder="(Es.Italia)" name="state_b" value={formData.state_b} onChange={handleInputChange} style={{width:'110px'}}/>
-              </div>
-          </div>
-          <label>Codice Fiscale</label>
-          <input type='text' placeholder="Es. DNTCRL65S67M126L" name="cf" value={formData.cf} onChange={handleInputChange}/>
-          
-          <label>Indirizzo Residenza</label>
-          <div className='d-flex gap-2'>
-            <input type='text' placeholder="Indirizzo di Residenza" name="indirizzo_res" value={formData.indirizzo_res} onChange={handleInputChange} style={{width:'200px'}}/>
-            <input type='text' placeholder="Città Residenza" name="citta_res" value={formData.citta_res} onChange={handleInputChange} style={{width:'150px'}}/>
-            <input type='text' placeholder="(Es.MI)" name="prov_res" value={formData.prov_res} onChange={handleInputChange} style={{width:'80px'}}/>
-            <input type='text' placeholder="(Es.Italia)" name="stato_res" value={formData.stato_res} onChange={handleInputChange} style={{width:'110px'}}/>
-          </div>
-
-          <label>Indirizzo Domicilio</label>
-          <div className='d-flex gap-2'>
-            <input type='text' placeholder="Indirizzo di Domicilio" name="indirizzo_dom" value={formData.indirizzo_dom} onChange={handleInputChange} style={{width:'200px'}}/>
-            <input type='text' placeholder="Città Domicilio" name="citta_dom" value={formData.citta_dom} onChange={handleInputChange} style={{width:'150px'}}/>
-            <input type='text' placeholder="(Es.MI)" name="prov_dom" value={formData.prov_dom} onChange={handleInputChange} style={{width:'80px'}}/>
-            <input type='text' placeholder="(Es.Italia)" name="stato_dom" value={formData.stato_dom} onChange={handleInputChange} style={{width:'110px'}}/>
-          </div>
-
-          <label>Email</label>
-          <input type='email' name="email" value={formData.email} onChange={handleInputChange}/>
-          <label>Cellulare</label>
-          <input type='text' name="cellulare" value={formData.cellulare} onChange={handleInputChange}/>
-          <button onClick={handleSubmit} className='mt-2' >Invia</button>
-
-        </form>
-    </>
-  )
+  
 }
 
 const AddWorkers = (permessi:any) => {
