@@ -183,7 +183,7 @@ const [formData, setFormData] = useState<{
             
             </div>
 
-          <div className='d-flex gap-2'>
+          <div className='d-flex flex-column gap-2'>
             <div className='d-flex gap-2'>
                 <label>
                   Totale:
