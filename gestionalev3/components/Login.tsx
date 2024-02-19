@@ -7,22 +7,14 @@ const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 
 
-export function getWorkerId() {
-  const [workerId, setWorkerId] = useState<any>(null);
-  useEffect(() => {
-    const workerIdFromCookie:any = getWorkerIdFromCookie(); // Funzione per ottenere l'ID del worker dai cookie
-    setWorkerId(workerIdFromCookie);
-  }, []);
 
-  return workerId;
-}
 
 function setWorkerIdToCookie(workerId:any) {
   document.cookie = `workerId=${workerId}; path=/; max-age=3600`; // Imposta il cookie con il nome "workerId" e una durata di 3600 secondi (1 ora)
 }
 
 // Funzione per ottenere l'ID del worker dai cookie
-function getWorkerIdFromCookie() {
+export function getWorkerIdFromCookie() {
   const cookies = document.cookie.split(';');
   for (let cookie of cookies) {
     const [name, value] = cookie.trim().split('=');

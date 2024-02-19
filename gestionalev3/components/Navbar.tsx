@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { getWorkerId } from "./Login";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

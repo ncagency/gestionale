@@ -53,18 +53,15 @@ const Contabile = () => {
     const [courses,setCourses] = useState<Corso[]>([]);
     const [enti, setEnti] = useState<Ente[]>([]);
     const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
-    const [permessi,setPermessi] = useState<any>()
+
 
 
     useEffect(() => {
         const fetchFileNames = async () => {
           try {
-            const worker_id = await getWorkerId()
-            console.log(worker_id)
             const response = await axios.get(`${apiURL}/contabile`);
             let contabile = response.data
-            const response2 = await axios.get(`${apiURL}/workers/${worker_id}`);
-            setPermessi(response2.data.permessi)
+          
             setStudents(contabile[0].students)
             setCourses(contabile[0].courses)
             setEnti(contabile[0].enti)
@@ -103,9 +100,7 @@ const Contabile = () => {
         window.location.href = query;
     }
 
-    if (!permessi || !permessi.seeContabile) {
-        return "Caricamento...";
-      }
+
 
   return (
     <div className='h-100 d-flex flex-column gap-3'>

@@ -6,8 +6,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { GoButton } from "@/components";
-import { getWorkerId } from "@/components/Login";
-
+import { getWorkerIdFromCookie } from "@/components/Login";
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 const style = {
@@ -155,7 +154,7 @@ interface CronologiaRecord {
 export default function Home() {
     const [cronologia, setCronologia] = useState<CronologiaRecord[]>([]);
     const [permessi,setPermessi] = useState<any>()
-    const worker_id = getWorkerId()
+    const worker_id = getWorkerIdFromCookie()
 
    useEffect(() => {
     const fetch = async () => {
