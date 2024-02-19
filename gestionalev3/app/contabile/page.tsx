@@ -124,7 +124,8 @@ function Contabile() {
             
             <div className='d-flex gap-1 h-25'>
                 <div style={styleSuccess} className='d-flex flex-column justify-content-center bg-primary w-25 h-100 rounded-3 p-3'>
-                   <div className='d-flex gap-2 justify-content-between align-items-center p-1 '>
+                  
+                   <div className='d-flex gap-2 justify-content-between  p-1 '>
                 
                     <p className='fs-4 text-white'>Entrate</p>
 
