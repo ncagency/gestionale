@@ -21,6 +21,7 @@ const [formData, setFormData] = useState<{
   flag: boolean;
   totale: number;
   percentuale:number;
+  accademico:any;
   rate: any; 
 }>({
   user_id: '',
@@ -30,6 +31,7 @@ const [formData, setFormData] = useState<{
   data: formattedDate,
   totale: 0,
   percentuale:0,
+  accademico:"",
   rate: [],
 });
 
@@ -205,6 +207,7 @@ const [formData, setFormData] = useState<{
               </div>
               <div className='d-flex flex-column'>
               <label className=''>Anno Accademico:  </label>
+              <input placeholder="Solo con Corsi universitari"  name="accademico"  type="text" value={formData.accademico}  onChange={(e) => handleInputChange(e)}  required />
               </div>
             </div>
          
