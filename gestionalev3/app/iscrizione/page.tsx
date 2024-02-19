@@ -191,7 +191,7 @@ const [formData, setFormData] = useState<{
         
                   </div>
                 <div  className='d-flex flex-column'>
-                <label> Percentuale Guadagno:</label>
+                <label> Percentuale (Utilizza solo con Corsi universitari, senza simbolo %)</label>
                   <input className="input_small" placeholder="Utilizza solo con Corsi universitari" type="number" value={formData.percentuale} name="percentuale"  onChange={(e) => handleInputChange(e)}  required />
                 </div>
             
@@ -202,7 +202,7 @@ const [formData, setFormData] = useState<{
               </div>
               <div className='d-flex flex-column'>
               <label className=''>Anno Accademico:  </label>
-              <input placeholder="Utilizza solo con Corsi universitari"  className="" type="text" value={formData.accademico} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
+              <input placeholder="Solo con Corsi universitari"  className="" type="text" value={formData.accademico} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
               </div>
             </div>
          
