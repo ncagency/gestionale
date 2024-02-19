@@ -207,7 +207,7 @@ const [formData, setFormData] = useState<{
               </div>
               <div className='d-flex flex-column'>
               <label className=''>Anno Accademico:  </label>
-              <input placeholder="Solo con Corsi universitari"  className="" type="text" value={formData.accademico} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
+              <input placeholder="Solo con Corsi universitari"  className="" type="text" value={formData.accademico}  onChange={(e) => handleInputChange(e)}  required />
               </div>
             </div>
          
