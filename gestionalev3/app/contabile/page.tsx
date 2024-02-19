@@ -170,7 +170,7 @@ function Contabile() {
                 </div>
             </div>
 
-            <div style={style} className='w-100 d-flex flex-column '> 
+            <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
                     <h1 className='text-white fs-4'>Enti</h1>
                     <table className="table table-bordered ">
                             <tbody>
@@ -196,7 +196,7 @@ function Contabile() {
                     </table>
 
                     </div>
-            <div style={style} className='w-100 d-flex flex-column'> 
+            <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
                     <h1 className='text-white fs-4'>Corsi</h1>
                         <table className="table table-bordered">
                                 <tbody>

@@ -21,6 +21,7 @@ const [formData, setFormData] = useState<{
   flag: boolean;
   totale: number;
   percentuale:number;
+  accademico:string;
   rate: any; 
 }>({
   user_id: '',
@@ -30,6 +31,7 @@ const [formData, setFormData] = useState<{
   data: formattedDate,
   totale: 0,
   percentuale:0,
+  accademico:"";
   rate: [],
 });
 
@@ -168,7 +170,7 @@ const [formData, setFormData] = useState<{
               <option value="" disabled>Seleziona Corso</option>
               {courses.map((corso, index) => (
                 <option key={index} value={corso._id}>
-                  {corso.nome}
+                  {corso.nome} | {corso.tipo}
                 </option>
               ))}
 
@@ -182,22 +184,28 @@ const [formData, setFormData] = useState<{
             </div>
 
           <div className='d-flex gap-2'>
-          <div className='d-flex gap-2'>
-          <label>
-            Totale:
-            <input type="number" value={totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
-          </label>
+            <div className='d-flex gap-2'>
+                <label>
+                  Totale:
+                  <input className="input_small" type="number" value={totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
+                </label>
 
-         <label>
-            Percentuale Guadagno:
-            <input placeholder="Utilizza solo con Corsi universitari" type="number" value={formData.percentuale} name="percentuale"  onChange={(e) => handleInputChange(e)}  required />
-          </label>
-          </div>
+              <label>
+                  Percentuale Guadagno:
+                  <input className="input_small" placeholder="Utilizza solo con Corsi universitari" type="number" value={formData.percentuale} name="percentuale"  onChange={(e) => handleInputChange(e)}  required />
+                </label>
+            </div>
+            <div className='d-flex gap-2'>
+              <label className=''>
+              Numero di Rate:
+              <input className="input_small" type="number" value={numRate} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
+            </label>
+              <label className=''>
+              Anno Accademico:
+              <input placeholder="Utilizza solo con Corsi universitari"  className="input_small" type="text" value={formData.accademico} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
+            </label>
+            </div>
          
-          <label className=''>
-            Numero di Rate:
-            <input type="number" value={numRate} onChange={(e) => setNumRate(parseInt(e.target.value))} required />
-          </label>
 
           </div>
           

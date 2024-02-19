@@ -7,6 +7,10 @@ body {
  width: 900px;
 }
 
+.input_small {
+  width: 400px;
+}
+
 input {
   padding: 10px;
   border-radius: 5px;
