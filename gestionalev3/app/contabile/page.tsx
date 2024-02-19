@@ -170,7 +170,7 @@ function Contabile() {
                 </div>
             </div>
 
-            <div style={style} className='w-50 d-flex flex-column '> 
+            <div style={style} className='w-100 d-flex flex-column '> 
                     <h1 className='text-white fs-4'>Enti</h1>
                     <table className="table table-bordered ">
                             <tbody>
@@ -179,6 +179,7 @@ function Contabile() {
                                     <td>Totale</td>
                                     <td>Da Inviare</td>
                                     <td>Inviati</td>
+                                    <td>Da Ricevere</td>
                                 </tr>
 
                         {enti.map((ente) => (
