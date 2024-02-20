@@ -109,7 +109,7 @@ function Contabile() {
         fetchFileNames();
     }, [cronologia]); // Aggiungi cronologia come dipendenza per eseguire l'effetto solo quando cambia la cronologia
 
-    if (!permessi && !totalPerMonthYear) {
+    if (!permessi) {
         return "Loading..."
     } else if ( permessi.seeContabile != true) {
         return (
