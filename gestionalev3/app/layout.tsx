@@ -19,7 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     background: "linear-gradient(to right, #ffffff, #f2f2f2)",
   };
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Funzione per gestire il login dell'utente
   const handleLogin = () => {
