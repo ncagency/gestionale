@@ -77,7 +77,7 @@ const Iscrizione = () => {
   return (
     <div className='d-flex'>
       <div style={style} className='bg-primary rounded-4' >
-        <form className='d-flex flex-column align-items-end gap-2' onSubmit={handleSubmit}>
+        <form className='d-flex flex-column align-items-start gap-2' onSubmit={handleSubmit}>
           <div className='d-flex'>
           <label>
             Corso:
@@ -114,10 +114,10 @@ const Iscrizione = () => {
             
             
           </div>
-          <div className='d-flex gap-2'>
+          <div className='d-flex  gap-4'>
           <label>
             Costo:
-            <input type="text" value={formData.costo} name="costo" onChange={handleInputChange} required />
+            <input className="input_small" type="text" value={formData.costo} name="costo" onChange={handleInputChange} required />
           </label>
           <label>
             Stock:

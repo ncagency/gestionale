@@ -281,13 +281,13 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile, permes
                 <div className="row mt-5">
                     
                     <div className='d-flex gap-2'>
-                      <div className="col-7"> 
+                      <div className="col-6"> 
                           <p className="mb-0">{course._id}</p>
                           <h2>{course.nome}</h2>
                           <h3>{course.ente}</h3>
                           <p>Numero Iscritti: {numero_utenti}</p>
                       </div>
-                      <div className='col-5 w-50'>
+                      <div className='col-6 p-4'>
                           { permessi.seeContabile == true && (<div style={style} className='bg-primary text-white p-3 rounded-4'>
                                { course.tipo != "Uni" && (contabile.stock < 10 && contabile.stock > 0) && <div className='bg-warning fs-4 p-3 rounded-3 m-2'>Stock in Esaurimento</div>} 
                                  { course.tipo != "Uni" &&  contabile.stock === 0 && <div className='bg-danger fs-4 p-3 rounded-3 m-2'>Stock Esaurito</div>} 
@@ -296,11 +296,15 @@ const CourseDetails: FC<CourseDetailsProps> = ({ course, type ,contabile, permes
                                   <h2>Profit {contabile.totale_profit} €</h2>
                                   <hr />
                                   <div className='d-flex gap-4 fs-5'>
-                          {  course.tipo != "Uni"  &&(<div className="d-flex gap-4"> <h4>Stock:{contabile.stock}</h4>
+                          {  course.tipo != "Uni"  &&(<div className="d-flex flex-column gap-4"> <h4>Stock:{contabile.stock}</h4>
                                     <h4>Costo:{contabile.costo} €</h4></div>)}
                                     <h4>Venduti:{contabile.venduti}</h4>
                                   </div>
-                                  { course.tipo != "Uni" && permessi.addStock == true && (<div style={{cursor:'pointer'}} onClick={redirec} className='bg-warning p-3 w-25 rounded-5 mt-5'> Stock</div>)}
+                                  { course.tipo != "Uni" && permessi.addStock == true && (<div style={{cursor:'pointer'}} onClick={redirec} className='bg-warning p-1 rounded-5 mt-5 d-flex gap-5 w-25 h-100 align-items-center justify-content-center'>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" className="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+                              <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
+                            </svg>
+                                </div>)}
                           </div>)}
                       
                       </div>
