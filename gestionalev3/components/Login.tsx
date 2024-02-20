@@ -50,6 +50,7 @@ export default function Login({ onLogin }:{ onLogin:any }) {
         username,
         password
       });
+      console.log(response)
 
       // Se la risposta è positiva, chiama la funzione di callback onLogin per eseguire l'accesso
       if (response.data.success) {
