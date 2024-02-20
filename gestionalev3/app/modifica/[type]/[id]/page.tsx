@@ -249,7 +249,7 @@ const EditStudents = ({id}:{id:any}) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${apiURL}/modifica/students/${id}`, formData);
-
+      console.log(response.data)
       redirec()
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
