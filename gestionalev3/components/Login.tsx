@@ -75,7 +75,7 @@ export default function Login({ onLogin }:{ onLogin:any }) {
           <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div>
-          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="text" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <div className='m-4'>
           <button type="submit">Login</button>
