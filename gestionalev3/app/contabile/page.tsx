@@ -59,8 +59,8 @@ function Contabile() {
     const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
     const [permessi, setPermessi] = useState<any>()
     const [totalPerMonthYear, setTotalPerMonthYear] = useState<{[key: string]: {entrata: number, uscita: number, profitto: number}}>({})
-    const [monthYearFilter, setMonthYearFilter] = useState<string>();
-
+    const [monthYearFilter, setMonthYearFilter] = useState<string>("2024-02-20");
+    
     useEffect(() => {
         const fetchFileNames = async () => {
             try {
