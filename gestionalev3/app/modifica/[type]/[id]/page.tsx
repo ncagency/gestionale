@@ -245,20 +245,20 @@ const EditStudents = ({id}:{id:any}) => {
     });
   };
 
+  const redirec = () => {
+    const destinationValue = `/scheda/students/${id}`;
+    window.location.href = destinationValue;
+}
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
       const response = await axios.put(`${apiURL}/modifica/students/${id}`, formData);
-      console.log(response.data)
       redirec()
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
   };
-  const redirec = () => {
-    const destinationValue = `/scheda/students/${id}`;
-    window.location.href = destinationValue;
-}
+
 
   return (
     <>
