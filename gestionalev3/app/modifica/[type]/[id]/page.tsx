@@ -248,7 +248,7 @@ const EditStudents = ({id}:{id:any}) => {
   const handleSubmit = async (e:any) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiURL}/modifica/students/${id}`, formData);
+      const response = await axios.put(`${apiURL}/modifica/students/${id}`, formData);
       console.log(response.data)
       redirec()
     } catch (error) {
