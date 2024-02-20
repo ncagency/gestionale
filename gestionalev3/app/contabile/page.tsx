@@ -246,6 +246,7 @@ function Contabile() {
                         </tbody>
                         </table>
             </div>
+            </div>
 </div>
     </div>
   )
