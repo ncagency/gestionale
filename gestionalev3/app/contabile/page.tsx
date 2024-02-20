@@ -134,7 +134,7 @@ function Contabile() {
 
 
                     </div>
-                   <p className='fs-1 text-white'>{total} €</p>
+                   <p className='fs-1 text-white'>TOTALE €</p>
                 </div>
                 <div style={styleBad} className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
                    
@@ -147,7 +147,7 @@ function Contabile() {
                     </svg>
 
                 </div>
-                   <p className='fs-1 text-white'>{uscite} €</p>
+                   <p className='fs-1 text-white'>USCITE €</p>
                 </div>
                 <div style={style} className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
                    
@@ -163,7 +163,7 @@ function Contabile() {
                 </svg>
         
                 <div>
-                   <p className='fs-1 text-white'>{profit} €</p>
+                   <p className='fs-1 text-white'>PROFITTO €</p>
                 </div>
            
             </div>
