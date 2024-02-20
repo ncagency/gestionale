@@ -120,13 +120,8 @@ function Contabile() {
                 <p onClick={() => redirec(`/`)} style={{cursor: 'pointer'}}>Indietro</p>
             </div>
 
-            <select onChange={(e) => setMonthYearFilter(e.target.value)}>
-                {Object.keys(totalPerMonthYear).map((monthYear) => (
-                    <option key={monthYear} value={monthYear}>
-                    {monthYear}
-                    </option>
-                ))}
-                </select>
+          
+           
 
           {monthYearFilter && (
             <div key={monthYearFilter}>
@@ -136,7 +131,16 @@ function Contabile() {
                 <p>Profitto: {totalPerMonthYear[monthYearFilter].profitto} €</p>
             </div>
             )}
+        <div>
+        <select onChange={(e) => setMonthYearFilter(e.target.value)}>
+            {Object.keys(totalPerMonthYear).map((monthYear) => (
+                <option key={monthYear} value={monthYear}>
+                {monthYear}
+                </option>
+            ))}
+            </select>
 
+        </div>
 
              <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
                     <h1 className='text-white fs-4'>Enti</h1>
