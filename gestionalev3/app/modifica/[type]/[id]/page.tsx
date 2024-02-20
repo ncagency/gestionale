@@ -351,6 +351,23 @@ const EditWorkers = ({id}:{id:any}) => {
     },
   })
 
+  
+  useEffect(() => {
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${apiURL}/workers/${id}`);
+      const workerData = response.data;
+      setFormData(workerData);
+    } catch (error) {
+      console.error('Errore durante il recupero dei dati dello studente:', error);
+    }
+  };
+
   const handleInputChange = (e:any) => {
     const {name , value} = e.target;
     console.log(e.target)
