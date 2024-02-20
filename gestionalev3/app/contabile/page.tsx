@@ -59,6 +59,7 @@ function Contabile() {
     const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
     const [permessi, setPermessi] = useState<any>()
     const [totalPerMonthYear, setTotalPerMonthYear] = useState<{[key: string]: {entrata: number, uscita: number, profitto: number}}>({})
+    const [monthYearFilter, setMonthYearFilter] = useState<string>();
 
     useEffect(() => {
         const fetchFileNames = async () => {
@@ -118,15 +119,24 @@ function Contabile() {
             <div className='text-primary fs-4'>
                 <p onClick={() => redirec(`/`)} style={{cursor: 'pointer'}}>Indietro</p>
             </div>
-            
-            {Object.entries(totalPerMonthYear).map(([monthYear, totals]) => (
-                <div key={monthYear}>
-                    <h2>{monthYear}</h2>
-                    <p>Entrate: {totals.entrata} €</p>
-                    <p>Uscite: {totals.uscita} €</p>
-                    <p>Profitto: {totals.profitto} €</p>
-                </div>
-            ))}
+
+            <select onChange={(e) => setMonthYearFilter(e.target.value)}>
+                {Object.keys(totalPerMonthYear).map((monthYear) => (
+                    <option key={monthYear} value={monthYear}>
+                    {monthYear}
+                    </option>
+                ))}
+                </select>
+
+          {monthYearFilter && (
+            <div key={monthYearFilter}>
+                <h2>{monthYearFilter}</h2>
+                <p>Entrate: {totalPerMonthYear[monthYearFilter].entrata} €</p>
+                <p>Uscite: {totalPerMonthYear[monthYearFilter].uscita} €</p>
+                <p>Profitto: {totalPerMonthYear[monthYearFilter].profitto} €</p>
+            </div>
+            )}
+
 
              <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
                     <h1 className='text-white fs-4'>Enti</h1>
