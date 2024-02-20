@@ -161,13 +161,12 @@ function Contabile() {
                 <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z"/>
                 <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567"/>
                 </svg>
-                
-
-                </div>
+        
+                <div>
                    <p className='fs-1 text-white'>{profit} €</p>
-                </d
+                </div>
            
-
+            </div>
              <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
                     <h1 className='text-white fs-4'>Enti</h1>
                     <table className="table table-bordered ">
