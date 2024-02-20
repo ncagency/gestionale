@@ -119,8 +119,8 @@ function Contabile() {
             <div className='text-primary fs-4'>
                 <p onClick={() => redirec(`/`)} style={{cursor: 'pointer'}}>Indietro</p>
             </div>
-
-            <div className='d-flex gap-1 h-25'>
+            {monthYearFilter && (
+            <div key={monthYearFilter} className='d-flex gap-1 h-25'>
 
                 <div style={styleSuccess} className='d-flex flex-column justify-content-center bg-primary w-25 h-100 rounded-3 p-3'>
                   
@@ -134,7 +134,7 @@ function Contabile() {
 
 
                     </div>
-                   <p className='fs-1 text-white'>TOTALE €</p>
+                   <p className='fs-1 text-white'> {totalPerMonthYear[monthYearFilter].entrata}  €</p>
                 </div>
                 <div style={styleBad} className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
                    
@@ -147,7 +147,7 @@ function Contabile() {
                     </svg>
 
                 </div>
-                   <p className='fs-1 text-white'>USCITE €</p>
+                   <p className='fs-1 text-white'> {totalPerMonthYear[monthYearFilter].uscita}  €</p>
                 </div>
 
 
@@ -166,10 +166,11 @@ function Contabile() {
                         </svg>
 
                 </div>
-                   <p className='fs-1 text-white'>PROFITTO €</p>
+                   <p className='fs-1 text-white'> {totalPerMonthYear[monthYearFilter].profitto}  €</p>
                 </div>
 
                 <div style={style} className='d-flex flex-column justify-content-center w-25 h-100 rounded-3 p-3'>
+                <p className='fs-4 text-white'>{monthYearFilter}</p>
                 <select onChange={(e) => setMonthYearFilter(e.target.value)}>
                     {Object.keys(totalPerMonthYear).map((monthYear) => (
                         <option key={monthYear} value={monthYear}>
@@ -178,7 +179,7 @@ function Contabile() {
                     ))}
                     </select>
                 </div> 
-            </div>
+            </div>)}
         
             
 <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
