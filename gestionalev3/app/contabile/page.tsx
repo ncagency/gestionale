@@ -113,7 +113,6 @@ function Contabile() {
     const redirec = (query:string) => {
         window.location.href = query;
     }
-    console.log(totalPerMonthYear)
     return (
         <div className='h-100 d-flex flex-column gap-3'>
             <div className='text-primary fs-4'>
