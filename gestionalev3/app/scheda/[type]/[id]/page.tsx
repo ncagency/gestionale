@@ -179,17 +179,6 @@ const UserDetails: FC<UserDetailsProps> = ({ user, type, contabile, permessi }) 
                   
             
                   }
-                 
-                  
-                
-                {(type == "workers" ) && 
-                    <div className="row bg-primary mt-0">
-                        <ul>
-                            <li>
-                                Permesso 1 | o Si o No // implementa permessi
-                            </li>
-                        </ul>
-                    </div>}
             </div>
 
         </>
