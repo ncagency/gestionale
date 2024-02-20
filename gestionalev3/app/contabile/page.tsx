@@ -150,7 +150,7 @@ function Contabile() {
                    <p className='fs-1 text-white'>USCITE €</p>
                 </div>
                 <div style={style} className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
-                   
+                </div> 
                 <div className='d-flex gap-2 justify-content-between  p-1 '>
                 
                 <p className='fs-4 text-white'>Profit</p>
@@ -165,9 +165,12 @@ function Contabile() {
                 <div>
                    <p className='fs-1 text-white'>PROFITTO €</p>
                 </div>
-           
+                </div>
             </div>
-             <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
+            
+            
+            
+<div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
                     <h1 className='text-white fs-4'>Enti</h1>
                     <table className="table table-bordered ">
                             <tbody>
@@ -192,9 +195,9 @@ function Contabile() {
                     </tbody>
                     </table>
 
-                    </div>
-            <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
-                    <h1 className='text-white fs-4'>Corsi</h1>
+</div>
+<div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
+ <h1 className='text-white fs-4'>Corsi</h1>
                         <table className="table table-bordered">
                                 <tbody>
                                     <tr className="border-1 p-4">
@@ -221,8 +224,8 @@ function Contabile() {
                             
                         </tbody>
                         </table>
-                    </div>
-            <div style={style} className='w-100 p-4 rounded-4'>
+ </div>
+<div style={style} className='w-100 p-4 rounded-4'>
             <h1 className='text-white'>Studenti</h1>
             <table className="table table-bordered">
                                 <tbody>
@@ -244,11 +247,9 @@ function Contabile() {
                             ))}
                             
                         </tbody>
-                        </table>
-            </div>
-            </div>
+            </table>
 </div>
-    </div>
+            </div>
   )
     
 }
