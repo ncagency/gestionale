@@ -7,7 +7,12 @@ import { ObjectId } from 'mongodb'
 
 const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
+const divStyle = {
+  width: '700px',
+  padding: '60px',
+  background: "linear-gradient(to right, #3b83ff, #2a59ac)",
 
+};
 const EditCourses = ({id}:{id:any}) => {
   
   const [formData,setFormData] = useState({
@@ -524,12 +529,14 @@ const EditForm = ({params}:{params:any}) => {
   const divStyle = {
     width: '700px',
     padding: '60px',
+    background: "linear-gradient(to right, #3b83ff, #2a59ac)",
+
   };
 
   
   return (
     <div className='d-flex '>
-        <div  style={divStyle}  className='bg-primary rounded-4'> 
+        <div  style={divStyle}  className='rounded-4'> 
               { type == "students" && <EditStudents id={id}/>}
               { type == "courses" && <EditCourses id={id}/>}
               { type == "enti" && <EditEnti id={id}/>}
