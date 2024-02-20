@@ -170,9 +170,13 @@ function Contabile() {
                 </div>
 
                 <div style={style} className='d-flex flex-column justify-content-center w-25 h-100 rounded-3 p-3'>
-     
-                    <input type='date'/>
-                
+                <select onChange={(e) => setMonthYearFilter(e.target.value)}>
+                    {Object.keys(totalPerMonthYear).map((monthYear) => (
+                        <option key={monthYear} value={monthYear}>
+                        {monthYear}
+                        </option>
+                    ))}
+                    </select>
                 </div> 
             </div>
         
