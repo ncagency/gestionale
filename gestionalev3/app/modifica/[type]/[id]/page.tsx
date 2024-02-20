@@ -251,7 +251,7 @@ const EditStudents = ({id}:{id:any}) => {
     try {
       const response = await axios.put(`${apiURL}/modifica/students/${id}`, formData);
       console.log(response)
-      window.location.href =  `${apiURL}/scheda/students/${id}`;
+      window.location.href =  `/scheda/students/${id}`;
     } catch (error) {
       console.error('Errore durante l\'invio dei dati:', error);
     }
