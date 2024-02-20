@@ -53,13 +53,21 @@ interface CronologiaItem {
 
 
 function Contabile() {
+    const todayDate: Date = new Date();
+    const year: number = todayDate.getFullYear();
+    const month: number = todayDate.getMonth() + 1; // i mesi sono indicizzati da 0 a 11
+    const day: number = todayDate.getDate();
+  
+    const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+  
     const [students,setStudents] = useState<Student[]>([]);
     const [courses,setCourses] = useState<Corso[]>([]);
     const [enti, setEnti] = useState<Ente[]>([]);
     const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
     const [permessi, setPermessi] = useState<any>()
     const [totalPerMonthYear, setTotalPerMonthYear] = useState<{[key: string]: {entrata: number, uscita: number, profitto: number}}>({})
-    const [monthYearFilter, setMonthYearFilter] = useState<string>("2024-02-20");
+    const [monthYearFilter, setMonthYearFilter] = useState<string>(formattedDate);
     
     useEffect(() => {
         const fetchFileNames = async () => {
@@ -101,7 +109,7 @@ function Contabile() {
         fetchFileNames();
     }, [cronologia]); // Aggiungi cronologia come dipendenza per eseguire l'effetto solo quando cambia la cronologia
 
-    if (!permessi) {
+    if (!permessi && !totalPerMonthYear) {
         return "Loading..."
     } else if ( permessi.seeContabile != true) {
         return (
