@@ -10,7 +10,7 @@ const apiURL =  "https://testxsjsjns-bbec60097ba9.herokuapp.com"
 
 
 function setWorkerIdToCookie(workerId:any) {
-  document.cookie = `workerId=${workerId}; path=/; max-age=7200`; // Imposta il cookie con il nome "workerId" e una durata di 3600 secondi (1 ora)
+  document.cookie = `workerId=${workerId}; path=/; max-age=3600`; // Imposta il cookie con il nome "workerId" e una durata di 3600 secondi (1 ora)
 }
 
 // Funzione per ottenere l'ID del worker dai cookie
