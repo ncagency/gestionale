@@ -48,7 +48,7 @@ interface Student {
 interface CronologiaItem {
     costo?: number;
     inviati?: number;
-    data?:string;
+    data:string;
 }
 
 
@@ -78,7 +78,7 @@ function Contabile() {
                 const totals: {[key: string]: {entrata: number, uscita: number, profitto: number}} = {};
                 cronologia.forEach(item => {
                     console.log(item)
-                    const { costo, inviati } = item;
+                    const { data, costo, inviati } = item;
                     const [year, month] = data.split('-');
                     const key = `${year}-${month}`;
                     if (!totals[key]) {
