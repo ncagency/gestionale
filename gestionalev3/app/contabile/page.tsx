@@ -76,6 +76,7 @@ function Contabile() {
                 // Calcolare totali per mese e anno
                 const totals: {[key: string]: {entrata: number, uscita: number, profitto: number}} = {};
                 cronologia.forEach(item => {
+                    console.log(item)
                     const { data, costo, inviati } = item;
                     const [year, month] = data.split('-');
                     const key = `${year}-${month}`;
