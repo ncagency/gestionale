@@ -126,8 +126,13 @@ function Contabile() {
             <div className='text-primary fs-4'>
                 <p onClick={() => redirec(`/`)} style={{cursor: 'pointer'}}>Indietro</p>
             </div>
-            {monthYearFilter && (
-            <div key={monthYearFilter} className='d-flex gap-1 h-25'>
+            
+            
+            <div className='d-flex gap-2'>
+
+          
+            {totalPerMonthYear[monthYearFilter] && (
+            <div className='d-flex gap-1 h-25'>
 
                 <div style={styleSuccess} className='d-flex flex-column justify-content-center bg-primary w-25 h-100 rounded-3 p-3'>
                   
@@ -176,19 +181,20 @@ function Contabile() {
                    <p className='fs-1 text-white'> {totalPerMonthYear[monthYearFilter].profitto}  €</p>
                 </div>
 
-                <div style={style} className='d-flex flex-column justify-content-center w-25 h-100 rounded-3 p-3'>
-                <p className='fs-4 text-white'>{monthYearFilter}</p>
-                <select onChange={(e) => setMonthYearFilter(e.target.value)}>
-                    {Object.keys(totalPerMonthYear).map((monthYear) => (
-                        <option key={monthYear} value={monthYear}>
-                        {monthYear}
-                        </option>
-                    ))}
-                    </select>
-                </div> 
+          
             </div>)}
-        
-            
+            {monthYearFilter && (
+                <div key={monthYearFilter} style={style} className='d-flex flex-column justify-content-center w-25 h-100 rounded-3 p-3'>
+                                <p className='fs-4 text-white'>{monthYearFilter}</p>
+                                <select onChange={(e) => setMonthYearFilter(e.target.value)}>
+                                    {Object.keys(totalPerMonthYear).map((monthYear) => (
+                                        <option key={monthYear} value={monthYear}>
+                                        {monthYear}
+                                        </option>
+                                    ))}
+                                    </select>
+                </div> )}
+         </div>
 <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
                     <h1 className='text-white fs-4'>Enti</h1>
                     <table className="table table-bordered ">
