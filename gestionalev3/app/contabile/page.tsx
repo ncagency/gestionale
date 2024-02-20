@@ -170,12 +170,8 @@ function Contabile() {
                 </div>
 
                 <div style={style} className='d-flex flex-column justify-content-center w-25 h-100 rounded-3 p-3'>
-                    <div className='d-flex gap-2 justify-content-between  p-1 '>
-                    
-                    <p className='fs-4 text-white'>Data</p>
-                    <input type='data'/>
-                
-                    </div>
+     
+                    <input type='date'/>
                 
                 </div> 
             </div>
