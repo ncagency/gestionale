@@ -77,7 +77,6 @@ function Contabile() {
                 // Calcolare totali per mese e anno
                 const totals: {[key: string]: {entrata: number, uscita: number, profitto: number}} = {};
                 cronologia.forEach(item => {
-                    console.log(item)
                     const { data, costo, inviati } = item;
                     const [year, month] = data.split('-');
                     const key = `${year}-${month}`;
@@ -127,8 +126,88 @@ function Contabile() {
                     <p>Profitto: {totals.profitto} €</p>
                 </div>
             ))}
-        </div>
-    );
+             <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
+                    <h1 className='text-white fs-4'>Enti</h1>
+                    <table className="table table-bordered ">
+                            <tbody>
+                                <tr className="border-1 p-4">
+                                    <td>Nome</td>
+                                    <td>Totale</td>
+                                    <td>Da Inviare</td>
+                                    <td>Inviati</td>
+                                    <td>Da Ricevere</td>
+                                </tr>
+
+                        {enti.map((ente) => (
+                                <tr className="border-1 p-4">
+                                    <td>{ente.nome}</td>
+                                    <td>{ente.totale} €</td>
+                                    <td>{ente.da_inviare} €</td>
+                                    <td>{ente.inviati} €</td>
+                                    <td>{ente.da_ricevere} €</td>
+                                </tr>                       
+                        ))}
+                        
+                    </tbody>
+                    </table>
+
+                    </div>
+            <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
+                    <h1 className='text-white fs-4'>Corsi</h1>
+                        <table className="table table-bordered">
+                                <tbody>
+                                    <tr className="border-1 p-4">
+                                        <td>Nome</td>
+                                        <td>Costo</td>
+                                        <td>Venduti</td>
+                                        <td>Stock</td>
+                                        <td>Entrate</td>
+                                        <td>Uscite</td>
+                                        <td>Profit</td>
+                                    </tr>
+
+                            {courses.map((corso) => (
+                                    <tr className="border-1 p-4">
+                                        <td>{corso.name}</td>
+                                        <td>{corso.costo} €</td>
+                                        <td>{corso.venduti}</td>
+                                        <td>{corso.stock}</td>
+                                        <td>{corso.totale_entrate} €</td>
+                                        <td>{corso.totale_uscite} €</td>
+                                        <td>{corso.totale_profit} €</td>
+                                    </tr>                       
+                            ))}
+                            
+                        </tbody>
+                        </table>
+                    </div>
+            <div style={style} className='w-100 p-4 rounded-4'>
+            <h1 className='text-white'>Studenti</h1>
+            <table className="table table-bordered">
+                                <tbody>
+                                    <tr className="border-1 p-4">
+                                        <td>Nome</td>
+                                        <td>Totale</td>
+                                        <td>Saldati</td>
+                                        <td>In Sospeso</td>
+                                    </tr>
+
+                            {students.map((student) => (
+                                    <tr className="border-1 p-4">
+                                        <td>{student.nome} {student.secondo_nome} {student.cognome}</td>
+                                        <td>{student.totale} €</td>
+                                        <td>{student.saldati} €</td>
+                                        <td>{student.in_sospeso} €</td>
+                                      
+                                    </tr>                       
+                            ))}
+                            
+                        </tbody>
+                        </table>
+            </div>
+    </div>
+  )
+    
 }
 
 
