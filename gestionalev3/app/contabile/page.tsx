@@ -59,15 +59,17 @@ function Contabile() {
     const day: number = todayDate.getDate();
   
     const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const [year2, month2] = formattedDate.split('-');
+    
+    let datatoday = `${year2}-${month2}`
 
-  
     const [students,setStudents] = useState<Student[]>([]);
     const [courses,setCourses] = useState<Corso[]>([]);
     const [enti, setEnti] = useState<Ente[]>([]);
     const [cronologia, setCronologia] = useState<CronologiaItem[]>([]);
     const [permessi, setPermessi] = useState<any>()
     const [totalPerMonthYear, setTotalPerMonthYear] = useState<{[key: string]: {entrata: number, uscita: number, profitto: number}}>({})
-    const [monthYearFilter, setMonthYearFilter] = useState<string>(formattedDate);
+    const [monthYearFilter, setMonthYearFilter] = useState<string>(datatoday);
     
     useEffect(() => {
         const fetchFileNames = async () => {
@@ -121,6 +123,8 @@ function Contabile() {
     const redirec = (query:string) => {
         window.location.href = query;
     }
+
+  
     return (
         <div className='h-100 d-flex flex-column gap-3'>
             <div className='text-primary fs-4'>
@@ -130,13 +134,12 @@ function Contabile() {
             
             <div className='d-flex gap-2'>
 
-          
-            {totalPerMonthYear[monthYearFilter] && (
-            <div className='d-flex gap-1 h-25'>
+        { totalPerMonthYear[monthYearFilter] &&(
+            <div className='d-flex gap-1 w-100 h-100'>
 
                 <div style={styleSuccess} className='d-flex flex-column justify-content-center bg-primary w-25 h-100 rounded-3 p-3'>
                   
-                   <div className='d-flex gap-2 justify-content-between  p-1 '>
+                   <div className='d-flex gap-2 justify-content-between  p-1 h-100 w-100 '>
                 
                     <p className='fs-4 text-white'>Entrate</p>
 
@@ -146,7 +149,7 @@ function Contabile() {
 
 
                     </div>
-                   <p className='fs-1 text-white'> {totalPerMonthYear[monthYearFilter].entrata}  €</p>
+                   <p className='fs-1 text-white'>{totalPerMonthYear[monthYearFilter].entrata} €</p>
                 </div>
                 <div style={styleBad} className='d-flex flex-column justify-content-center  bg-primary w-25 h-100 rounded-3 p-3'>
                    
@@ -159,7 +162,7 @@ function Contabile() {
                     </svg>
 
                 </div>
-                   <p className='fs-1 text-white'> {totalPerMonthYear[monthYearFilter].uscita}  €</p>
+                   <p className='fs-1 text-white'> {totalPerMonthYear[monthYearFilter].uscita} €</p>
                 </div>
 
 
@@ -178,10 +181,8 @@ function Contabile() {
                         </svg>
 
                 </div>
-                   <p className='fs-1 text-white'> {totalPerMonthYear[monthYearFilter].profitto}  €</p>
+                   <p className='fs-1 text-white'>{totalPerMonthYear[monthYearFilter].profitto}  €</p>
                 </div>
-
-          
             </div>)}
             {monthYearFilter && (
                 <div key={monthYearFilter} style={style} className='d-flex flex-column justify-content-center w-25 h-100 rounded-3 p-3'>
@@ -194,6 +195,8 @@ function Contabile() {
                                     ))}
                                     </select>
                 </div> )}
+           
+           
          </div>
 <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
                     <h1 className='text-white fs-4'>Enti</h1>
