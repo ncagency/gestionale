@@ -46,6 +46,7 @@ function UploadForm({params}:{params:any}) {
     const formData = new FormData();
     formData.append('id', id);
     formData.append('costo', costo);
+    formData.append('data', data);
     if (image) {
       formData.append('image', image, data) 
     }
