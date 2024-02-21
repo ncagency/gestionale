@@ -47,7 +47,6 @@ const [formData, setFormData] = useState<{
     const { name, value } = event.target;
 
     const selectedCourse = courses.find(course => course._id === value);
-    console.log(coursetype)
     // Aggiorna lo stato courseTipo con il tipo del corso selezionato
     if (selectedCourse) {
       setCourse(selectedCourse.tipo);
@@ -148,6 +147,8 @@ const [formData, setFormData] = useState<{
     const destinationValue = `/scheda/students/${id}`;
     window.location.href = destinationValue;
 }
+console.log()
+
   return (
     <div className='d-flex '>
       <div style={divStyle} className='bg-primary rounded-4'>
@@ -210,23 +211,21 @@ const [formData, setFormData] = useState<{
                   <input className="input_small" type="number" value={totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
         
                   </div>
-                <div  className='d-flex flex-column'>
+                  {coursetype == "Uni" && (<div  className='d-flex flex-column'>
                   <label className='fs-5'> Percentuale </label>
                   <div className='d-flex gap-2'>
                   <input className="input_small" placeholder="Utilizza solo con Corsi universitari" type="number" value={formData.percentuale} name="percentuale"  onChange={(e) => handleInputChange(e)}  required />
                   <p className='subtitle'>(Solo con Corsi universitari, senza simbolo %)</p>
-
                   </div>
-                <div  className='d-flex flex-column'>
+                  </div>)}
+                {coursetype == "standard" && (<div  className='d-flex flex-column'>
                   <label className='fs-5'> Prezzo di Acquisto </label>
                   <div className='d-flex gap-2'>
                   <input className="input_small" placeholder="Prezzo di Acquisto" type="number" value={formData.prezzo_acquisto} name="prezzo_acquisto"  onChange={(e) => handleInputChange(e)}  required />
                   <p className='subtitle'>(Utilizza solo con corsi su Fattura)</p>
-
                   </div>
-
-                </div>
-            </div>
+                </div>)}
+            
             </div>
             <div className='d-flex gap-3'>
               <div className='d-flex flex-column'><label className=''>   Numero Rate:   </label>
