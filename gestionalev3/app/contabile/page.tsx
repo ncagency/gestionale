@@ -28,6 +28,7 @@ interface Ente {
 }
 
 interface Corso {
+    _id:string;
     name: string;
     costo: number;
     venduti: number;
@@ -81,6 +82,10 @@ function Contabile() {
       const fullName = `${student.nome} ${student.secondo_nome} ${student.cognome}`;
       return fullName.toLowerCase().includes(searchQuery.toLowerCase());
     });
+    const filteredCourses = courses.filter(course => {
+        const fullName = `${course.name}`;
+        return fullName.toLowerCase().includes(searchQuery.toLowerCase());
+      });
 
     useEffect(() => {
         const fetchFileNames = async () => {
@@ -237,6 +242,13 @@ function Contabile() {
 </div>
 <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
  <h1 className='text-white fs-4'>Corsi</h1>
+    <input
+            type="text"
+            placeholder="Cerca per nome"
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+            className="form-control mb-4"
+        />
             <table className="table table-bordered">
                 <tbody>
                     <tr className="border-1 p-4">
@@ -249,9 +261,9 @@ function Contabile() {
                         <td>Profit</td>
                     </tr>
 
-                    {courses.map((corso) => (
-                        <tr className="border-1 p-4" key={corso.id}>
-                            <td>{corso.name.length > 20 ? corso.name.slice(0, 20) + '...' : corso.name}</td>
+                    {filteredCourses.map((corso) => (
+                        <tr className="border-1 p-4" key={corso._id}>
+                            <td>{corso.name.length > 60 ? corso.name.slice(0, 60) + '...' : corso.name}</td>
                             <td>{corso.costo} €</td>
                             <td>{corso.venduti}</td>
                             <td>{corso.stock}</td>
