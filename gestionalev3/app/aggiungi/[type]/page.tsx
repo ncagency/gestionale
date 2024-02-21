@@ -107,6 +107,7 @@ const AddCourses = (permessi:any) => {
                       className="selector-width-state ">
                         <option value="" >Standard</option>
                         <option value="Uni">Uni</option>
+                        <option value="stock">Stock</option>
                       </select>
           <button onClick={handleSubmit} className='mt-2' >Invia</button>
         </form>

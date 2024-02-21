@@ -10,7 +10,7 @@ const Iscrizione = () => {
   const year: number = todayDate.getFullYear();
   const month: number = todayDate.getMonth() + 1; // i mesi sono indicizzati da 0 a 11
   const day: number = todayDate.getDate();
-
+  const[coursetype, setCourse] = useState("") 
 const formattedDate: string = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
 const [formData, setFormData] = useState<{
@@ -20,6 +20,7 @@ const [formData, setFormData] = useState<{
   data: string;
   flag: boolean;
   totale: number;
+  prezzo_acquisto:number;
   percentuale:number;
   accademico:any;
   rate: any; 
@@ -30,6 +31,7 @@ const [formData, setFormData] = useState<{
   flag:false,
   data: formattedDate,
   totale: 0,
+  prezzo_acquisto:0,
   percentuale:0,
   accademico:"",
   rate: [],
@@ -41,14 +43,30 @@ const [formData, setFormData] = useState<{
   const [totale, setTotale] = useState<number>(0);
   const [numRate, setNumRate] = useState<number>(0);
 
-  const handleInputChange = (e:any) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    if (name === 'totale') {
-      setTotale(parseFloat(value));
+  const handleInputChange = (event:any) => {
+    const { name, value } = event.target;
+
+    if (name === "course_id") {
+      // Aggiorna lo stato course_id
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+
+      // Trova il corso selezionato in base all'ID
+      const selectedCourse = courses.find(course => course._id === value);
+
+      // Aggiorna lo stato courseTipo con il tipo del corso selezionato
+      if (selectedCourse) {
+        setCourse(selectedCourse.tipo);
+        console.log(coursetype)
+      }
+    } else {
+      // Altrimenti gestisci gli altri campi del form
+      setFormData({
+        ...formData,
+        [name]: value
+      });
     }
   };
 
@@ -186,7 +204,7 @@ const [formData, setFormData] = useState<{
           <div className='d-flex flex-column gap-2'>
             <div className='d-flex gap-5'>
                 <div className='d-flex flex-column'>
-                <label> Totale:</label>
+                <label> Prezzo Vendita:</label>
                   <input className="input_small" type="number" value={totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
         
                   </div>
@@ -197,9 +215,16 @@ const [formData, setFormData] = useState<{
                   <p className='subtitle'>(Solo con Corsi universitari, senza simbolo %)</p>
 
                   </div>
+                <div  className='d-flex flex-column'>
+                  <label className='fs-5'> Prezzo di Acquisto </label>
+                  <div className='d-flex gap-2'>
+                  <input className="input_small" placeholder="Prezzo di Acquisto" type="number" value={formData.prezzo_acquisto} name="prezzo_acquisto"  onChange={(e) => handleInputChange(e)}  required />
+                  <p className='subtitle'>(Utilizza solo con corsi su Fattura)</p>
+
+                  </div>
 
                 </div>
-            
+            </div>
             </div>
             <div className='d-flex gap-3'>
               <div className='d-flex flex-column'><label className=''>   Numero Rate:   </label>
