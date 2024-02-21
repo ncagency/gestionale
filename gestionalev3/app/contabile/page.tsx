@@ -237,32 +237,33 @@ function Contabile() {
 </div>
 <div style={style} className='w-100 d-flex flex-column p-4 rounded-4'> 
  <h1 className='text-white fs-4'>Corsi</h1>
-                        <table className="table table-bordered">
-                                <tbody>
-                                    <tr className="border-1 p-4">
-                                        <td>Nome</td>
-                                        <td>Costo</td>
-                                        <td>Venduti</td>
-                                        <td>Stock</td>
-                                        <td>Entrate</td>
-                                        <td>Uscite</td>
-                                        <td>Profit</td>
-                                    </tr>
+            <table className="table table-bordered">
+                <tbody>
+                    <tr className="border-1 p-4">
+                        <td>Nome</td>
+                        <td>Costo</td>
+                        <td>Venduti</td>
+                        <td>Stock</td>
+                        <td>Entrate</td>
+                        <td>Uscite</td>
+                        <td>Profit</td>
+                    </tr>
 
-                            {courses.map((corso) => (
-                                    <tr className="border-1 p-4">
-                                        <td>{corso.name}</td>
-                                        <td>{corso.costo} €</td>
-                                        <td>{corso.venduti}</td>
-                                        <td>{corso.stock}</td>
-                                        <td>{corso.totale_entrate} €</td>
-                                        <td>{corso.totale_uscite} €</td>
-                                        <td>{corso.totale_profit} €</td>
-                                    </tr>                       
-                            ))}
-                            
-                        </tbody>
-                        </table>
+                    {courses.map((corso) => (
+                        <tr className="border-1 p-4" key={corso.id}>
+                            <td>{corso.name.length > 20 ? corso.name.slice(0, 20) + '...' : corso.name}</td>
+                            <td>{corso.costo} €</td>
+                            <td>{corso.venduti}</td>
+                            <td>{corso.stock}</td>
+                            <td>{corso.totale_entrate} €</td>
+                            <td>{corso.totale_uscite} €</td>
+                            <td>{corso.totale_profit} €</td>
+                        </tr>                       
+                    ))}
+                    
+                </tbody>
+            </table>
+
  </div>
  <div style={style} className='w-100 p-4 rounded-4'>
       <h1 className='text-white'>Studenti</h1>
