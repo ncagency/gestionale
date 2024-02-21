@@ -43,33 +43,26 @@ const [formData, setFormData] = useState<{
   const [totale, setTotale] = useState<number>(0);
   const [numRate, setNumRate] = useState<number>(0);
 
-  const handleInputChange = (event:any) => {
-    const { name, value } = event.target;
 
+  const handleCourseChange = (e:any) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
     const selectedCourse = courses.find(course => course._id === value);
-    // Aggiorna lo stato courseTipo con il tipo del corso selezionato
-    if (selectedCourse) {
-      setCourse(selectedCourse.tipo);
-      
-    }
+    setCourse(selectedCourse.tipo);
 
-    if (name === "course_id") {
-      // Aggiorna lo stato course_id
-      setFormData({
-        ...formData,
-        [name]: value
-      });
-
-      // Trova il corso selezionato in base all'ID
-      
-    } else {
-      // Altrimenti gestisci gli altri campi del form
-      setFormData({
-        ...formData,
-        [name]: value
-      });
+  }
+  const handleInputChange = (e:any) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    if (name === 'totale') {
+      setTotale(parseFloat(value));}
     }
-  };
 
 
   const handleRateChange = (index: number, field: any, value: any) => {
@@ -147,7 +140,6 @@ const [formData, setFormData] = useState<{
     const destinationValue = `/scheda/students/${id}`;
     window.location.href = destinationValue;
 }
-console.log()
 
   return (
     <div className='d-flex '>
@@ -184,7 +176,7 @@ console.log()
             <select
               name="course_id"
               value={formData.course_id}
-              onChange={handleInputChange}
+              onChange={handleCourseChange}
               className="selector-width-state "
               required
             >
@@ -207,8 +199,8 @@ console.log()
           <div className='d-flex flex-column gap-2'>
             <div className='d-flex gap-5'>
                 <div className='d-flex flex-column'>
-                <label> Prezzo Vendita:</label>
-                  <input className="input_small" type="number" value={totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
+                <label>Prezzo Vendita:</label>
+                  <input className="input_small" type="number" value={formData.totale} name="totale"  onChange={(e) => handleInputChange(e)}  required />
         
                   </div>
                   {coursetype == "Uni" && (<div  className='d-flex flex-column'>
