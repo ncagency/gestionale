@@ -239,10 +239,10 @@ export default function Home() {
                                        <label className="fs-5 text-warning">Nome</label>
                                        <p className="fs-3"> {record.ente_name}</p>
                                    </div>
-                                   <div>
+                                  { record.corso_nome && (<div>
                                        <label className="fs-5 text-warning">Corso</label>
                                        <p className="fs-3">{record.corso_nome}</p>
-                                   </div>
+                                   </div>)}
                                </div>
                                <div className="col">
                                    <div className="row">
@@ -250,15 +250,15 @@ export default function Home() {
                                        <label className="fs-5 text-warning">Data</label>
                                        <p className="fs-3"> {record.data}</p>
                                        </div>
-                                       <div className="col">
+                                     { record.n_stock && (  <div className="col">
                                        <label className="fs-5 text-warning">Stock</label>
                                        <p className="fs-3">{record.n_stock}</p>
-                                       </div>
+                                       </div>)}
                                    </div>
                                    <div className="row">
-                                       <div className="col">
+                                      { record.prezzo && ( <div className="col">
                                        <label className="fs-5 text-warning">Prezzo</label>
-                                       <p className="fs-3">{record.prezzo} €</p></div>
+                                       <p className="fs-3">{record.prezzo} €</p></div>)}
                                       
                                        <div className="col">
                                        <label className="fs-5 text-warning">Inviati</label>
