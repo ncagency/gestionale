@@ -71,6 +71,17 @@ function Contabile() {
     const [totalPerMonthYear, setTotalPerMonthYear] = useState<{[key: string]: {entrata: number, uscita: number, profitto: number}}>({})
     const [monthYearFilter, setMonthYearFilter] = useState<string>(datatoday);
     
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchInputChange = (e:any) => {
+      setSearchQuery(e.target.value);
+    };
+  
+    const filteredStudents = students.filter(student => {
+      const fullName = `${student.nome} ${student.secondo_nome} ${student.cognome}`;
+      return fullName.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+
     useEffect(() => {
         const fetchFileNames = async () => {
             try {
@@ -253,30 +264,34 @@ function Contabile() {
                         </tbody>
                         </table>
  </div>
-<div style={style} className='w-100 p-4 rounded-4'>
-            <h1 className='text-white'>Studenti</h1>
-            <table className="table table-bordered">
-                                <tbody>
-                                    <tr className="border-1 p-4">
-                                        <td>Nome</td>
-                                        <td>Totale</td>
-                                        <td>Saldati</td>
-                                        <td>In Sospeso</td>
-                                    </tr>
-
-                            {students.map((student) => (
-                                    <tr className="border-1 p-4">
-                                        <td>{student.nome} {student.secondo_nome} {student.cognome}</td>
-                                        <td>{student.totale} €</td>
-                                        <td>{student.saldati} €</td>
-                                        <td>{student.in_sospeso} €</td>
-                                      
-                                    </tr>                       
-                            ))}
-                            
-                        </tbody>
-            </table>
-</div>
+ <div style={style} className='w-100 p-4 rounded-4'>
+      <h1 className='text-white'>Studenti</h1>
+      <input
+        type="text"
+        placeholder="Cerca per nome, cognome o secondo nome..."
+        value={searchQuery}
+        onChange={handleSearchInputChange}
+        className="form-control mb-4"
+      />
+      <table className="table table-bordered">
+        <tbody>
+          <tr className="border-1 p-4">
+            <td>Nome</td>
+            <td>Totale</td>
+            <td>Saldati</td>
+            <td>In Sospeso</td>
+          </tr>
+          {filteredStudents.map((student, index) => (
+            <tr key={index} className="border-1 p-4">
+              <td>{student.nome} {student.secondo_nome} {student.cognome}</td>
+              <td>{student.totale} €</td>
+              <td>{student.saldati} €</td>
+              <td>{student.in_sospeso} €</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
             </div>
   )
     

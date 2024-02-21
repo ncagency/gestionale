@@ -480,7 +480,7 @@ const AddWorkers = (permessi:any) => {
             </div>
 
             <div className='d-flex justify-content-between  gap-2'>
-              <label>Paga Rate:</label>
+              <label>Paga Fatture:</label>
               <input type='checkbox' name="pagaFatture" checked={formData.permessi.pagaFatture} onChange={handleCheckboxChange}/>
             </div>
 
