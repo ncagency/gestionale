@@ -46,6 +46,14 @@ const [formData, setFormData] = useState<{
   const handleInputChange = (event:any) => {
     const { name, value } = event.target;
 
+    const selectedCourse = courses.find(course => course._id === value);
+    console.log(coursetype)
+    // Aggiorna lo stato courseTipo con il tipo del corso selezionato
+    if (selectedCourse) {
+      setCourse(selectedCourse.tipo);
+      
+    }
+
     if (name === "course_id") {
       // Aggiorna lo stato course_id
       setFormData({
@@ -54,13 +62,7 @@ const [formData, setFormData] = useState<{
       });
 
       // Trova il corso selezionato in base all'ID
-      const selectedCourse = courses.find(course => course._id === value);
-
-      // Aggiorna lo stato courseTipo con il tipo del corso selezionato
-      if (selectedCourse) {
-        setCourse(selectedCourse.tipo);
-        console.log(coursetype)
-      }
+      
     } else {
       // Altrimenti gestisci gli altri campi del form
       setFormData({
