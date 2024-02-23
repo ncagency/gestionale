@@ -39,9 +39,28 @@ const [formData, setFormData] = useState<{
 
   const [students, setStudents] = useState<any[]>([]);
   const [courses, setCourses] = useState<any[]>([]);
+  const [filteredcourses, setFilteredCourses] = useState<any[]>([]);
   const [enti, setEnti] = useState<any[]>([]);
   const [totale, setTotale] = useState<number>(0);
   const [numRate, setNumRate] = useState<number>(0);
+  const [selectedEnte, setSelectedEnte] = useState<string>('');
+
+
+  const handleEnteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedEnteNome = e.target.value;
+    
+    // Trova l'ente selezionato
+    const foundEnte = enti.find(ente => ente.nome === selectedEnteNome);
+    if (foundEnte) {
+      // Imposta i corsi filtrati nello stato
+      setSelectedEnte(foundEnte.nome);
+  
+
+      // Filtra i corsi in base all'ente selezionato
+      const filteredCourses = courses.filter(corso => corso.ente === foundEnte.nome);
+      setFilteredCourses(filteredCourses);
+    }
+  };
 
 
   const handleCourseChange = (e:any) => {
@@ -129,6 +148,10 @@ const [formData, setFormData] = useState<{
         const response2 = await axios.get(`${apiURL}/courses/`);
         const corsi = response2.data;
         setCourses(corsi);
+        setFilteredCourses(corsi);
+
+        const response3 = await axios.get(`${apiURL}/enti/`);
+        setEnti(response3.data)
       } catch (error) {
         console.error('Errore durante il recupero dal database', error);
       }
@@ -171,6 +194,30 @@ const [formData, setFormData] = useState<{
             <div className='d-flex gap-2'>
             <div className='d-flex flex-column '>
             <label>
+            Ente:
+            </label>
+            <select
+                    name="ente"
+                    value={selectedEnte || ""}
+                    onChange={handleEnteChange}
+                    className="selector-width-state"
+                    required
+                  >
+          <option value="" disabled>Seleziona Ente</option>
+          {enti.map((ente, index) => (
+            <option key={index} value={ente.nome}>
+              {ente.nome} 
+            </option>
+          ))}
+        </select>
+
+              </div>
+              </div>
+          
+
+            <div className='d-flex gap-2'>
+            <div className='d-flex flex-column '>
+            <label>
             Corso:
             </label>
             <select
@@ -181,7 +228,7 @@ const [formData, setFormData] = useState<{
               required
             >
               <option value="" disabled>Seleziona Corso</option>
-              {courses.map((corso, index) => (
+              {filteredcourses.map((corso, index) => (
                 <option key={index} value={corso._id}>
                   {corso.nome} | {corso.tipo}
                 </option>
