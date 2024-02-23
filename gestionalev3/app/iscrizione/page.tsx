@@ -44,7 +44,20 @@ const [formData, setFormData] = useState<{
   const [totale, setTotale] = useState<number>(0);
   const [numRate, setNumRate] = useState<number>(0);
   const [selectedEnte, setSelectedEnte] = useState<string>('');
+  const [searchText, setSearchText] = useState<string>('');
 
+
+
+  const handleSearch = (e:any) => {
+    setSearchText(e.target.value)
+
+    const filteredCourses = filteredcourses.filter(corso => {
+      const matchesSearch = corso.nome.toLowerCase().includes(searchText.toLowerCase());
+      return matchesSearch;
+    });
+    setFilteredCourses(filteredCourses);
+
+  }
 
   const handleEnteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedEnteNome = e.target.value;
@@ -52,16 +65,18 @@ const [formData, setFormData] = useState<{
     // Trova l'ente selezionato
     const foundEnte = enti.find(ente => ente.nome === selectedEnteNome);
     if (foundEnte) {
-      // Imposta i corsi filtrati nello stato
+      // Imposta l'ente selezionato nello stato
       setSelectedEnte(foundEnte.nome);
   
-
-      // Filtra i corsi in base all'ente selezionato
-      const filteredCourses = courses.filter(corso => corso.ente === foundEnte.nome);
+      // Filtra i corsi in base all'ente selezionato e al testo di ricerca
+      const filteredCourses = courses.filter(corso => {
+        const matchesEnte = corso.ente === foundEnte.nome;
+        const matchesSearch = corso.nome.toLowerCase().includes(searchText.toLowerCase());
+        return matchesEnte && matchesSearch;
+      });
       setFilteredCourses(filteredCourses);
     }
   };
-
 
   const handleCourseChange = (e:any) => {
     const { name, value } = e.target;
@@ -108,7 +123,7 @@ const [formData, setFormData] = useState<{
   };
 
   const divStyle = {
-    width: '700px',
+    width: '900px',
     padding: '60px',
     background: "linear-gradient(to right, #3b83ff, #2a59ac)",
 
@@ -204,6 +219,7 @@ const [formData, setFormData] = useState<{
                     required
                   >
           <option value="" disabled>Seleziona Ente</option>
+          <option value="">Tutti</option>
           {enti.map((ente, index) => (
             <option key={index} value={ente.nome}>
               {ente.nome} 
@@ -215,11 +231,17 @@ const [formData, setFormData] = useState<{
               </div>
           
 
-            <div className='d-flex gap-2'>
+              <div className='d-flex gap-2'>
             <div className='d-flex flex-column '>
             <label>
             Corso:
             </label>
+            <input
+                  type="text"
+                  placeholder="Cerca corso..."
+                  value={searchText}
+                  onChange={(e) => handleSearch(e)}
+                />
             <select
               name="course_id"
               value={formData.course_id}
